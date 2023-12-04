@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 
 from apps.clients.models import Client
+from apps.orders.models import Order, OrderStatus
 from apps.tg.choices import RoleTypeChoices
 from apps.tg.models import TelegramUser
 
@@ -19,3 +20,13 @@ def get_or_create_user(message):
         tguser.user = client
         tguser.save()
     return tguser.user, tguser
+
+
+def get_or_create_order(message):
+    order, created = Order.objects.get_or_create(order_number=message.chat.id, page_number=0)
+    if created:
+        client = Client.objects.get(userId=message.chat.id)
+        order.created_by = client
+        order.order_number = message.chat.id
+        order.save()
+    return order.created_by, order

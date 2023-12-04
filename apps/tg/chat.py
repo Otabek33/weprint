@@ -6,10 +6,10 @@ from django.contrib.auth import get_user_model
 from telebot import types
 from telegram import KeyboardButton, ReplyKeyboardMarkup
 import logging
-from apps.tg.buttons import main_menu, themes, order_color, order_size
+from apps.tg.buttons import main_menu, themes, order_color, order_size, order_binding
 from apps.tg.choices import RoleTypeChoices
-from apps.tg.models import Chat, Message, TelegramUser
-from apps.tg.utils import get_or_create_user
+from apps.tg.models import Chat, Message, TelegramUser, PrintColor, PrintSize
+from apps.tg.utils import get_or_create_user, get_or_create_order
 
 User = get_user_model()
 
@@ -22,10 +22,23 @@ logger = logging.getLogger(__name__)
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     tg_user = TelegramUser.objects.get(tg_pk=call.message.chat.id)
-    if call.data == "white" or call.data == "color":
+    client, order = get_or_create_order(call.message)
+    if call.data == "WHITE" or call.data == "COLOURFUL":
         # bot.answer_callback_query(call.id, "Keyingi bosqichga o'tyapsiz!", show_alert=True)
+        printColor = PrintColor[call.data]
+        order.printColor = printColor
+        order.save()
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi o'lchamda chop etmoqchisiz", reply_markup=order_size())
+    elif call.data == "A5" or call.data == "A4" or call.data == "A3":
+        printSize = PrintSize[call.data]
+        order.printSize = printSize
+        order.save()
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_message(call.message.chat.id, "Pereplyot shaklidini tanlang", reply_markup=order_binding())
+    elif call.data == "backFromSize":
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_message(call.message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
 
 
 @bot.message_handler(commands=["start", "stop"])

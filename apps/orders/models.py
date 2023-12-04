@@ -1,7 +1,9 @@
+from django.utils import timezone
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import uuid
-from apps.tg.models import PrintColor, PrintSize, PrintBindingTypes
+from apps.tg.models import PrintColor, PrintSize
 
 
 # Create your models here.
@@ -10,6 +12,18 @@ class OrderStatus(models.IntegerChoices):
     CONFORM = 2, _("В подтверждении")
     ACTIVE = 3, _("Активный")
     CANCELLED = 4, _("Отменено")
+
+
+class PrintBindingTypes(models.Model):
+    name = models.CharField(_("Nomi"), max_length=150, blank=True)
+    photo = models.FileField(upload_to="binding/%Y/%m/%d/")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Тип переплета печати"
+        verbose_name_plural = "Типы переплета печати"
 
 
 class Order(models.Model):
@@ -23,10 +37,11 @@ class Order(models.Model):
         choices=PrintColor.choices,
         default=PrintColor.WHITE,
     )
-    printBindingType = models.IntegerField(
-        choices=PrintBindingTypes.choices,
-        default=PrintBindingTypes.NO_BINDING,
-    )
+    printBindingType = models.ForeignKey(PrintBindingTypes,
+                                         on_delete=models.CASCADE,
+                                         blank=True,
+                                         null=True,
+                                         related_name="printBindingTypes", )
     file = models.FileField(upload_to="uploads/%Y/%m/%d/")
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     page_number = models.IntegerField()
@@ -38,7 +53,7 @@ class Order(models.Model):
                                    blank=True, null=True, related_name="order_created_by")
     updated_by = models.ForeignKey("clients.Client", verbose_name=_("Updated by"), on_delete=models.SET_NULL,
                                    blank=True, null=True, related_name="order_updated_by")
-    created_at = models.DateTimeField
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.order_number)

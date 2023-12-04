@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from apps.orders.models import (Order)
+from apps.orders.models import (Order, PrintBindingTypes)
 
 
 # Register your models here.
@@ -23,3 +23,5 @@ class OrderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Order, OrderAdmin)
+
+admin.site.register([PrintBindingTypes])
