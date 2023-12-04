@@ -74,7 +74,7 @@ def start(message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(types.KeyboardButton(text="Телефон 📱", request_contact=True))
     bot.send_message(
-        message.chat.id, mess, reply_markup=keyboard, parse_mode='html')
+        message.chat.id, mess, reply_markup=keyboard)
 
 
 CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "video_note", "voice", "location", "contact",
@@ -87,12 +87,22 @@ CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "vide
 def get_sms(message):
     user, tguser = get_or_create_user(message)
     attr_value = getattr(user, "phone", False)
+    keyboard = types.ReplyKeyboardRemove()
     if attr_value is False:
         bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
     else:
-        keyboard = types.ReplyKeyboardRemove()
-        markup = main_menu()
-        bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
+        text = message.text
+        if text == "Buyurtma berish 🛒":
+            bot.send_message(message.chat.id, text)
+        elif text == "Buyurtmalar 📦":
+            bot.send_message(message.chat.id, text)
+        elif text == "Sozlamalar ⚙️":
+            bot.send_message(message.chat.id, text)
+        elif text == "Biz haqimizda ℹ️":
+            bot.send_message(message.chat.id, text)
+        else:
+            markup = main_menu()
+            bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
 
 
 @bot.message_handler(content_types=["contact"])
