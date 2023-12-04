@@ -68,31 +68,6 @@ def callback_query(call):
             bot.send_message(call.message.chat.id, "<b>Sizda tugallanmagan dialog mavjud.</b>")
 
 
-# @bot.message_handler(commands=["start", "stop"])
-# def start(message):
-#     if message.text == "/start":
-#         get_or_create_user(message)
-#         bot.send_message(message.chat.id, "Tanlang", reply_markup=main_menu())
-#     elif message.text == "/stop":
-#         user, tg_user = get_or_create_user(message)
-#         chat = Chat.objects.filter(subscribers=user, closed=False).first()
-#         if chat:
-#             if tg_user.current_role_in_chat == RoleTypeChoices.USER:
-#                 if chat.is_full:
-#                     chat.closed = True
-#                     chat.save()
-#                     partner = chat.subscribers.exclude(id=user.id).last()
-#                     for id in [partner.telegramuser_set.last().tg_pk, tg_user.tg_pk]:
-#                         bot.send_message(
-#                             id, "<b>Suhbat tugatildi. /start buyrug'i orqali yangi suhbat yaratishingiz mumkin!</b>")
-#                 else:
-#                     bot.send_message(message.chat.id, "Chatga kimdir qoshilmagungacha toxtata olmaysiz!")
-#             else:
-#                 bot.send_message(message.chat.id, "<b>Suhbatni siz tugata olmaysiz! Sizning huquqingiz yetmaydi!</b>")
-#         else:
-#             bot.send_message(message.chat.id, "<b>Sizda joriiy suhbatlar yo'q!</b>")
-
-
 @bot.message_handler(commands=["start", "stop"])
 def start(message):
     mess = f'Ассалому алейкум , <b>{message.from_user.first_name}</b>!\nМен - <b>GimsShopBot</b>,\nТизимдан фойдаланишдан олдин Телефон рақамингизни юборинг'
@@ -108,6 +83,18 @@ CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "vide
                  "migrate_from_chat_id", "pinned_message"]
 
 
+@bot.message_handler()
+def get_sms(message):
+    user, tguser = get_or_create_user(message)
+    attr_value = getattr(user, "phone", False)
+    if attr_value is False:
+        bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
+    else:
+        keyboard = types.ReplyKeyboardRemove()
+        markup = main_menu()
+        bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
+
+
 @bot.message_handler(content_types=["contact"])
 def get_contact(message):
     client, tguser = get_or_create_user(message)
@@ -116,8 +103,6 @@ def get_contact(message):
     keyboard = types.ReplyKeyboardRemove()
     markup = main_menu()
     bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
-
-
 
 
 def polToWebhook(request):
