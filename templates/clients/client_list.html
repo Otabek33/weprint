@@ -11,10 +11,10 @@
                 <header class="card-header">
                     <div class="card-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+
                     </div>
 
-                    <h2 class="card-title">Actions</h2>
+                    <a type="button" href="{% url 'clients:add' %}" class="btn btn-primary">Добавить</a>
                 </header>
                 <div class="card-body">
                     <table class="table table-responsive-md table-bordered mb-0">
@@ -30,22 +30,23 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {% for client in client_list %}
                         <tr>
-                            {% for client in client_list %}
 
-                                <td>1</td>
+
+                                <td>{{ forloop.counter }}</td>
                                 <td>{{ client.username }}</td>
                                 <td>{{ client.first_name }}</td>
                                 <td>{{ client.last_name }}</td>
                                 <td>{{ client.userId }}</td>
                                 <td>{{ client.phone }}</td>
-                                <td class="actions">
+                                <td class="actions text-center">
                                     <a href=""><i class="fas fa-pencil-alt"></i></a>
                                     <a href="" class="delete-row"><i class="far fa-trash-alt"></i></a>
                                 </td>
-                            {% endfor %}
-                        </tr>
 
+                        </tr>
+ {% endfor %}
                         </tbody>
                     </table>
                 </div>

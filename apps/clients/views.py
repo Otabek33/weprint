@@ -18,7 +18,6 @@ class ClientListView(CreateView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['client_list'] = Client.objects.filter(deleted_status=False)
-
         return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -74,3 +73,22 @@ class ClientDeleteView(DeleteView):
 
 
 client_delete = ClientDeleteView.as_view()
+
+
+class ClientCreateView(CreateView):
+    model = Client
+    form_class = ClientCreateForm
+    template_name = "clients/client_add.html"
+
+    def form_valid(self, form):
+        print("ishladi form valid")
+        client = form.save(commit=False)
+        client.save()
+        return redirect("clients:client_list")
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return HttpResponse(form.errors)
+
+
+client_add = ClientCreateView.as_view()

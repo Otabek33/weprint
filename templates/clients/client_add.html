@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Page Title{% endblock %}
+
+
+{% block content %}
+    <!-- start: page -->
+    <form class="ecommerce-form action-buttons-fixed" action="" method="post">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <section class="card card-modern card-big-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-1-5 col-xl-1-5">
+                                <i class="card-big-info-icon bx bx-user"></i>
+                                <h2 class="card-big-info-title">User</h2>
+                                <p class="card-big-info-desc">Add new client</p>
+                            </div>
+                            <div class="col-lg-3-5 col-xl-4-5">
+                                 <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Username</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.username }}
+{#                                        <input type="text" class="form-control form-control-modern"#}
+{#                                               name="username" value="" required/>#}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">First Name</label>
+                                    <div class="col-lg-7 col-xl-6">
+{#                                        <input type="text" class="form-control form-control-modern"#}
+{#                                               name="firstName" value="" required/>#}
+                                         {{ form.first_name }}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Last Name</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.last_name }}
+{#                                        <input type="text" class="form-control form-control-modern"#}
+{#                                               name="lastName" value="" required/>#}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Phone Number</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.phone }}
+{#                                        <input type="text" class="form-control form-control-modern"#}
+{#                                               name="phoneNumber" value=""/>#}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Chat Id
+                                        </label>
+                                    <div class="col-lg-7 col-xl-6">
+                                         {{ form.userId }}
+{#                                        <input type="text" class="form-control form-control-modern"#}
+{#                                               name="chatId" value="" required/>#}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row action-buttons d-flex justify-content-end">
+            <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+                <a href="{% url 'clients:client_list' %}"
+                   class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+            </div>
+            <div class="col-12 col-md-auto">
+                <button type="submit"
+                        class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+                        data-loading-text="Loading...">
+                    <i class="bx bx-save text-4 me-2"></i> Save Customer
+                </button>
+            </div>
+
+
+        </div>
+    </form>
+    <!-- end: page -->
+{% endblock %}
+<!-- Specific Page Vendor -->
+

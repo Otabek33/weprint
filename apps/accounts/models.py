@@ -38,9 +38,6 @@ class Company(models.Model):
 
 class CustomUser(AbstractUser):
     """Class representing a person"""
-    slug = models.SlugField(max_length=50, null=True, blank=True)
-    photo = models.ImageField(upload_to="avatars", default="media/avatars/user.png")
-
     role = models.ForeignKey(UserRole, on_delete=models.SET_NULL, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
 
