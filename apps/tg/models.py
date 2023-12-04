@@ -1,10 +1,28 @@
-from typing import Iterable, Optional
-
-from django.contrib.auth import get_user_model
 from django.db import models
 
 from apps.clients.models import Client
 from apps.tg.choices import RoleTypeChoices
+from django.utils.translation import gettext_lazy as _
+
+
+class PrintColor(models.IntegerChoices):
+    WHITE = 1, _('oq qora')
+    COLOURFUL = 2, _('rangli')
+
+
+class PrintSize(models.IntegerChoices):
+    A5 = 1, _('A5')
+    A4 = 2, _('A4')
+    A3 = 3, _('A3')
+
+
+class PrintBindingTypes(models.IntegerChoices):
+    SPIRAL = 1, _("газетная")
+    SADDLE_STITCH = 2, _("газетная")
+    PERFECT_BINDING = 3, _("газетная")
+    CASE = 4, _("газетная")
+    PLASTIC_COMB = 5, _("газетная")
+    NO_BINDING = 6, _("газетная")
 
 
 class Theme(models.Model):

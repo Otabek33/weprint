@@ -45,5 +45,5 @@ class Client(models.Model):
 
     class Meta:
         """Class representing a person"""
-        verbose_name = _("Клиент")
-        verbose_name_plural = _("Клиенты")
+        verbose_name = _("Client")
+        verbose_name_plural = _("Clients")
