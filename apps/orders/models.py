@@ -22,8 +22,8 @@ class PrintBindingTypes(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Тип переплета печати"
-        verbose_name_plural = "Типы переплета печати"
+        verbose_name = "Binding type"
+        verbose_name_plural = "Biding types"
 
 
 class Order(models.Model):

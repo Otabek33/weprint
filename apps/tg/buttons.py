@@ -3,7 +3,8 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from apps.clients.models import Client
 from telebot import types
 
-from apps.tg.models import PrintColor, PrintSize, PrintBindingTypes
+from apps.tg.models import PrintColor, PrintSize
+from apps.orders.models import PrintBindingTypes
 
 
 def main_menu():
@@ -38,13 +39,29 @@ def order_size():
 def order_binding():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton(f"{PrintBindingTypes.SPIRAL.label}", callback_data="SPIRAL"),
-               InlineKeyboardButton(f"{PrintBindingTypes.SADDLE_STITCH.label}", callback_data="SADDLE_STITCH"))
-    markup.add(InlineKeyboardButton(f"{PrintBindingTypes.PERFECT_BINDING.label}", callback_data="PERFECT_BINDING"),
-               InlineKeyboardButton(f"{PrintBindingTypes.CASE.label}", callback_data="CASE"))
-    markup.add(InlineKeyboardButton(f"{PrintBindingTypes.PLASTIC_COMB.label}", callback_data="PLASTIC_COMB"),
-               InlineKeyboardButton(f"{PrintBindingTypes.NO_BINDING.label}", callback_data="NO_BINDING"))
+    bindings = PrintBindingTypes.objects.all()
+    counter = 0
+    bind_list = []
+    for binding in bindings:
+        counter += 1
+        bind_list.append(InlineKeyboardButton(binding.name, callback_data=binding.name))
+        if counter == 2:
+            markup.add(bind_list[0], bind_list[1])
+            counter = 0
+            bind_list = []
+
+    markup.add(InlineKeyboardButton(f"📷 Rasmlar", callback_data="photoOfBinding"))
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromBinding"))
+    return markup
+
+
+def order_info():
+    markup = InlineKeyboardMarkup()
+    markup.row_width = 2
+    markup.add(InlineKeyboardButton(f"Bekor qilish ❌", callback_data="cancel_order"),
+               InlineKeyboardButton(f"Buyurtma berish ✔", callback_data="order_product"))
+    markup.add(InlineKeyboardButton(f"Saqlab qo'yish ➕", callback_data="order_save"))
+    markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromOrderInfo"))
     return markup
 
 

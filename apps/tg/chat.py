@@ -1,15 +1,15 @@
 import json
-import random
 
 import telebot
 from django.contrib.auth import get_user_model
 from telebot import types
-from telegram import KeyboardButton, ReplyKeyboardMarkup
+
 import logging
-from apps.tg.buttons import main_menu, themes, order_color, order_size, order_binding
-from apps.tg.choices import RoleTypeChoices
-from apps.tg.models import Chat, Message, TelegramUser, PrintColor, PrintSize
+from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info
+
+from apps.tg.models import TelegramUser, PrintColor, PrintSize
 from apps.tg.utils import get_or_create_user, get_or_create_order
+from apps.orders.models import PrintBindingTypes
 
 User = get_user_model()
 
@@ -18,10 +18,13 @@ TOKEN = "6788108652:AAE89YGQ06R2aqds3RP5mhymRJqBE9Djblg"
 bot = telebot.TeleBot(TOKEN, parse_mode="html")
 logger = logging.getLogger(__name__)
 
+amount_of_page = False
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     tg_user = TelegramUser.objects.get(tg_pk=call.message.chat.id)
+    bindings = PrintBindingTypes.objects.all()
     client, order = get_or_create_order(call.message)
     if call.data == "WHITE" or call.data == "COLOURFUL":
         # bot.answer_callback_query(call.id, "Keyingi bosqichga o'tyapsiz!", show_alert=True)
@@ -36,9 +39,25 @@ def callback_query(call):
         order.save()
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Pereplyot shaklidini tanlang", reply_markup=order_binding())
+    elif call.data == "photoOfBinding":
+        for binding in bindings:
+            bot.send_photo(call.message.chat.id, photo=binding.photo, caption=binding.name)
+        bot.send_message(call.message.chat.id, "Pereplyot shaklidini tanlang", reply_markup=order_binding())
+
+    elif PrintBindingTypes.objects.filter(name=call.data).exists():
+        order.printBindingType = PrintBindingTypes.objects.filter(name=call.data).first()
+        order.save()
+        global amount_of_page
+
+        amount_of_page = True
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_message(call.message.chat.id, "Sahifalar sonini kiriting")
     elif call.data == "backFromSize":
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
+    elif call.data == "backFromBinding":
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_message(call.message.chat.id, "Qaysi o'lchamda chop etmoqchisiz", reply_markup=order_size())
 
 
 @bot.message_handler(commands=["start", "stop"])
@@ -59,8 +78,10 @@ CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "vide
 @bot.message_handler()
 def get_sms(message):
     user, tguser = get_or_create_user(message)
+    client, order = get_or_create_order(message)
     attr_value = getattr(user, "phone", False)
     keyboard = types.ReplyKeyboardRemove()
+    global amount_of_page
     if attr_value is False:
         bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
     else:
@@ -73,6 +94,19 @@ def get_sms(message):
             bot.send_message(message.chat.id, text)
         elif text == "Biz haqimizda ℹ️":
             bot.send_message(message.chat.id, text)
+        elif amount_of_page:
+            if text.isnumeric():
+                amount_of_page = False
+                order.page_number = int(text)
+                order.save()
+                mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+                       f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+                       f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price} so\'m \n\n\nYaratildi 🕕 : 01-01-2023\n'
+
+                bot.send_message(message.chat.id, mess, reply_markup=order_info())
+
+            else:
+                bot.send_message(message.chat.id, 'Iltimos sahifalar miqdorini yuboring')
         else:
             markup = main_menu()
             bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
