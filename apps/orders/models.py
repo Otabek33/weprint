@@ -12,6 +12,7 @@ class OrderStatus(models.IntegerChoices):
     CONFORM = 2, _("В подтверждении")
     ACTIVE = 3, _("Активный")
     CANCELLED = 4, _("Отменено")
+    FINISH = 5, _("Доставлен")
 
 
 class PrintBindingTypes(models.Model):
@@ -28,7 +29,7 @@ class PrintBindingTypes(models.Model):
 
 class Order(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    order_number = models.IntegerField(default=0)
+    order_number = models.CharField(_("Buyurtma raqami"), max_length=150, blank=True)
     printSize = models.IntegerField(
         choices=PrintSize.choices,
         default=PrintSize.A4,
@@ -44,7 +45,7 @@ class Order(models.Model):
                                          related_name="printBindingTypes", )
     file = models.FileField(upload_to="uploads/%Y/%m/%d/")
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    page_number = models.IntegerField()
+    page_number = models.IntegerField(default=0)
     order_status = models.IntegerField(
         choices=OrderStatus.choices,
         default=OrderStatus.CREATION,

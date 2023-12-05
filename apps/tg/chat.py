@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 import telebot
 from django.contrib.auth import get_user_model
@@ -8,7 +9,7 @@ import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info
 
 from apps.tg.models import TelegramUser, PrintColor, PrintSize
-from apps.tg.utils import get_or_create_user, get_or_create_order
+from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price
 from apps.orders.models import PrintBindingTypes
 
 User = get_user_model()
@@ -98,10 +99,13 @@ def get_sms(message):
             if text.isnumeric():
                 amount_of_page = False
                 order.page_number = int(text)
+                order.created_at = datetime.now()
                 order.save()
+                generation_price(order)
                 mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
                        f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
-                       f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price} so\'m \n\n\nYaratildi 🕕 : 01-01-2023\n'
+                       f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price} so\'m \n\n\n' \
+                       f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
 
                 bot.send_message(message.chat.id, mess, reply_markup=order_info())
 

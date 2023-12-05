@@ -4,6 +4,8 @@ from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
 from apps.tg.choices import RoleTypeChoices
 from apps.tg.models import TelegramUser
+import uuid
+from datetime import datetime
 
 User = get_user_model()
 
@@ -23,10 +25,30 @@ def get_or_create_user(message):
 
 
 def get_or_create_order(message):
-    order, created = Order.objects.get_or_create(order_number=message.chat.id, page_number=0)
+    client = Client.objects.get(userId=message.chat.id)
+    order, created = Order.objects.get_or_create(created_by=client, order_status=OrderStatus.CREATION, page_number=0)
     if created:
-        client = Client.objects.get(userId=message.chat.id)
         order.created_by = client
-        order.order_number = message.chat.id
+        order.order_number = generate_order_number()
         order.save()
     return order.created_by, order
+
+
+def generate_order_number():
+    # Static prefix for the order number
+    prefix = "OB"
+
+    # Current timestamp to include in the order number
+    timestamp = datetime.now().strftime("%d%m%Y%H%M")
+
+    # Generate a random UUID and extract the last portion to add some uniqueness
+    unique_id = str(uuid.uuid4())[-4:]
+
+    # Combine the elements to create the order number
+    order_number = f"{prefix}-{timestamp}-{unique_id}"
+
+    return order_number
+
+
+def generation_price(order):
+    pass
