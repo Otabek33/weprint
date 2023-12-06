@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
+from apps.products.models import Product
 from apps.tg.choices import RoleTypeChoices
 from apps.tg.models import TelegramUser
 import uuid
@@ -39,10 +40,10 @@ def generate_order_number():
     prefix = "OB"
 
     # Current timestamp to include in the order number
-    timestamp = datetime.now().strftime("%d%m%Y%H%M")
+    timestamp = datetime.now().strftime("%d%m%H%M")
 
     # Generate a random UUID and extract the last portion to add some uniqueness
-    unique_id = str(uuid.uuid4())[-4:]
+    unique_id = str(uuid.uuid4())[-2:]
 
     # Combine the elements to create the order number
     order_number = f"{prefix}-{timestamp}-{unique_id}"
@@ -51,4 +52,10 @@ def generate_order_number():
 
 
 def generation_price(order):
-    pass
+    product = Product.productListByUser.get_product(order.printColor, order.printSize, order.printBindingType)
+    order.price = order.page_number * product.price
+    order.save()
+
+
+def get_order():
+    return Order()

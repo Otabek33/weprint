@@ -8,11 +8,11 @@ from apps.tg.models import PrintColor, PrintSize
 
 # Create your models here.
 class OrderStatus(models.IntegerChoices):
-    CREATION = 1, _("В создании")
-    CONFORM = 2, _("В подтверждении")
-    ACTIVE = 3, _("Активный")
-    CANCELLED = 4, _("Отменено")
-    FINISH = 5, _("Доставлен")
+    CREATION = 1, _("Yangi")
+    ORDERD = 2, _("Buyurtma berilgan")
+    ACTIVE = 3, _("Faol")
+    CANCELLED = 4, _("Bekor qilingan")
+    FINISH = 5, _("Yetqazib berilgan")
 
 
 class PrintBindingTypes(models.Model):

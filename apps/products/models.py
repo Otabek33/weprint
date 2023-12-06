@@ -19,6 +19,9 @@ class ProductManager(models.Manager):
     def by_id(self, id):
         return super().get_queryset().get(pk=id)
 
+    def get_product(self, color, size, binding):
+        return super().get_queryset().get(printColor=color, printSize=size, printBindingType=binding)
+
 
 # Create your models here.
 class Product(models.Model):
