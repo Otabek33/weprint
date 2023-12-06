@@ -1,6 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from typing import Any, Dict
-from django.db.models.query import QuerySet
+
 from django.views.generic import (ListView, CreateView)
 from apps.orders.forms import OrderCreateForm
 from apps.orders.models import Order
