@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 import uuid
 
 from apps.tg.models import PrintSize, PrintColor
+from apps.orders.models import PrintBindingTypes
 
 
 # Create your models here.
@@ -17,18 +18,6 @@ class ProductManager(models.Manager):
 
     def by_id(self, id):
         return super().get_queryset().get(pk=id)
-
-
-class PrintBindingTypes(models.Model):
-    name = models.CharField(_("name"), max_length=150, blank=True)
-    photo = models.FileField(upload_to="binding/%Y/%m/%d/")
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Тип переплета печати"
-        verbose_name_plural = "Типы переплета печати"
 
 
 # Create your models here.
@@ -47,7 +36,7 @@ class Product(models.Model):
                                          on_delete=models.CASCADE,
                                          blank=True,
                                          null=True,
-                                         related_name="printBindingTypes", )
+                                         related_name="printBindingTypess", )
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     company = models.ForeignKey(Company,
                                 on_delete=models.CASCADE,
