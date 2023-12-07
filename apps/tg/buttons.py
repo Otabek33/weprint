@@ -47,16 +47,9 @@ def order_binding():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     bindings = PrintBindingTypes.objects.all()
-    counter = 0
-    bind_list = []
-    for binding in bindings:
-        counter += 1
-        bind_list.append(InlineKeyboardButton(binding.name, callback_data=binding.name))
-        if counter == 2:
-            markup.add(bind_list[0], bind_list[1])
-            counter = 0
-            bind_list = []
 
+    for binding in bindings:
+        markup.add(InlineKeyboardButton(binding.name, callback_data=binding.name))
     markup.add(InlineKeyboardButton(f"📷 Rasmlar", callback_data="photoOfBinding"))
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromBinding"))
     return markup
