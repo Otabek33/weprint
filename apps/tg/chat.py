@@ -21,14 +21,16 @@ logger = logging.getLogger(__name__)
 
 amount_of_page = False
 sending_document = False
-object_need_file = ""
+
+
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     tg_user = TelegramUser.objects.get(tg_pk=call.message.chat.id)
-    bindings = PrintBindingTypes.objects.all()
     client, order = get_or_create_order(call.message)
+    bindings = PrintBindingTypes.objects.all()
+
     if call.data == "WHITE" or call.data == "COLOURFUL":
         # bot.answer_callback_query(call.id, "Keyingi bosqichga o'tyapsiz!", show_alert=True)
         printColor = PrintColor[call.data]
