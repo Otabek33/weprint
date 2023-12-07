@@ -63,6 +63,7 @@ def save_order_file(message, file_oath, order_number):
     order.file = file_oath
     order.file_status = False
     order.save()
+    return order
 
 
 def get_order(order_number):

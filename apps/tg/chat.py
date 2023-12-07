@@ -23,6 +23,8 @@ amount_of_page = False
 sending_document = False
 order_number = ""
 MAX_FILE_SIZE_MB = 50
+GROUP_CHAT_ID = 4089429437
+
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
@@ -184,14 +186,18 @@ def get_document(message):
                 local_file.write(downloaded_file)
 
             # Now, you can save the file path to your Django model
-            save_order_file(message, file_path, order_number)
+            order = save_order_file(message, file_path, order_number)
 
             bot.send_message(message.chat.id, "Xujjat qabul qilindi")
+            mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+                   f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+                   f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+                   f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
+                   f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
+            bot.send_document(message.chat.id, document=open(file_path, 'rb'), caption=mess)
         else:
             bot.send_message(message.chat.id, "Yuborilayotgan hujjat pdf yoki word ko'rinishida bo'lishi kerak")
             # Save the file content to a local file
-
-
 
 
 def polToWebhook(request):
