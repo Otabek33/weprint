@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 amount_of_page = False
 sending_document = False
 order_number = ""
-
+MAX_FILE_SIZE_MB = 50
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
@@ -173,15 +173,25 @@ def get_document(message):
 
     # Download the file content using the file_path
     downloaded_file = bot.download_file(file_path_telegram)
+    max_file_size_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
 
-    # Save the file content to a local file
-    with open(file_path, 'wb') as local_file:
-        local_file.write(downloaded_file)
+    if message.document.file_size > max_file_size_bytes:
+        bot.send_message(message.chat.id, "Yuborilayotgan hujjat hajmi 50 mb dan kichik bo'lishi kerak")
+    else:
+        if message.document.file_name.lower().endswith('.pdf') or message.document.file_name.lower().endswith(
+                ('.doc', '.docx')):
+            with open(file_path, 'wb') as local_file:
+                local_file.write(downloaded_file)
 
-    # Now, you can save the file path to your Django model
-    save_order_file(message, file_path, order_number)
+            # Now, you can save the file path to your Django model
+            save_order_file(message, file_path, order_number)
 
-    bot.send_message(message.chat.id, "Xujjat qabul qilindi")
+            bot.send_message(message.chat.id, "Xujjat qabul qilindi")
+        else:
+            bot.send_message(message.chat.id, "Yuborilayotgan hujjat pdf yoki word ko'rinishida bo'lishi kerak")
+            # Save the file content to a local file
+
+
 
 
 def polToWebhook(request):
