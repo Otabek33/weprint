@@ -21,17 +21,24 @@ def main_menu():
 def order_color():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton(f"{PrintColor.WHITE.label} 📃", callback_data="WHITE"),
-               InlineKeyboardButton(f"{PrintColor.COLOURFUL.label} 🌈", callback_data="COLOURFUL"))
+    # for printColor in PrintColor:
+    counter = 0
+    color_list = []
+    for printColor in PrintColor:
+        counter += 1
+        color_list.append(InlineKeyboardButton(f"{str(printColor.label)}", callback_data=str(printColor.name)))
+        if counter == 2:
+            markup.add(color_list[0], color_list[1])
+            counter = 0
+            color_list = []
     return markup
 
 
 def order_size():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton(f"{PrintSize.A5.label}", callback_data="A5"))
-    markup.add(InlineKeyboardButton(f"{PrintSize.A4.label}", callback_data="A4"))
-    markup.add(InlineKeyboardButton(f"{PrintSize.A3.label}", callback_data="A3"))
+    for printSize in PrintSize:
+        markup.add(InlineKeyboardButton(f"{str(printSize.label)}", callback_data=str(printSize.label)))
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromSize"))
     return markup
 

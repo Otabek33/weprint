@@ -6,14 +6,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 class PrintColor(models.IntegerChoices):
-    WHITE = 1, _('oq qora')
-    COLOURFUL = 2, _('rangli')
+    WHITE = 1, _('Oq qora')
+    COLOURFUL = 2, _('Rangli')
 
 
 class PrintSize(models.IntegerChoices):
     A5 = 1, _('A5')
     A4 = 2, _('A4')
-    A3 = 3, _('A3')
 
 
 class PrintBindingTypes(models.IntegerChoices):
