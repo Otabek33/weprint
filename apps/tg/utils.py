@@ -27,7 +27,8 @@ def get_or_create_user(message):
 
 def get_or_create_order(message):
     client = Client.objects.get(userId=message.chat.id)
-    order, created = Order.objects.get_or_create(created_by=client, order_status=OrderStatus.CREATION, page_number=0)
+    order, created = Order.objects.get_or_create(tg_pk=message.chat.id, created_by=client,
+                                                 order_status=OrderStatus.CREATION, page_number=0)
     if created:
         order.created_by = client
         order.order_number = generate_order_number()
@@ -57,5 +58,12 @@ def generation_price(order):
     order.save()
 
 
-def get_order():
-    return Order()
+def save_order_file(message, file_oath, order_number):
+    order = Order.objects.get(tg_pk=message.chat.id, order_number=order_number)
+    order.file = file_oath
+    order.file_status = False
+    order.save()
+
+
+def get_order(order_number):
+    return Order.objects.get(order_number=order_number)

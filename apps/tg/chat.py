@@ -9,7 +9,7 @@ import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info
 
 from apps.tg.models import TelegramUser, PrintColor, PrintSize
-from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, get_order
+from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order
 from apps.orders.models import PrintBindingTypes
 
 User = get_user_model()
@@ -21,19 +21,18 @@ logger = logging.getLogger(__name__)
 
 amount_of_page = False
 sending_document = False
-
-
+order_number = ""
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
-    tg_user = TelegramUser.objects.get(tg_pk=call.message.chat.id)
-    client, order = get_or_create_order(call.message)
+    global order_number
+    order = get_order(order_number)
     bindings = PrintBindingTypes.objects.all()
-
     if call.data == "WHITE" or call.data == "COLOURFUL":
         # bot.answer_callback_query(call.id, "Keyingi bosqichga o'tyapsiz!", show_alert=True)
         printColor = PrintColor[call.data]
+        order_number = order.order_number
         order.printColor = printColor
         order.save()
         bot.delete_message(call.message.chat.id, call.message.id)
@@ -69,9 +68,10 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
     elif call.data == "order_product":
         global sending_document
-        global object_need_file
+
         sending_document = True
-        object_need_file = order
+        order.file_status = True
+        order.save()
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
                        caption="Hujjatni yuboring")
@@ -101,15 +101,17 @@ CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "vide
 @bot.message_handler()
 def get_sms(message):
     user, tguser = get_or_create_user(message)
-    client, order = get_or_create_order(message)
     attr_value = getattr(user, "phone", False)
     keyboard = types.ReplyKeyboardRemove()
     global amount_of_page
+    global order_number
     if attr_value is False:
         bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
     else:
         text = message.text
         if text == "Buyurtma berish 🛒":
+            client, order = get_or_create_order(message)
+            order_number = order.order_number
             bot.send_message(message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
         elif text == "Buyurtmalar 📦":
             bot.send_message(message.chat.id, text)
@@ -119,6 +121,7 @@ def get_sms(message):
             bot.send_message(message.chat.id, text)
         elif amount_of_page:
             if text.isnumeric():
+                order = get_order(order_number)
                 amount_of_page = False
                 order.page_number = int(text)
                 order.created_at = datetime.now()
@@ -176,8 +179,7 @@ def get_document(message):
         local_file.write(downloaded_file)
 
     # Now, you can save the file path to your Django model
-    object_need_file.file = file_path
-    object_need_file.save()
+    save_order_file(message, file_path, order_number)
 
     bot.send_message(message.chat.id, "Xujjat qabul qilindi")
 
