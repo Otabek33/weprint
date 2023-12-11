@@ -103,6 +103,13 @@ def payment_type():
     return markup
 
 
+def location_share():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    button_location = types.KeyboardButton(text='Manzil', request_location=True)
+    markup.row(button_location)
+    return markup
+
+
 def themes():
     objects = Client.objects.all()
     markup = InlineKeyboardMarkup()

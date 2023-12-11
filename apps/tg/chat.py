@@ -7,7 +7,7 @@ from telebot import types
 
 import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request, \
-    payment_type
+    payment_type, location_share
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 
 amount_of_page = False
 sending_document = False
+sending_location = False
 order_number = ""
 MAX_FILE_SIZE_MB = 50
 GROUP_CHAT_ID = 4089429437
@@ -32,6 +33,7 @@ GROUP_CHAT_ID = 4089429437
 def callback_query(call):
     global order_number
     global sending_document
+    global sending_location
     order = get_order(order_number)
     bindings = PrintBindingTypes.objects.all()
     if call.data == "WHITE" or call.data == "COLOURFUL":
@@ -65,11 +67,6 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         markup = main_menu()
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
-    # elif call.data == "order_save":
-    #     bot.answer_callback_query(call.id, "Buyurtma muvofaqiyatli saqlandi", show_alert=True)
-    #     bot.delete_message(call.message.chat.id, call.message.id)
-    #     markup = main_menu()
-    #     bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
     elif call.data == "order_product":
 
         sending_document = True
@@ -80,19 +77,18 @@ def callback_query(call):
                        caption="Hujjatni yuboring")
     elif call.data == 'location_request':
         bot.delete_message(call.message.chat.id, call.message.id)
-        location = location_request()
-        bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location)
+        bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location_request())
 
     elif call.data == 'Self_Delivery':
         update_delivery(order, DeliveryType.Self_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
-        payment = payment_type()
-        bot.send_message(call.message.chat.id, "To'lov turini tanlang", reply_markup=payment)
+        bot.send_message(call.message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
 
     elif call.data == 'Courier_Delivery':
         update_delivery(order, DeliveryType.Courier_Delivery)
+        sending_location = True
         bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_message(call.message.chat.id, "Courier_Delivery")
+        bot.send_message(call.message.chat.id, "Manzilingizni yuboring", reply_markup=location_share())
     elif call.data == 'CASH':
         sending_document = True
         order.file_status = True
@@ -186,6 +182,11 @@ def get_sms(message):
                 bot.send_message(message.chat.id, 'Iltimos sahifalar miqdorini yuboring')
         elif sending_document:
             bot.send_message(message.chat.id, 'Iltimos hujjat yuboring')
+        elif sending_location:
+            response_text = text
+            bot.send_message(message.chat.id, response_text)
+
+
         else:
             markup = main_menu()
             bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
@@ -264,6 +265,19 @@ def get_document(message):
         else:
             bot.send_message(message.chat.id, "Yuborilayotgan hujjat pdf yoki word ko'rinishida bo'lishi kerak")
             # Save the file content to a local file
+
+
+@bot.message_handler(content_types=['location'])
+def get_location(message):
+    # Extract latitude and longitude from the message
+    latitude = message.location.latitude
+    longitude = message.location.longitude
+
+    # Your logic to handle the location data
+    response_text = f'Thank you for sharing your location!\nLatitude: {latitude}\nLongitude: {longitude}'
+
+    # Sending a response to the user
+    bot.reply_to(message, response_text)
 
 
 def polToWebhook(request):
