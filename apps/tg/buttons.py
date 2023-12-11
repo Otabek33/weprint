@@ -61,8 +61,8 @@ def order_info():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(InlineKeyboardButton(f"Bekor qilish ❌", callback_data="cancel_order"),
-               InlineKeyboardButton(f"Davom etirish", callback_data="location_request"))
-    markup.add(InlineKeyboardButton(f"Saqlab qo'yish ➕", callback_data="order_save"))
+               InlineKeyboardButton(f"Davom etirish ⏭", callback_data="location_request"))
+    # markup.add(InlineKeyboardButton(f"Saqlab qo'yish ➕", callback_data="order_save"))
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromOrderInfo"))
     return markup
 

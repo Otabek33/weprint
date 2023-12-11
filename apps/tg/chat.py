@@ -9,7 +9,7 @@ import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request, \
     payment_type
 
-from apps.tg.models import TelegramUser, PrintColor, PrintSize, PaymentType, DeliveryType
+from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
     update_delivery
 from apps.orders.models import PrintBindingTypes
@@ -65,11 +65,11 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         markup = main_menu()
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
-    elif call.data == "order_save":
-        bot.answer_callback_query(call.id, "Buyurtma muvofaqiyatli saqlandi", show_alert=True)
-        bot.delete_message(call.message.chat.id, call.message.id)
-        markup = main_menu()
-        bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
+    # elif call.data == "order_save":
+    #     bot.answer_callback_query(call.id, "Buyurtma muvofaqiyatli saqlandi", show_alert=True)
+    #     bot.delete_message(call.message.chat.id, call.message.id)
+    #     markup = main_menu()
+    #     bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
     elif call.data == "order_product":
 
         sending_document = True
@@ -109,6 +109,7 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi o'lchamda chop etmoqchisiz", reply_markup=order_size())
     elif call.data == "backFromLocationChoose":
+        bot.delete_message(call.message.chat.id, call.message.id)
         order = get_order(order_number)
         amount_of_page = False
         order.created_at = datetime.now()
@@ -232,19 +233,30 @@ def get_document(message):
             # Now, you can save the file path to your Django model
             order = save_order_file(message, file_path, order_number)
 
-            bot.send_message(message.chat.id, "Xujjat qabul qilindi")
-            mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
-                   f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
-                   f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+            mess = f'<b>Sizning buyurtmangiz muvoffaqiyatli yaratildi.\nTez orada xodimimiz siz bilan bog\'lanadi!!!</b>\n\n\n' \
+                   f'<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n' \
+                   f'<b>Varaqlar soni  📄 : </b> {order.page_number}\n\n' \
+                   f'<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n' \
+                   f'<b>Rangi 📕 :</b> {order.get_printColor_display()}\n\n' \
+                   f'<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n' \
+                   f'<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
                    f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
                    f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
-            admin_message = f'<b>Yangi buyurtma </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Buyurtma beruvchi 🔍 :</b> {order.created_by}\n\n' \
-                            f'<b>Telefon 🔍 :</b> {order.created_by.phone}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
-                            f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
-                            f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
-                            f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
-                            f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
-            bot.send_document(message.chat.id, document=open(file_path, 'rb'), caption=mess)
+            admin_message = f'<b>Yangi buyurtma </b>' \
+                            f'\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}' \
+                            f'\n\n<b>Buyurtma beruvchi 🔍 :</b> {order.created_by}' \
+                            f'\n\n<b>Telefon 🔍 :</b> {order.created_by.phone}' \
+                            f'\n\n<b>To\'lov turi 🔍 :</b> {order.get_cash_type_display()}' \
+                            f'\n\n<b>Yetqazib berish turi 🔍 :</b> {order.get_delivery_type_display()}' \
+                            f'\n\n<b>==============</b>' \
+                            f'\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+                            f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}' \
+                            f'\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+                            f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()}' \
+                            f'\n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m' \
+                            f'\n\n<b>Status : </b> {order.get_order_status_display()}' \
+                            f'\n\n \n\nYaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
+            bot.send_message(message.chat.id, mess)
             bot.send_document(chat_id=-4089429437, document=open(file_path, 'rb'), caption=admin_message)
             os.remove(file_path)
 

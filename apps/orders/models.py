@@ -8,8 +8,8 @@ from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 
 # Create your models here.
 class OrderStatus(models.IntegerChoices):
-    CREATION = 1, _("Yangi")
-    ORDERD = 2, _("Buyurtma berilgan")
+    CREATION = 1, _("Yaratilish")
+    ORDERED = 2, _("Yangi Buyurtma")
     ACTIVE = 3, _("Faol")
     CANCELLED = 4, _("Bekor qilingan")
     FINISH = 5, _("Yetqazib berilgan")

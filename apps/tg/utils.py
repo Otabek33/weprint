@@ -62,6 +62,7 @@ def save_order_file(message, file_oath, order_number):
     order = Order.objects.get(tg_pk=message.chat.id, order_number=order_number)
     order.file = file_oath
     order.file_status = False
+    order.order_status = OrderStatus.ORDERED
     order.save()
     return order
 
