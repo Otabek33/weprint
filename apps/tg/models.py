@@ -29,6 +29,11 @@ class DeliveryType(models.IntegerChoices):
     Courier_Delivery = 2, _('Kuryerlik xizmati')
 
 
+class PaymentType(models.IntegerChoices):
+    CASH = 1, _('Naqt')
+    CARD = 2, _('Karta orqali')
+
+
 class Theme(models.Model):
     content = models.CharField(max_length=500)
 

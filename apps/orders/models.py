@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import uuid
-from apps.tg.models import PrintColor, PrintSize
+from apps.tg.models import PrintColor, PrintSize, PaymentType
 
 
 # Create your models here.
@@ -57,6 +57,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     tg_pk = models.CharField(max_length=150, default=0)
     file_status = models.BooleanField(default=False)
+    cash_type = models.IntegerField(
+        choices=PaymentType.choices,
+        default=PaymentType.CASH,
+    )
 
     def __str__(self):
         return str(self.order_number)

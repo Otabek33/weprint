@@ -3,7 +3,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from apps.clients.models import Client
 from telebot import types
 
-from apps.tg.models import PrintColor, PrintSize, DeliveryType
+from apps.tg.models import PrintColor, PrintSize, DeliveryType, PaymentType
 from apps.orders.models import PrintBindingTypes
 
 
@@ -82,6 +82,24 @@ def location_request():
             delivery_type = []
 
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromLocationChoose"))
+    return markup
+
+
+def payment_type():
+    markup = InlineKeyboardMarkup()
+    markup.row_width = 2
+    # for printColor in PrintColor:
+    counter = 0
+    payment_type = []
+    for paymentType in PaymentType:
+        counter += 1
+        payment_type.append(InlineKeyboardButton(f"{str(paymentType.label)}", callback_data=str(paymentType.name)))
+        if counter == 2:
+            markup.add(payment_type[0], payment_type[1])
+            counter = 0
+            payment_type = []
+
+    markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromPaymentChoose"))
     return markup
 
 

@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 from telebot import types
 
 import logging
-from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request
+from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request, \
+    payment_type
 
 from apps.tg.models import TelegramUser, PrintColor, PrintSize
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order
@@ -82,12 +83,40 @@ def callback_query(call):
         location = location_request()
         bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location)
 
+    elif call.data == 'Self_Delivery':
+        bot.delete_message(call.message.chat.id, call.message.id)
+        payment = payment_type()
+        bot.send_message(call.message.chat.id, "To'lov turini tanlang", reply_markup=payment)
+
+    elif call.data == 'Courier_Delivery':
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_message(call.message.chat.id, "Courier_Delivery")
+
     elif call.data == "backFromSize":
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
     elif call.data == "backFromBinding":
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi o'lchamda chop etmoqchisiz", reply_markup=order_size())
+    elif call.data == "backFromLocationChoose":
+        order = get_order(order_number)
+        amount_of_page = False
+        order.created_at = datetime.now()
+        order.save()
+        generation_price(order)
+        mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+               f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+               f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+               f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
+               f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
+
+        bot.send_message(call.message.chat.id, mess, reply_markup=order_info())
+    elif call.data == "backFromPaymentChoose":
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location_request())
+    else:
+        markup = main_menu()
+        bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
 
 
 @bot.message_handler(commands=["start", "stop"])
