@@ -56,6 +56,7 @@ class Order(models.Model):
                                    blank=True, null=True, related_name="order_updated_by")
     created_at = models.DateTimeField(default=timezone.now)
     tg_pk = models.CharField(max_length=150, default=0)
+    file_status = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.order_number)

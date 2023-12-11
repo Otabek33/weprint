@@ -24,6 +24,11 @@ class PrintBindingTypes(models.IntegerChoices):
     NO_BINDING = 6, _("Переплетсиз")
 
 
+class DeliveryType(models.IntegerChoices):
+    Self_Delivery = 1, _('O\'zim olib ketaman')
+    Courier_Delivery = 2, _('Kuryerlik xizmati')
+
+
 class Theme(models.Model):
     content = models.CharField(max_length=500)
 

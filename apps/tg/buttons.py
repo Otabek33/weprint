@@ -3,7 +3,7 @@ from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from apps.clients.models import Client
 from telebot import types
 
-from apps.tg.models import PrintColor, PrintSize
+from apps.tg.models import PrintColor, PrintSize, DeliveryType
 from apps.orders.models import PrintBindingTypes
 
 
@@ -70,9 +70,19 @@ def order_info():
 def location_request():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
-    markup.add(InlineKeyboardButton(f"O'zim olib ketaman", callback_data="self_take"),
-               InlineKeyboardButton(f"Kuryerlik hizmati", callback_data="courier_service"))
+    # for printColor in PrintColor:
+    counter = 0
+    delivery_type = []
+    for deliveryType in DeliveryType:
+        counter += 1
+        delivery_type.append(InlineKeyboardButton(f"{str(deliveryType.label)}", callback_data=str(deliveryType.name)))
+        if counter == 2:
+            markup.add(delivery_type[0], delivery_type[1])
+            counter = 0
+            delivery_type = []
+
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromLocationChoose"))
+    return markup
 
 
 def themes():
