@@ -96,7 +96,7 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Courier_Delivery")
     elif call.data == 'Naqt':
         bot.delete_message(call.message.chat.id, call.message.id)
-        global sending_document
+
 
         sending_document = True
         order.file_status = True
