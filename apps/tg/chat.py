@@ -9,8 +9,9 @@ import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request, \
     payment_type
 
-from apps.tg.models import TelegramUser, PrintColor, PrintSize
-from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order
+from apps.tg.models import TelegramUser, PrintColor, PrintSize, PaymentType, DeliveryType
+from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
+    update_delivery
 from apps.orders.models import PrintBindingTypes
 
 User = get_user_model()
@@ -30,6 +31,7 @@ GROUP_CHAT_ID = 4089429437
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
     global order_number
+    global sending_document
     order = get_order(order_number)
     bindings = PrintBindingTypes.objects.all()
     if call.data == "WHITE" or call.data == "COLOURFUL":
@@ -70,7 +72,6 @@ def callback_query(call):
         markup = main_menu()
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
     elif call.data == "order_product":
-        global sending_document
 
         sending_document = True
         order.file_status = True
@@ -84,13 +85,26 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location)
 
     elif call.data == 'Self_Delivery':
+        update_delivery(order, DeliveryType.Self_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
         payment = payment_type()
         bot.send_message(call.message.chat.id, "To'lov turini tanlang", reply_markup=payment)
 
     elif call.data == 'Courier_Delivery':
+        update_delivery(order, DeliveryType.Courier_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Courier_Delivery")
+    elif call.data == 'Naqt':
+        bot.delete_message(call.message.chat.id, call.message.id)
+        global sending_document
+
+        sending_document = True
+        order.file_status = True
+        order.cash_type = PaymentType.CASH
+        order.save()
+        bot.delete_message(call.message.chat.id, call.message.id)
+        bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
+                       caption="Hujjatni yuboring")
 
     elif call.data == "backFromSize":
         bot.delete_message(call.message.chat.id, call.message.id)

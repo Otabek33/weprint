@@ -68,3 +68,8 @@ def save_order_file(message, file_oath, order_number):
 
 def get_order(order_number):
     return Order.objects.get(order_number=order_number)
+
+
+def update_delivery(order, delivery_type):
+    order.delivery_type = delivery_type
+    order.save()
