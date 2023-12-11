@@ -57,7 +57,6 @@ def callback_query(call):
         order.printBindingType = PrintBindingTypes.objects.filter(name=call.data).first()
         order.save()
         global amount_of_page
-
         amount_of_page = True
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Sahifalar sonini kiriting")
@@ -94,10 +93,7 @@ def callback_query(call):
         update_delivery(order, DeliveryType.Courier_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Courier_Delivery")
-    elif call.data == 'Naqt':
-        bot.delete_message(call.message.chat.id, call.message.id)
-
-
+    elif call.data == 'CASH':
         sending_document = True
         order.file_status = True
         order.cash_type = PaymentType.CASH
