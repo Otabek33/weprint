@@ -27,7 +27,7 @@ class PrintBindingTypes(models.Model):
         verbose_name_plural = "Biding types"
 
 
-class Location(models.Model):
+class ClientAddress(models.Model):
     name = models.CharField(max_length=255, default="some place")
     latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
@@ -74,7 +74,7 @@ class Order(models.Model):
         choices=DeliveryType.choices,
         default=DeliveryType.Self_Delivery,
     )
-    location = models.OneToOneField(Location, on_delete=models.CASCADE, default=None)
+    location = models.OneToOneField(ClientAddress, on_delete=models.CASCADE, default=None)
 
     def __str__(self):
         return str(self.order_number)
