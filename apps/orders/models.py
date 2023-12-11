@@ -55,8 +55,7 @@ class Order(models.Model):
     updated_by = models.ForeignKey("clients.Client", verbose_name=_("Updated by"), on_delete=models.SET_NULL,
                                    blank=True, null=True, related_name="order_updated_by")
     created_at = models.DateTimeField(default=timezone.now)
-    tg_pk = models.CharField(max_length=150,default=0)
-    file_status = models.BooleanField(default=False)
+    tg_pk = models.CharField(max_length=150, default=0)
 
     def __str__(self):
         return str(self.order_number)

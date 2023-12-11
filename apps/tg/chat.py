@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from telebot import types
 
 import logging
-from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info
+from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request
 
 from apps.tg.models import TelegramUser, PrintColor, PrintSize
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order
@@ -77,6 +77,11 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
                        caption="Hujjatni yuboring")
+    elif call.data == 'location_request':
+        bot.delete_message(call.message.chat.id, call.message.id)
+        location = location_request()
+        bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location)
+
     elif call.data == "backFromSize":
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
@@ -194,7 +199,17 @@ def get_document(message):
                    f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
                    f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
                    f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
+            admin_message = f'<b>Yangi buyurtma </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Buyurtma beruvchi 🔍 :</b> {order.created_by}\n\n' \
+                            f'<b>Telefon 🔍 :</b> {order.created_by.phone}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+                            f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+                            f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+                            f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
+                            f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
             bot.send_document(message.chat.id, document=open(file_path, 'rb'), caption=mess)
+            bot.send_document(chat_id=-4089429437, document=open(file_path, 'rb'), caption=admin_message)
+            os.remove(file_path)
+
+
         else:
             bot.send_message(message.chat.id, "Yuborilayotgan hujjat pdf yoki word ko'rinishida bo'lishi kerak")
             # Save the file content to a local file

@@ -55,14 +55,24 @@ def order_binding():
     return markup
 
 
+# InlineKeyboardButton(f"Buyurtma berish ✔", callback_data="order_product"))
+
 def order_info():
     markup = InlineKeyboardMarkup()
     markup.row_width = 2
     markup.add(InlineKeyboardButton(f"Bekor qilish ❌", callback_data="cancel_order"),
-               InlineKeyboardButton(f"Buyurtma berish ✔", callback_data="order_product"))
+               InlineKeyboardButton(f"Davom etirish", callback_data="location_request"))
     markup.add(InlineKeyboardButton(f"Saqlab qo'yish ➕", callback_data="order_save"))
     markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromOrderInfo"))
     return markup
+
+
+def location_request():
+    markup = InlineKeyboardMarkup()
+    markup.row_width = 2
+    markup.add(InlineKeyboardButton(f"O'zim olib ketaman", callback_data="self_take"),
+               InlineKeyboardButton(f"Kuryerlik hizmati", callback_data="courier_service"))
+    markup.add(InlineKeyboardButton(f"🔙 Ortga", callback_data="backFromLocationChoose"))
 
 
 def themes():
