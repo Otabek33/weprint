@@ -104,7 +104,7 @@ def payment_type():
 
 
 def location_share():
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     button_location = types.KeyboardButton(text='Manzil', request_location=True)
     markup.row(button_location)
     return markup

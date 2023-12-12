@@ -187,8 +187,8 @@ def get_sms(message):
         elif sending_location:
             order = get_order(order_number)
             # Extract latitude and longitude from the message
-            address, created = ClientAddress.objects.get_or_create(name=text)
-            order.location = address
+            location, created = ClientAddress.objects.get_or_create(name=text)
+            order.location = location
             order.save()
             bot.delete_message(message.chat.id, message.id)
             bot.send_message(message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
