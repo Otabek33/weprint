@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 
 from apps.clients.models import Client
-from apps.orders.models import Order, OrderStatus
+from apps.orders.models import Order, OrderStatus, ClientAddress
 from apps.products.models import Product
 from apps.tg.choices import RoleTypeChoices
 from apps.tg.models import TelegramUser
@@ -26,9 +26,10 @@ def get_or_create_user(message):
 
 
 def get_or_create_order(message):
+    location = ClientAddress.objects.create(name="A place", longitude=1, latitude=1)
     client = Client.objects.get(userId=message.chat.id)
     order, created = Order.objects.get_or_create(tg_pk=message.chat.id, created_by=client,
-                                                 order_status=OrderStatus.CREATION, page_number=0)
+                                                 order_status=OrderStatus.CREATION, page_number=0, location=location)
     if created:
         order.created_by = client
         order.order_number = generate_order_number()

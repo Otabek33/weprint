@@ -12,7 +12,7 @@ from apps.tg.buttons import main_menu, order_color, order_size, order_binding, o
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
     update_delivery
-from apps.orders.models import PrintBindingTypes
+from apps.orders.models import PrintBindingTypes, ClientAddress
 
 User = get_user_model()
 
@@ -146,8 +146,10 @@ def get_sms(message):
     user, tguser = get_or_create_user(message)
     attr_value = getattr(user, "phone", False)
     keyboard = types.ReplyKeyboardRemove()
+
     global amount_of_page
     global order_number
+
     if attr_value is False:
         bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
     else:
@@ -183,8 +185,13 @@ def get_sms(message):
         elif sending_document:
             bot.send_message(message.chat.id, 'Iltimos hujjat yuboring')
         elif sending_location:
-            response_text = text
-            bot.send_message(message.chat.id, response_text)
+            order = get_order(order_number)
+            # Extract latitude and longitude from the message
+            address, created = ClientAddress.objects.get_or_create(name=text)
+            order.location = address
+            order.save()
+            bot.delete_message(message.chat.id, message.id)
+            bot.send_message(message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
 
 
         else:
@@ -245,10 +252,14 @@ def get_document(message):
                    f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
             admin_message = f'<b>Yangi buyurtma </b>' \
                             f'\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}' \
-                            f'\n\n<b>Buyurtma beruvchi 🔍 :</b> {order.created_by}' \
-                            f'\n\n<b>Telefon 🔍 :</b> {order.created_by.phone}' \
-                            f'\n\n<b>To\'lov turi 🔍 :</b> {order.get_cash_type_display()}' \
-                            f'\n\n<b>Yetqazib berish turi 🔍 :</b> {order.get_delivery_type_display()}' \
+                            f'\n\n<b>Buyurtma beruvchi  :</b> {order.created_by}' \
+                            f'\n\n<b>Telefon 📞 :</b> {order.created_by.phone}' \
+                            f'\n\n<b>To\'lov turi 💳 :</b> {order.get_cash_type_display()}' \
+                            f'\n\n<b>Yetqazib berish turi 🚚 :</b> {order.get_delivery_type_display()}' \
+                            f'\n\n<b>Adres 🏠 :</b> ' \
+                            f'\n<b>manzil nomi =></b>{order.location.name}' \
+                            f'\n<b>latitude =></b>{order.location.latitude}' \
+                            f'\n<b>longitude =></b>{order.location.longitude} ' \
                             f'\n\n<b>==============</b>' \
                             f'\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
                             f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}' \
@@ -269,15 +280,16 @@ def get_document(message):
 
 @bot.message_handler(content_types=['location'])
 def get_location(message):
+    order = get_order(order_number)
     # Extract latitude and longitude from the message
-    latitude = message.location.latitude
-    longitude = message.location.longitude
+    location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
+                                                            longitude=message.location.longitude)
+    order.location = location
+    order.save()
 
     # Your logic to handle the location data
-    response_text = f'Thank you for sharing your location!\nLatitude: {latitude}\nLongitude: {longitude}'
-
-    # Sending a response to the user
-    bot.reply_to(message, response_text)
+    bot.delete_message(message.chat.id, message.id)
+    bot.send_message(message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
 
 
 def polToWebhook(request):
