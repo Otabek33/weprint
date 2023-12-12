@@ -1,3 +1,4 @@
+import asyncio
 import json
 from datetime import datetime
 
@@ -8,25 +9,23 @@ from telebot import types
 import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request, \
     payment_type, location_share
+from apps.tg.consta import BOT_TOKEN, PAYMENTS_PROVIDER_TOKEN, TIME_MACHINE_IMAGE_URL, MAX_FILE_SIZE_MB, GROUP_CHAT_ID
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
     update_delivery
 from apps.orders.models import PrintBindingTypes, ClientAddress
+from apps.tg.message import MESSAGES
 
 User = get_user_model()
 
-TOKEN = "6788108652:AAE89YGQ06R2aqds3RP5mhymRJqBE9Djblg"
-
-bot = telebot.TeleBot(TOKEN, parse_mode="html")
+bot = telebot.TeleBot(BOT_TOKEN, parse_mode="html")
 logger = logging.getLogger(__name__)
 
 amount_of_page = False
 sending_document = False
 sending_location = False
 order_number = ""
-MAX_FILE_SIZE_MB = 50
-GROUP_CHAT_ID = 4089429437
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -97,6 +96,15 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
                        caption="Hujjatni yuboring")
+    elif call.data == 'CARD':
+        if PAYMENTS_PROVIDER_TOKEN.split(':')[1] == 'TEST':
+            bot.send_message(call.message.chat.id, MESSAGES['pre_buy_demo_alert'])
+
+        order.cash_type = PaymentType.CARD
+        order.save()
+        # Setup prices
+        PRICE = types.LabeledPrice(label='Настоящая Машина Времени', amount=4200000)
+        bot.delete_message(call.message.chat.id, call.message.id)
 
     elif call.data == "backFromSize":
         bot.delete_message(call.message.chat.id, call.message.id)
@@ -127,7 +135,7 @@ def callback_query(call):
 
 
 @bot.message_handler(commands=["start", "stop"])
-def start(message):
+async def start(message):
     mess = f'Ассалому алейкум , <b>{message.from_user.first_name}</b>!\nМен - <b>GimsShopBot</b>,\nТизимдан фойдаланишдан олдин Телефон рақамингизни юборинг'
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(types.KeyboardButton(text="Телефон 📱", request_contact=True))
@@ -271,7 +279,7 @@ def get_document(message):
                             f'\n\n<b>Status : </b> {order.get_order_status_display()}' \
                             f'\n\n \n\nYaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
             bot.send_message(message.chat.id, mess, reply_markup=main_menu())
-            bot.send_document(chat_id=-4089429437, document=open(file_path, 'rb'), caption=admin_message)
+            bot.send_document(chat_id=GROUP_CHAT_ID, document=open(file_path, 'rb'), caption=admin_message)
             os.remove(file_path)
 
 
