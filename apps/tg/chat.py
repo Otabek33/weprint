@@ -213,7 +213,9 @@ def get_contact(message):
 def get_document(message):
     import os
     from django.conf import settings
+    global sending_document
 
+    sending_document = False
     # Ensure the "uploads" directory within "media" exists
     uploads_directory = os.path.join(settings.MEDIA_ROOT, "uploads")
     if not os.path.exists(uploads_directory):
@@ -252,7 +254,7 @@ def get_document(message):
                    f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
             admin_message = f'<b>Yangi buyurtma </b>' \
                             f'\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}' \
-                            f'\n\n<b>Buyurtma beruvchi  :</b> {order.created_by}' \
+                            f'\n\n<b>Buyurtma beruvchi  👤:</b> {order.created_by}' \
                             f'\n\n<b>Telefon 📞 :</b> {order.created_by.phone}' \
                             f'\n\n<b>To\'lov turi 💳 :</b> {order.get_cash_type_display()}' \
                             f'\n\n<b>Yetqazib berish turi 🚚 :</b> {order.get_delivery_type_display()}' \
@@ -268,7 +270,7 @@ def get_document(message):
                             f'\n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m' \
                             f'\n\n<b>Status : </b> {order.get_order_status_display()}' \
                             f'\n\n \n\nYaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
-            bot.send_message(message.chat.id, mess)
+            bot.send_message(message.chat.id, mess, reply_markup=main_menu())
             bot.send_document(chat_id=-4089429437, document=open(file_path, 'rb'), caption=admin_message)
             os.remove(file_path)
 
@@ -289,6 +291,7 @@ def get_location(message):
 
     # Your logic to handle the location data
     bot.delete_message(message.chat.id, message.id)
+
     bot.send_message(message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
 
 
