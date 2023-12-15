@@ -8,6 +8,6 @@ urlpatterns = [
     path("", client_list, name="client_list"),
     path("add/", client_add, name="add"),
     path("update/<uuid:pk>", client_update, name="update"),
-    path("delete/", client_delete, name="delete"),
+    path("delete/<uuid:pk>", client_delete, name="delete"),
 
 ]

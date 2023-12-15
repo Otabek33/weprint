@@ -50,7 +50,8 @@
                                 <td>{{ client.phone }}</td>
                                 <td class="actions text-center">
                                     <a href="{% url 'clients:update' client.pk %}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="{% url 'clients:delete' %}" class="delete-row"><i class="far fa-trash-alt"></i></a>
+                                    <a href="{% url 'clients:delete'  client.pk %}" class="delete-row"><i
+                                            class="far fa-trash-alt"></i></a>
                                 </td>
 
                             </tr>

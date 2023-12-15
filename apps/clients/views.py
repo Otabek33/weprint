@@ -55,21 +55,8 @@ client_update = ClientUpdateView.as_view()
 
 class ClientDeleteView(DeleteView):
     model = Client
-
-    def post(self, request, *args, **kwargs):
-        if is_ajax(request):
-            pk = request.POST.get("id")
-            client = Client.objects.get(uuid=pk)
-            client.deleted_status = True
-            client.updated_at = datetime.now(tz=timezone.utc)
-            client.updated_by = self.request.user
-            client.save()
-            # ProjectSerializer(client, many=False).data
-
-            return JsonResponse(
-                {"success": True, "data": None}
-            )
-        return JsonResponse({"success": False, "data": None})
+    success_url = "/"
+    template_name = "clients/client_delete.html"
 
 
 client_delete = ClientDeleteView.as_view()
