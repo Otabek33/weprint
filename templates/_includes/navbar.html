@@ -1,136 +1,136 @@
 {% load static %}
 <!-- start: header -->
-    <header class="header header-nav-menu header-nav-links">
-        <div class="logo-container">
-            <a href="../" class="logo">
-                <img src="{% static 'img/device.png' %}" class="logo-image" width="90" height="24"
-                     alt="Porto Admin"/><img src="img/logo-default.png" class="logo-image-mobile" width="100"
-                                             height="41" alt="Porto Admin"/>
-            </a>
-            <button class="btn header-btn-collapse-nav d-lg-none" data-bs-toggle="collapse"
-                    data-bs-target=".header-nav">
-                <i class="fas fa-bars"></i>
-            </button>
+<header class="header header-nav-menu header-nav-links">
+    <div class="logo-container">
+        <a href="../" class="logo">
+            <img src="{% static 'img/device.png' %}" class="logo-image" width="90" height="24"
+                 alt="Porto Admin"/><img src="img/logo-default.png" class="logo-image-mobile" width="100"
+                                         height="41" alt="Porto Admin"/>
+        </a>
+        <button class="btn header-btn-collapse-nav d-lg-none" data-bs-toggle="collapse"
+                data-bs-target=".header-nav">
+            <i class="fas fa-bars"></i>
+        </button>
 
 
+    </div>
+
+    <!-- start: search & user box -->
+    <div class="header-right">
+
+        <a class="btn search-toggle d-none d-md-inline-block d-xl-none" data-toggle-class="active"
+           data-target=".search"><i class="bx bx-search"></i></a>
+        <span class="separator"></span>
+        <a class="dropdown-language nav-link" href="#" role="button" id="dropdownLanguage" data-bs-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+            <img src="{% static 'img/blank.gif' %}" class="flag flag-us" alt="English"/> EN
+            <i class="fas fa-chevron-down"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownLanguage">
+            <a class="dropdown-item" href="#"><img src="{% static 'img/blank.gif' %}" class="flag flag-us"
+                                                   alt="English"/> English</a>
+            <a class="dropdown-item" href="#"><img src="{% static 'img/blank.gif' %}" class="flag flag-es"
+                                                   alt="English"/> Español</a>
+            <a class="dropdown-item" href="#"><img src="{% static 'img/blank.gif' %}" class="flag flag-fr"
+                                                   alt="English"/> Française</a>
         </div>
 
-        <!-- start: search & user box -->
-        <div class="header-right">
+        <span class="separator"></span>
 
-            <a class="btn search-toggle d-none d-md-inline-block d-xl-none" data-toggle-class="active"
-               data-target=".search"><i class="bx bx-search"></i></a>
-            <span class="separator"></span>
-            <a class="dropdown-language nav-link" href="#" role="button" id="dropdownLanguage" data-bs-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                <img src="{% static 'img/blank.gif' %}" class="flag flag-us" alt="English"/> EN
-                <i class="fas fa-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownLanguage">
-                <a class="dropdown-item" href="#"><img src="{% static 'img/blank.gif' %}" class="flag flag-us"
-                                                       alt="English"/> English</a>
-                <a class="dropdown-item" href="#"><img src="{% static 'img/blank.gif' %}" class="flag flag-es"
-                                                       alt="English"/> Español</a>
-                <a class="dropdown-item" href="#"><img src="{% static 'img/blank.gif' %}" class="flag flag-fr"
-                                                       alt="English"/> Française</a>
-            </div>
+        <ul class="notifications">
 
-            <span class="separator"></span>
-
-            <ul class="notifications">
-
-                <li>
-                    <a href="#" class="dropdown-toggle notification-icon" data-bs-toggle="dropdown">
-                        <i class="bx bx-envelope"></i>
-                        <span class="badge">4</span>
-                    </a>
-
-                    <div class="dropdown-menu notification-menu">
-                        <div class="notification-title">
-                            <span class="float-end badge badge-default">230</span>
-                            Messages
-                        </div>
-
-                        <div class="content">
-                            <ul>
-                                <li>
-                                    <a href="#" class="clearfix">
-
-                                        <span class="image image-as-text">JD</span>
-
-                                        <span class="title">Joseph Doe</span>
-                                        <span class="message">Lorem ipsum dolor sit.</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-
-                                        <span class="image image-as-text bg-secondary">JJ</span>
-
-                                        <span class="title">Joseph Junior</span>
-                                        <span class="message truncate">Truncated message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam, nec venenatis risus. Vestibulum blandit faucibus est et malesuada. Sed interdum cursus dui nec venenatis. Pellentesque non nisi lobortis, rutrum eros ut, convallis nisi. Sed tellus turpis, dignissim sit amet tristique quis, pretium id est. Sed aliquam diam diam, sit amet faucibus tellus ultricies eu. Aliquam lacinia nibh a metus bibendum, eu commodo eros commodo. Sed commodo molestie elit, a molestie lacus porttitor id. Donec facilisis varius sapien, ac fringilla velit porttitor et. Nam tincidunt gravida dui, sed pharetra odio pharetra nec. Duis consectetur venenatis pharetra. Vestibulum egestas nisi quis elementum elementum.</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-
-                                        <span class="image image-as-text bg-tertiary">MD</span>
-
-                                        <span class="title">Monica Doe</span>
-                                        <span class="message">Lorem ipsum dolor sit.</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-
-                                        <span class="image image-as-text bg-quaternary">RD</span>
-
-                                        <span class="title">Robert Doe</span>
-                                        <span class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam.</span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                            <hr/>
-
-                            <div class="text-end">
-                                <a href="#" class="view-more">View All</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-            </ul>
-
-            <span class="separator"></span>
-
-            <div id="userbox" class="userbox">
-                <a href="#" data-bs-toggle="dropdown">
-
-                    <span class="profile-picture profile-picture-as-text">JD</span>
-                    <div class="profile-info profile-info-no-role" data-lock-name="John Doe"
-                         data-lock-email="johndoe@okler.com">
-                        <span class="name">Hi, <strong class="font-weight-semibold">John Doe</strong></span>
-                    </div>
-
-                    <i class="fas fa-chevron-down text-color-dark"></i>
+            <li>
+                <a href="#" class="dropdown-toggle notification-icon" data-bs-toggle="dropdown">
+                    <i class="bx bx-envelope"></i>
+                    <span class="badge">4</span>
                 </a>
 
-                <div class="dropdown-menu">
-                    <ul class="list-unstyled">
-                        <li>
-                            <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="bx bx-user"></i>
-                                My Profile</a>
-                        </li>
+                <div class="dropdown-menu notification-menu">
+                    <div class="notification-title">
+                        <span class="float-end badge badge-default">230</span>
+                        Messages
+                    </div>
 
-                        <li>
-                            <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="bx bx-log-out"></i>
-                                Logout</a>
-                        </li>
-                    </ul>
+                    <div class="content">
+                        <ul>
+                            <li>
+                                <a href="#" class="clearfix">
+
+                                    <span class="image image-as-text">JD</span>
+
+                                    <span class="title">Joseph Doe</span>
+                                    <span class="message">Lorem ipsum dolor sit.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+
+                                    <span class="image image-as-text bg-secondary">JJ</span>
+
+                                    <span class="title">Joseph Junior</span>
+                                    <span class="message truncate">Truncated message. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam, nec venenatis risus. Vestibulum blandit faucibus est et malesuada. Sed interdum cursus dui nec venenatis. Pellentesque non nisi lobortis, rutrum eros ut, convallis nisi. Sed tellus turpis, dignissim sit amet tristique quis, pretium id est. Sed aliquam diam diam, sit amet faucibus tellus ultricies eu. Aliquam lacinia nibh a metus bibendum, eu commodo eros commodo. Sed commodo molestie elit, a molestie lacus porttitor id. Donec facilisis varius sapien, ac fringilla velit porttitor et. Nam tincidunt gravida dui, sed pharetra odio pharetra nec. Duis consectetur venenatis pharetra. Vestibulum egestas nisi quis elementum elementum.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+
+                                    <span class="image image-as-text bg-tertiary">MD</span>
+
+                                    <span class="title">Monica Doe</span>
+                                    <span class="message">Lorem ipsum dolor sit.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="clearfix">
+
+                                    <span class="image image-as-text bg-quaternary">RD</span>
+
+                                    <span class="title">Robert Doe</span>
+                                    <span class="message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sit amet lacinia orci. Proin vestibulum eget risus non luctus. Nunc cursus lacinia lacinia. Nulla molestie malesuada est ac tincidunt. Quisque eget convallis diam.</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <hr/>
+
+                        <div class="text-end">
+                            <a href="#" class="view-more">View All</a>
+                        </div>
+                    </div>
                 </div>
+            </li>
+
+        </ul>
+
+        <span class="separator"></span>
+
+        <div id="userbox" class="userbox">
+            <a href="#" data-bs-toggle="dropdown">
+
+                <span class="profile-picture profile-picture-as-text">JD</span>
+                <div class="profile-info profile-info-no-role" data-lock-name="John Doe"
+                     data-lock-email="johndoe@okler.com">
+                    <span class="name">Hi, <strong class="font-weight-semibold">John Doe</strong></span>
+                </div>
+
+                <i class="fas fa-chevron-down text-color-dark"></i>
+            </a>
+
+            <div class="dropdown-menu">
+                <ul class="list-unstyled">
+                    <li>
+                        <a role="menuitem" tabindex="-1" href="pages-user-profile.html"><i class="bx bx-user"></i>
+                            My Profile</a>
+                    </li>
+
+                    <li>
+                        <a role="menuitem" tabindex="-1" href="pages-signin.html"><i class="bx bx-log-out"></i>
+                            Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!-- end: search & user box -->
-    </header>
-    <!-- end: header -->
+    </div>
+    <!-- end: search & user box -->
+</header>
+<!-- end: header -->

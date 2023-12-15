@@ -36,7 +36,7 @@ client_list = ClientListView.as_view()
 class ClientUpdateView(UpdateView):
     model = Client
     form_class = ClientUpdateForm
-    template_name = "clients/client_update.html"
+    template_name = "clients/client_add.html"
 
     def form_valid(self, form):
         product = form.save(commit=False)
