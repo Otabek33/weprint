@@ -5,7 +5,17 @@
 
 
 {% block content %}
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard ></h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span>Mijozlar</span></li>
+                <li><span>Qo'shish yoki O'zgartirish</span></li>
+            </ol>
+        </div>
+    </header>
     <!-- start: page -->
+
     <form class="ecommerce-form action-buttons-fixed" action="" method="post">
     {% csrf_token %}
         <div class="row">
