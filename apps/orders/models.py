@@ -68,7 +68,7 @@ class Order(models.Model):
     file_status = models.BooleanField(default=False)
     cash_type = models.IntegerField(
         choices=PaymentType.choices,
-        default=PaymentType.CASH,
+        default=PaymentType.WAIT,
     )
     delivery_type = models.IntegerField(
         choices=DeliveryType.choices,

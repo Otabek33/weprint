@@ -32,6 +32,7 @@ class DeliveryType(models.IntegerChoices):
 class PaymentType(models.IntegerChoices):
     CASH = 1, _('Naqt')
     CARD = 2, _('Karta orqali')
+    WAIT = 3, _('To\'lanmadi')
 
 
 class Theme(models.Model):
