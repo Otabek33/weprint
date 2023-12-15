@@ -236,6 +236,9 @@ def get_document(message):
                 local_file.write(downloaded_file)
 
             # Now, you can save the file path to your Django model
+            bot.send_message(message.chat.id, "Xodimimiz tez orada siz bilan bog'lanadi", disable_notification=False
+                             )
+
             order = save_order_file(message, file_path, order_number)
 
             mess = f'<b>Sizning buyurtmangiz muvoffaqiyatli yaratildi.\nTez orada xodimimiz siz bilan bog\'lanadi!!!</b>\n\n\n' \
