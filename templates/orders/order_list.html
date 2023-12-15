@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}Mijozlar{% endblock %}
+{% block title %}Buyurtmalar{% endblock %}
 
 
 {% block content %}
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Дашборд ></h2>
+        <h2 class="font-weight-bold text-6">Dashboard ></h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>клиенты</span></li>
+                <li><span>Buyurtmalar</span></li>
             </ol>
         </div>
     </header>
@@ -22,7 +22,7 @@
                     <div class="card-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <a type="button" href="{% url 'clients:add' %}" class="btn btn-primary">Добавить</a>
+                    <a type="button" href="#" class="btn btn-primary">Qo'shmoq</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-responsive-md table-bordered mb-0">
@@ -49,8 +49,8 @@
                                 <td>{{ client.userId }}</td>
                                 <td>{{ client.phone }}</td>
                                 <td class="actions text-center">
-                                    <a href="{% url 'clients:update' client.pk %}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="{% url 'clients:delete'  client.pk %}" class="delete-row"><i
+                                    <a href="#"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#" class="delete-row"><i
                                             class="far fa-trash-alt"></i></a>
                                 </td>
 

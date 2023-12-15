@@ -1,4 +1,3 @@
-
 from django.views.generic import (ListView, CreateView)
 from apps.orders.forms import OrderCreateForm
 from apps.orders.models import Order
@@ -10,7 +9,8 @@ class OrderListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        orders = Order.objects.filter(deleted_status=False).order_by("-created_at").exclude(order_status=1)
+        orders = Order.objects.filter(deleted_status=False, created_by=self.request.user).order_by(
+            "-created_at").exclude(order_status=1)
         context["order_list"] = orders
         return context
 
