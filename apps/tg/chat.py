@@ -79,33 +79,19 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location_request())
 
     elif call.data == 'Self_Delivery':
+        sending_document = True
+        order.file_status = True
+        order.save()
         update_delivery(order, DeliveryType.Self_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_message(call.message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
+        bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
+                       caption="Hujjatni yuboring")
 
     elif call.data == 'Courier_Delivery':
         update_delivery(order, DeliveryType.Courier_Delivery)
         sending_location = True
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Manzilingizni yuboring", reply_markup=location_share())
-    elif call.data == 'CASH':
-        sending_document = True
-        order.file_status = True
-        order.cash_type = PaymentType.CASH
-        order.save()
-        bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
-                       caption="Hujjatni yuboring")
-    elif call.data == 'CARD':
-        if PAYMENTS_PROVIDER_TOKEN.split(':')[1] == 'TEST':
-            bot.send_message(call.message.chat.id, MESSAGES['pre_buy_demo_alert'])
-
-        order.cash_type = PaymentType.CARD
-        order.save()
-        # Setup prices
-        PRICE = types.LabeledPrice(label='Настоящая Машина Времени', amount=4200000)
-        bot.delete_message(call.message.chat.id, call.message.id)
-
     elif call.data == "backFromSize":
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
@@ -126,9 +112,6 @@ def callback_query(call):
                f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
 
         bot.send_message(call.message.chat.id, mess, reply_markup=order_info())
-    elif call.data == "backFromPaymentChoose":
-        bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_message(call.message.chat.id, "Yetkazib berish usuli", reply_markup=location_request())
     else:
         markup = main_menu()
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
@@ -157,6 +140,7 @@ def get_sms(message):
 
     global amount_of_page
     global order_number
+    global sending_document
 
     if attr_value is False:
         bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
@@ -193,13 +177,16 @@ def get_sms(message):
         elif sending_document:
             bot.send_message(message.chat.id, 'Iltimos hujjat yuboring')
         elif sending_location:
+            sending_document = True
             order = get_order(order_number)
             # Extract latitude and longitude from the message
             location, created = ClientAddress.objects.get_or_create(name=text)
             order.location = location
+            order.file_status = True
             order.save()
             bot.delete_message(message.chat.id, message.id)
-            bot.send_message(message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
+            bot.send_photo(message.chat.id, photo=open('media/download.png', 'rb'),
+                           caption="Hujjatni yuboring")
 
 
         else:
@@ -290,17 +277,21 @@ def get_document(message):
 
 @bot.message_handler(content_types=['location'])
 def get_location(message):
+    global sending_document
+    sending_document = True
     order = get_order(order_number)
     # Extract latitude and longitude from the message
     location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
                                                             longitude=message.location.longitude)
     order.location = location
+    order.file_status = True
     order.save()
 
     # Your logic to handle the location data
     bot.delete_message(message.chat.id, message.id)
 
-    bot.send_message(message.chat.id, "To'lov turini tanlang", reply_markup=payment_type())
+    bot.send_photo(message.chat.id, photo=open('media/download.png', 'rb'),
+                   caption="Hujjatni yuboring")
 
 
 def polToWebhook(request):
