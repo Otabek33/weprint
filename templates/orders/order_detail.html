@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}Buyurtma 1{% endblock %}
+{% block title %}{{ object.order_number }}{% endblock %}
 
 
 {% block content %}
 
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Order #6927 Details</h2>
+        <h2 class="font-weight-bold text-6">Buyurtma #{{ object.order_number }} Ma'lumotlari</h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
 
-                <li><span>Home</span></li>
+                <li><span>Dashboard</span></li>
 
-                <li><span>eCommerce</span></li>
+                <li><span>Buyurtmalar</span></li>
 
-                <li><span>Orders</span></li>
+                <li><span>{{ object.order_number }}</span></li>
 
             </ol>
 
@@ -30,55 +30,59 @@
 
                 <div class="card card-modern">
                     <div class="card-header">
-                        <h2 class="card-title">General</h2>
+                        <h2 class="card-title">Umumiy ma'lumot</h2>
                     </div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Status</label>
+                                <label>Buyurtma statusi</label>
                                 <select class="form-control form-control-modern" name="orderStatus" required>
-                                    <option value="on-hold" selected>On Hold</option>
-                                    <option value="pending">Pending Payment</option>
-                                    <option value="processing">Processing</option>
-                                    <option value="completed">Completed</option>
-                                    <option value="cancelled">Cancelled</option>
-                                    <option value="refunded">Refunded</option>
-                                    <option value="failed">Failed</option>
+
+                                    <option value="on-hold" {% if object.order_status == 1 %}selected{% endif %}>
+                                        Yaratilish
+                                    </option>
+                                    <option value="pending" {% if object.order_status == 2 %}selected{% endif %}>
+                                        Yangi Buyurtma
+                                    </option>
+                                    <option value="processing" {% if object.order_status == 3 %}selected{% endif %}>
+                                        Faol
+                                    </option>
+                                    <option value="cancelled" {% if object.order_status == 4 %}selected{% endif %}>
+                                        Bekor qilingan
+                                    </option>
+                                    <option value="completed" {% if object.order_status == 5 %}selected{% endif %}>
+                                        Yetqazib berilgan
+                                    </option>
+
                                 </select>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Date Created</label>
+                                <label>Yaratilgan</label>
                                 <div class="date-time-field">
                                     <div class="date">
-                                        <input type="text" class="form-control form-control-modern" name="orderDate"
-                                               value="2019-11-21" required data-plugin-datepicker
-                                               data-plugin-options='{"orientation": "bottom", "format": "yyyy-mm-dd"}'/>
+                                        <input type="text" class="form-control form-control-modern" name="orderDate" value="{{ order.created_at|date:"d-M-Y H:i" }}"
+                                                readonly>
                                     </div>
-                                    <div class="time">
-                                        <span class="px-2">@</span>
-                                        <input type="text" class="form-control form-control-modern text-center"
-                                               name="orderTimeHour" value="10" required/>
-                                        <span class="px-2">:</span>
-                                        <input type="text" class="form-control form-control-modern text-center"
-                                               name="orderTimeMin" value="28" required/>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
+
+                    <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Customer</label>
-                                <select class="form-control form-control-modern" name="orderCustomer" required
-                                        data-plugin-selectTwo>
-                                    <option value="21" selected>John Doe</option>
-                                    <option value="33">Monica Doe</option>
-                                    <option value="55">Robert Doe</option>
-                                    <option value="60">Tim Doe</option>
-                                </select>
+                                <label>Mijoz</label>
+                                <div class="date-time-field">
+                                    <div class="date">
+                                        <input type="text" class="form-control form-control-modern" value="{{ order.created_by }}"
+                                                readonly>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 

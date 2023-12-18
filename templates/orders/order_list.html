@@ -50,7 +50,7 @@
 
 
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="{% url 'orders:order_detail' %}">{{ order.order_number }}</a></td>
+                                <td><a href="{% url 'orders:order_detail' order.uuid %}">{{ order.order_number }}</a></td>
                                 <td>{{ order.get_printSize_display }}</td>
                                 <td>{{ order.get_printColor_display }}</td>
                                 <td>{{ order.printBindingType.name }}</td>
