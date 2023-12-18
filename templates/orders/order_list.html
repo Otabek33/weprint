@@ -50,7 +50,7 @@
 
 
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="#">{{ order.order_number }}</a></td>
+                                <td><a href="{% url 'orders:order_detail' %}">{{ order.order_number }}</a></td>
                                 <td>{{ order.get_printSize_display }}</td>
                                 <td>{{ order.get_printColor_display }}</td>
                                 <td>{{ order.printBindingType.name }}</td>
@@ -60,7 +60,7 @@
                                 <td>{{ order.get_cash_type_display }}</td>
                                 <td>{{ order.get_delivery_type_display }}</td>
                                 <td>{{ order.location }}</td>
-                                <td>{{ order.price }}</td>
+                                <td>{{ order.price|floatformat:"2g" }} so'm</td>
                                 <td>{{ order.created_at|date:"d-M-Y H:i" }}</td>
                                 <td><button class="btn btn-primary" type="submit">Saqlash</button></td>
 {#                                <td class="actions text-center">#}

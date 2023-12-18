@@ -1,4 +1,4 @@
-from django.views.generic import (ListView, CreateView)
+from django.views.generic import (ListView, CreateView, TemplateView)
 from apps.orders.forms import OrderCreateForm
 from apps.orders.models import Order
 
@@ -16,6 +16,14 @@ class OrderListView(ListView):
 
 
 order_list = OrderListView.as_view()
+
+
+class OrderDetail(TemplateView):
+    model = Order
+    template_name = "orders/order_detail.html"
+
+
+order_detail = OrderDetail.as_view()
 
 
 class OrderCreationView(CreateView):
