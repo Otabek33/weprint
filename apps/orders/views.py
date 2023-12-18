@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import (ListView, CreateView, TemplateView, DetailView)
 from apps.orders.forms import OrderCreateForm
 from apps.orders.models import Order
@@ -21,6 +22,14 @@ order_list = OrderListView.as_view()
 class OrderDetail(DetailView):
     model = Order
     template_name = "orders/order_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = get_object_or_404(Order, pk=self.kwargs["pk"])
+        client = order.created_by
+        context["order"] = order
+        context["client"] = client
+        return context
 
 
 order_detail = OrderDetail.as_view()
