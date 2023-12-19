@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}{{ object.order_number }}{% endblock %}
 
+{% block title %}{{ object.order_number }}{% endblock %}
+{% block additional_css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+    <style>
+
+        #map {
+            height: 500px;
+        }
+
+    </style>
+
+{% endblock %}
 
 {% block content %}
 
@@ -13,7 +25,7 @@
 
                 <li><span>Dashboard</span></li>
 
-                <li><span>Buyurtmalar</span></li>
+                <li><span><a href="{% url 'orders:order_list' %}">Buyurtmalar</a></span></li>
 
                 <li><span>{{ object.order_number }}</span></li>
 
@@ -62,33 +74,36 @@
                                 <label>Yaratilgan</label>
                                 <div class="date-time-field">
                                     <div class="date">
-                                        <input type="text" class="form-control form-control-modern" name="orderDate" value="{{ order.created_at|date:"d-M-Y H:i" }}"
-                                                readonly>
+                                        <input type="text" class="form-control form-control-modern" name="orderDate"
+                                               value="{{ order.created_at|date:"d-M-Y H:i" }}"
+                                               readonly>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
 
-                    <div class="form-row">
+                        <div class="form-row">
                             <div class="form-group col mb-3">
                                 <label>Mijoz</label>
                                 <div class="date-time-field">
                                     <div class="date">
-                                        <input type="text" class="form-control form-control-modern" value="{{ order.created_by }}"
-                                                readonly>
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="{{ order.created_by }}"
+                                               readonly>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                    <div class="form-row">
+                        <div class="form-row">
                             <div class="form-group col mb-3">
                                 <label>ChatId</label>
                                 <div class="date-time-field">
                                     <div class="date">
-                                        <input type="text" class="form-control form-control-modern" value="{{ order.tg_pk }}"
-                                                readonly>
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="{{ order.tg_pk }}"
+                                               readonly>
                                     </div>
 
                                 </div>
@@ -108,7 +123,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xl-auto me-xl-5 pe-xl-5 mb-4 mb-xl-0">
-                                <h3 class="text-color-dark font-weight-bold text-4 line-height-1 mt-0 mb-3">Mahsulot haqida</h3>
+                                <h3 class="text-color-dark font-weight-bold text-4 line-height-1 mt-0 mb-3">Mahsulot
+                                    haqida</h3>
                                 <strong class="d-block text-color-dark">Hajmi:</strong>
                                 <p>{{ object.get_printSize_display }}</p>
                                 <strong class="d-block text-color-dark">Rangi:</strong>
@@ -122,15 +138,14 @@
                             <div class="col-xl-auto ps-xl-5">
                                 <h3 class="font-weight-bold text-color-dark text-4 line-height-1 mt-0 mb-3">
                                     Mijoz ma'lumotlari</h3>
-                                 <strong class="d-block text-color-dark">Telefon:</strong>
+                                <strong class="d-block text-color-dark">Telefon:</strong>
                                 <p>{{ client.phone }}</p>
-                                 <strong class="d-block text-color-dark">Username:</strong>
+                                <strong class="d-block text-color-dark">Username:</strong>
                                 <p>@{{ client.username }}</p>
-                                 <strong class="d-block text-color-dark">Ism:</strong>
+                                <strong class="d-block text-color-dark">Ism:</strong>
                                 <p>{{ client.first_name }}</p>
-                                 <strong class="d-block text-color-dark">Familiya:</strong>
+                                <strong class="d-block text-color-dark">Familiya:</strong>
                                 <p>{{ client.last_name }}</p>
-
 
 
                             </div>
@@ -164,7 +179,8 @@
                                 <tr>
                                     <td class="ps-4"><p><strong>{{ order.order_number }}</strong></p>
                                     </td>
-                                    <td><p ><strong>{{ order.get_printSize_display }} , {{ order.get_printColor_display }} , {{ order.printBindingType }}</strong></p>
+                                    <td><p><strong>{{ order.get_printSize_display }}
+                                        , {{ order.get_printColor_display }} , {{ order.printBindingType }}</strong></p>
                                     </td>
                                     <td class="text-end">{{ order.price|floatformat:"2g" }} so'm</td>
                                     <td class="text-end">1</td>
@@ -204,46 +220,65 @@
 
             </div>
         </div>
-    <!-- start: page -->
-					<div class="row">
-						<div class="col-lg-12">
-							<section class="card">
-								<header class="card-header">
-									<div class="card-actions">
-										<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-										<a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-									</div>
+        <div class="row">
+            <div class="col-lg-9">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                        </div>
 
-									<h2 class="card-title">Basic with Markers</h2>
-								</header>
-								<div class="card-body">
-									<div id="gmap-basic-marker" style="height: 500px; width: 100%;"></div>
-								</div>
-							</section>
-						</div>
-					</div>
-{#        <div class="row">#}
-{#            <div class="col">#}
-{##}
-{#                <div class="card card-modern">#}
-{#                    <div class="card-header">#}
-{#                        <h2 class="card-title">Manzil</h2>#}
-{#                    </div>#}
-{#                    <div class="card-body">#}
-{##}
-{#                        <div class="form-row">#}
-{#                            <div class="form-group col pb-1 mb-3">#}
-{#                                <label>Add Note</label>#}
-{#                                <textarea class="form-control form-control-modern" name="orderAddNote"#}
-{#                                          rows="6"></textarea>#}
-{#                            </div>#}
-{#                        </div>#}
-{##}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{#        </div>#}
+                        <h2 class="card-title">Manzil</h2>
+                    </header>
+                    <div class="card-body">
+                        <div id="map"></div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-3">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                        </div>
+
+                        <h2 class="card-title">Manzil</h2>
+                    </header>
+                    <div class="card-body" style="height: 530px;">
+
+                        <div class="form-row">
+                            <div class="form-group col mb-3">
+                                <label>Manzil</label>
+                                <div class="date-time-field">
+                                    <div class="date">
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="{{ order.location.name }}"
+                                               readonly>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col mb-3">
+                                <label>Yetqazib berish turi</label>
+                                <div class="date-time-field">
+                                    <div class="date">
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="{{ order.get_delivery_type_display }}"
+                                               readonly>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
         <div class="row action-buttons">
             <div class="col-12 col-md-auto">
                 <a href="#"
@@ -253,7 +288,7 @@
             </div>
 
             <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-                 <button type="submit"
+                <button type="submit"
                         class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
                         data-loading-text="Loading...">
                     <i class="bx bx-save text-4 me-2"></i> Qabul qilish
@@ -264,5 +299,33 @@
 
     <!-- end: page -->
 
+
 {% endblock %}
 <!-- Specific Page Vendor -->
+
+{% block additional_js %}
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        var latitude =
+        {{ order.location.latitude }}
+        var longitude =
+        {{ order.location.longitude }}
+        var map = L.map('map');
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.Routing.control({
+            waypoints: [
+                L.latLng(latitude, longitude),
+                L.latLng(41.322610, 69.253904)
+            ],
+            routeWhileDragging: true
+        }).addTo(map);
+
+
+    </script>
+{% endblock %}

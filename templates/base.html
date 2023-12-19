@@ -39,6 +39,7 @@
 
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+
     {% block additional_css %}{% endblock %}
     <!-- Head Libs -->
     <script src="{% static 'vendor/modernizr/modernizr.js' %}"></script>
@@ -629,6 +630,7 @@
 							</div>
 
 						</div>
+						</div>
 					</div>
 					<!-- end: page -->
             {% endblock content %}
@@ -651,10 +653,7 @@
 <script src="{% static 'vendor/jquery-placeholder/jquery.placeholder.js' %}"></script>
 
 <!-- Specific Page Vendor -->
-<script src="{% static 'vendor/raphael/raphael.js' %}"></script>
-<script src="{% static 'vendor/morris/morris.js' %}"></script>
-<script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>
+{% block additional_js %}{% endblock %}
 
 <!-- Theme Base, Components and Settings -->
 <script src="{% static 'js/theme.js' %}"></script>
@@ -667,10 +666,9 @@
 
 <!-- Examples -->
 <script src="{% static 'js/examples/examples.header.menu.js' %}"></script>
-<script src="{% static 'js/examples/examples.ecommerce.dashboard.js' %}"></script>
-<script src="{% static 'js/examples/examples.ecommerce.datatables.list.js' %}"></script>
 
-{% block additional_js %}{% endblock %}
+
+
 
 </body>
 </html>
