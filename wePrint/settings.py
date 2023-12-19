@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "apps.products",
 ]
 
+
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -56,7 +57,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
 ]
-
 ROOT_URLCONF = "wePrint.urls"
 
 TEMPLATES = [

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+
 {% block title %}Buyurtmalar{% endblock %}
 
 
@@ -50,7 +51,8 @@
 
 
                                 <td>{{ forloop.counter }}</td>
-                                <td><a href="{% url 'orders:order_detail' order.uuid %}">{{ order.order_number }}</a></td>
+                                <td><a href="{% url 'orders:order_detail' order.uuid %}">{{ order.order_number }}</a>
+                                </td>
                                 <td>{{ order.get_printSize_display }}</td>
                                 <td>{{ order.get_printColor_display }}</td>
                                 <td>{{ order.printBindingType.name }}</td>
@@ -62,12 +64,14 @@
                                 <td>{{ order.location }}</td>
                                 <td>{{ order.price|floatformat:"2g" }} so'm</td>
                                 <td>{{ order.created_at|date:"d-M-Y H:i" }}</td>
-                                <td><button class="btn btn-primary" type="submit">Saqlash</button></td>
-{#                                <td class="actions text-center">#}
-{#                                    <a href="#"><i class="fas fa-pencil-alt"></i></a>#}
-{#                                    <a href="#" class="delete-row"><i#}
-{#                                            class="far fa-trash-alt"></i></a>#}
-{#                                </td>#}
+                                <td>
+                                    <button class="btn btn-primary" type="submit">Saqlash</button>
+                                </td>
+                                {#                                <td class="actions text-center">#}
+                                {#                                    <a href="#"><i class="fas fa-pencil-alt"></i></a>#}
+                                {#                                    <a href="#" class="delete-row"><i#}
+                                {#                                            class="far fa-trash-alt"></i></a>#}
+                                {#                                </td>#}
 
                             </tr>
                         {% endfor %}
@@ -78,6 +82,13 @@
             </div>
         </div>
     </div>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endblock %}
 <!-- Specific Page Vendor -->

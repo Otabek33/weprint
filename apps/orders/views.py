@@ -1,8 +1,8 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import (ListView, CreateView, TemplateView, DetailView)
 from apps.orders.forms import OrderCreateForm
-from apps.orders.models import Order
-
+from apps.orders.models import Order, OrderStatus
+from django.contrib import messages
 
 class OrderListView(ListView):
     model = Order
@@ -30,6 +30,14 @@ class OrderDetail(DetailView):
         context["order"] = order
         context["client"] = client
         return context
+
+    def post(self, request, *args, **kwargs):
+        order = get_object_or_404(Order, pk=self.kwargs["pk"])
+        order.order_status = OrderStatus.ACTIVE
+        order.save()
+        # Send a success message
+        messages.success(request, 'Data successfully saved!')
+        return redirect("orders:order_list")
 
 
 order_detail = OrderDetail.as_view()
