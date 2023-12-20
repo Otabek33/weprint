@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import (ListView, CreateView, TemplateView, DetailView)
-from apps.orders.forms import OrderCreateForm
+from django.views.generic import (ListView, DetailView, DeleteView)
 from apps.orders.models import Order, OrderStatus
 from django.contrib import messages
+
 
 class OrderListView(ListView):
     model = Order
@@ -35,7 +35,6 @@ class OrderDetail(DetailView):
         order = get_object_or_404(Order, pk=self.kwargs["pk"])
         order.order_status = OrderStatus.ACTIVE
         order.save()
-        # Send a success message
         messages.success(request, 'Data successfully saved!')
         return redirect("orders:order_list")
 
@@ -43,10 +42,16 @@ class OrderDetail(DetailView):
 order_detail = OrderDetail.as_view()
 
 
-class OrderCreationView(CreateView):
+class OrderCancelView(DetailView):
     model = Order
-    form_class = OrderCreateForm
-    template_name = "orders/order_add.html"
+    template_name = "orders/order_cancel.html"
+
+    def post(self, request, *args, **kwargs):
+        order = get_object_or_404(Order, pk=self.kwargs["pk"])
+        order.order_status = OrderStatus.CANCELLED
+        order.save()
+        messages.success(self.request, 'Buyurtma bekor qilindi')
+        return redirect("orders:order_list")
 
 
-order_creation = OrderCreationView.as_view()
+order_cancel = OrderCancelView.as_view()
