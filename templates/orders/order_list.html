@@ -31,15 +31,13 @@
                         <tr>
                             <th>#</th>
                             <th>Buyurtma raqami</th>
-                            <th>Hajmi</th>
-                            <th>Rangi</th>
-                            <th>Pereplyot turi</th>
-                            <th>Sahifalar soni</th>
+
                             <th>Buyurtma statusi</th>
                             <th>Mijoz telefon raqami</th>
                             <th>To'lov statusi</th>
                             <th>Yetqazib berish turi</th>
-                            <th>Manzil</th>
+
+                            <th>Sahifalar soni</th>
                             <th>Narx</th>
                             <th>Yaratildi</th>
                             <th>Vazifa</th>
@@ -53,15 +51,24 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'orders:order_detail' order.uuid %}">{{ order.order_number }}</a>
                                 </td>
-                                <td>{{ order.get_printSize_display }}</td>
-                                <td>{{ order.get_printColor_display }}</td>
-                                <td>{{ order.printBindingType.name }}</td>
-                                <td>{{ order.page_number }}</td>
-                                <td>{{ order.get_order_status_display }}</td>
+
+                                <td>
+                                    {% if order.order_status == 2 %}
+                                        <span class="badge badge-warning">{{ order.get_order_status_display }}</span>
+                                    {% elif order.order_status == 3 %}
+                                        <span class="badge badge-primary">{{ order.get_order_status_display }}</span>
+                                    {% elif order.order_status == 4 %}
+                                        <span class="badge badge-danger">{{ order.get_order_status_display }}</span>
+                                    {% elif order.order_status == 5 %}
+                                        <span class="badge badge-success">{{ order.get_order_status_display }}</span>
+
+                                    {% endif %}
+
                                 <td>{{ order.created_by.phone }}</td>
                                 <td>{{ order.get_cash_type_display }}</td>
                                 <td>{{ order.get_delivery_type_display }}</td>
-                                <td>{{ order.location }}</td>
+
+                                <td>{{ order.page_number }}</td>
                                 <td>{{ order.price|floatformat:"2g" }} so'm</td>
                                 <td>{{ order.created_at|date:"d-M-Y H:i" }}</td>
                                 <td>

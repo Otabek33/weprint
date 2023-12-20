@@ -327,13 +327,13 @@
                 <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
                     {% if order.order_status == 4 %}
                         <button type="button" class="btn btn-danger"
-                        >{{ order.get_order_status_display }}</button>
+                        ><i class="bx bx-eraser text-4 me-2"></i>{{ order.get_order_status_display }}</button>
                     {% elif order.order_status == 3 %}
                         <button type="button" class="btn btn-primary"
-                        >{{ order.get_order_status_display }}</button>
+                        ><i class="bx bx-align-justify text-4 me-2"></i>{{ order.get_order_status_display }}</button>
                     {% elif order.order_status == 5 %}
                         <button type="button" class="btn btn-success"
-                        >{{ order.get_order_status_display }}</button>
+                        ><i class="bx bx-check-circle text-4 me-2"></i>{{ order.get_order_status_display }}</button>
                     {% endif %}
 
                 </div>
