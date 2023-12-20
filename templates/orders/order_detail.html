@@ -50,28 +50,41 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Buyurtma statusi</label>
-                                <select class="form-control form-control-modern" name="orderStatus" required>
+                                <label>Yaratilgan</label>
+                                <div class="date-time-field">
+                                    <div class="date">
+                                        <input type="text" class="form-control form-control-modern" name="orderDate"
+                                               value="{{ object.get_order_status_display }}"
+                                               readonly>
+                                    </div>
 
-                                    <option value="on-hold" {% if object.order_status == 1 %}selected{% endif %}>
-                                        Yaratilish
-                                    </option>
-                                    <option value="pending" {% if object.order_status == 2 %}selected{% endif %}>
-                                        Yangi Buyurtma
-                                    </option>
-                                    <option value="processing" {% if object.order_status == 3 %}selected{% endif %}>
-                                        Faol
-                                    </option>
-                                    <option value="cancelled" {% if object.order_status == 4 %}selected{% endif %}>
-                                        Bekor qilingan
-                                    </option>
-                                    <option value="completed" {% if object.order_status == 5 %}selected{% endif %}>
-                                        Yetqazib berilgan
-                                    </option>
-
-                                </select>
+                                </div>
                             </div>
                         </div>
+                        {#                        <div class="form-row">#}
+                        {#                            <div class="form-group col mb-3">#}
+                        {#                                <label>Buyurtma statusi</label>#}
+                        {#                                <select class="form-control form-control-modern" name="orderStatus" required>#}
+                        {##}
+                        {#                                    <option value="on-hold" {% if object.order_status == 1 %}selected{% endif %}>#}
+                        {#                                        Yaratilish#}
+                        {#                                    </option>#}
+                        {#                                    <option value="pending" {% if object.order_status == 2 %}selected{% endif %}>#}
+                        {#                                        Yangi Buyurtma#}
+                        {#                                    </option>#}
+                        {#                                    <option value="processing" {% if object.order_status == 3 %}selected{% endif %}>#}
+                        {#                                        Faol#}
+                        {#                                    </option>#}
+                        {#                                    <option value="cancelled" {% if object.order_status == 4 %}selected{% endif %}>#}
+                        {#                                        Bekor qilingan#}
+                        {#                                    </option>#}
+                        {#                                    <option value="completed" {% if object.order_status == 5 %}selected{% endif %}>#}
+                        {#                                        Yetqazib berilgan#}
+                        {#                                    </option>#}
+                        {##}
+                        {#                                </select>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                         <div class="form-row">
                             <div class="form-group col mb-3">
                                 <label>Yaratilgan</label>
@@ -294,21 +307,40 @@
                 </section>
             </div>
         </div>
+        {% if order.order_status == 2 %}
+            <div class="row action-buttons">
+                <div class="col-12 col-md-auto">
+                    <a class="mb-1 mt-1 me-1 modal-basic btn btn-danger  delete-button btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+                       href="#modalBasic"><i class="bx bx-trash text-4 me-2"></i>Bekor qilish</a>
+                </div>
 
-        <div class="row action-buttons">
-            <div class="col-12 col-md-auto">
-                <a class="mb-1 mt-1 me-1 modal-basic btn btn-danger  delete-button btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
-                   href="#modalBasic"><i class="bx bx-trash text-4 me-2"></i>Bekor qilish</a>
+                <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+                    <button type="submit"
+                            class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+                            data-loading-text="Loading...">
+                        <i class="bx bx-save text-4 me-2"></i> Qabul qilish
+                    </button>
+                </div>
             </div>
+        {% else %}
+            <div class="row action-buttons">
+                <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+                    {% if order.order_status == 4 %}
+                        <button type="button" class="btn btn-danger"
+                        >{{ order.get_order_status_display }}</button>
+                    {% elif order.order_status == 3 %}
+                        <button type="button" class="btn btn-primary"
+                        >{{ order.get_order_status_display }}</button>
+                    {% elif order.order_status == 5 %}
+                        <button type="button" class="btn btn-success"
+                        >{{ order.get_order_status_display }}</button>
+                    {% endif %}
 
-            <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-                <button type="submit"
-                        class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
-                        data-loading-text="Loading...">
-                    <i class="bx bx-save text-4 me-2"></i> Qabul qilish
-                </button>
+                </div>
             </div>
-        </div>
+        {% endif %}
+
+
     </form>
     <div id="modalBasic" class="modal-block mfp-hide">
         <section class="card">
