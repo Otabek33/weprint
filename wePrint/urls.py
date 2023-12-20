@@ -22,9 +22,10 @@ from django.views import defaults as default_views
 
 urlpatterns = [
     path("", include("apps.accounts.urls", namespace="accounts")),
-    path("client/", include("apps.clients.urls", namespace="clients")),
-    path("order/", include("apps.orders.urls", namespace="orders")),
-    path("product/", include("apps.products.urls", namespace="products")),
+    path("clients/", include("apps.clients.urls", namespace="clients")),
+    path("orders/", include("apps.orders.urls", namespace="orders")),
+    path("products/", include("apps.products.urls", namespace="products")),
+    path("transactions/", include("apps.transactions.urls", namespace="transactions")),
     path("admin/", admin.site.urls),
 
 ]

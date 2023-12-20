@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "apps.tg",
     "apps.orders",
     "apps.products",
+    "apps.transactions",
 ]
 
 
