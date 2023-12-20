@@ -26,6 +26,7 @@ class Company(models.Model):
     address = models.TextField("Адрес", blank=True, max_length=100)
     email = models.EmailField("Почта", max_length=100, null=True, blank=True)
     phone = models.CharField("Телефон", max_length=100, null=True, blank=True)
+    balance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 
     class Meta:
         """Class representing a person"""

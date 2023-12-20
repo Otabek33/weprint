@@ -43,13 +43,13 @@
                         <tr>
                            <th>#</th>
                             <th>Buyurtma raqami</th>
+                            <th>Yaratilgan</th>
                             <th>Buyurtma statusi</th>
                             <th>Mijoz telefon raqami</th>
                             <th>To'lov statusi</th>
                             <th>Yetqazib berish turi</th>
                             <th>Sahifalar soni</th>
                             <th>Narx</th>
-                            <th>Yaratilgan</th>
 
                         </tr>
                         </thead>
@@ -59,16 +59,16 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'orders:order_detail' order.uuid %}">{{ order.order_number }}</a>
                                 </td>
+                                <td>{{ order.created_at|date:"d-m-Y H:i" }}</td>
                                 <td>
                                     {% if order.order_status == 2 %}
                                         <span class="badge badge-warning">{{ order.get_order_status_display }}</span>
                                     {% elif order.order_status == 3 %}
-                                        <span class="badge badge-primary">{{ order.get_order_status_display }}</span>
+                                        <span class="badge badge-success">{{ order.get_order_status_display }}</span>
                                     {% elif order.order_status == 4 %}
                                         <span class="badge badge-danger">{{ order.get_order_status_display }}</span>
                                     {% elif order.order_status == 5 %}
-                                        <span class="badge badge-success">{{ order.get_order_status_display }}</span>
-
+                                        <span class="badge badge-default">{{ order.get_order_status_display }}</span>
                                     {% endif %}
 
                                 <td>{{ order.created_by.phone }}</td>
@@ -76,7 +76,6 @@
                                 <td>{{ order.get_delivery_type_display }}</td>
                                 <td>{{ order.page_number }}</td>
                                 <td>{{ order.price|floatformat:"2g" }} so'm</td>
-                                <td>{{ order.created_at|date:"d-m-Y H:i" }}</td>
 
                             </tr>
                         {% endfor %}
