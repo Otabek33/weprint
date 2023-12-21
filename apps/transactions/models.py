@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from apps.accounts.models import CustomUser
 from apps.clients.models import Client
+from apps.orders.models import Order
 from apps.products.models import Product
 
 
@@ -34,11 +35,11 @@ class Transaction(models.Model):
                                blank=True,
                                null=True,
                                related_name="client_transaction", )
-    product = models.ForeignKey(Product,
-                                on_delete=models.SET_NULL,
-                                blank=True,
-                                null=True,
-                                related_name="product_transaction", )
+    order = models.ForeignKey(Order,
+                              on_delete=models.SET_NULL,
+                              blank=True,
+                              null=True,
+                              related_name="order_transaction", )
     double_entry_accounting = models.IntegerField("Pul yo'nalishi",
                                                   choices=DoubleEntryAccounting.choices,
                                                   default=DoubleEntryAccounting.CREDIT)

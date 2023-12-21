@@ -1,9 +1,13 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime
 from typing import Any, Dict
+
+from django.http import HttpResponse
+from django.shortcuts import redirect
 from django.views.generic import (ListView, CreateView, )
 
 from apps.transactions.forms import TransactionCreateForm
-from apps.transactions.models import Transaction
+from apps.transactions.models import Transaction, CashType
 
 
 class TransactionListView(ListView):
@@ -23,6 +27,16 @@ class TransactionAddView(CreateView):
     model = Transaction
     form_class = TransactionCreateForm
     template_name = "transactions/transaction_add.html"
+
+    def form_valid(self, form):
+        product = form.save(commit=False)
+        product.created_by = self.request.user
+        product.created_at = datetime.now()
+        product.save()
+        return redirect("transactions:transaction_list")
+
+    def form_invalid(self, form):
+        return HttpResponse(form.errors)
 
 
 transaction_add = TransactionAddView.as_view()

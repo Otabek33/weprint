@@ -3,7 +3,21 @@
 {% load static %}
 
 {% block title %}Transaksiyalar{% endblock %}
-
+{% block additional_css %}
+    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.theme.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/select2-bootstrap-theme/select2-bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-multiselect/css/bootstrap-multiselect.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-tagsinput/bootstrap-tagsinput.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-timepicker/css/bootstrap-timepicker.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/dropzone/basic.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/dropzone/dropzone.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-markdown/css/bootstrap-markdown.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/summernote/summernote-bs4.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/codemirror/lib/codemirror.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/codemirror/theme/monokai.css' %}"/>
+{% endblock %}
 
 {% block content %}
     <header class="page-header page-header-left-inline-breadcrumb">
@@ -16,7 +30,7 @@
         </div>
     </header>
     <!-- start: page -->
-    <form class="ecommerce-form action-buttons-fixed" action="" method="post">
+    <form class="ecommerce-form action-buttons-fixed" action="." method="post">
         {% csrf_token %}
         <div class="row">
             <div class="col">
@@ -30,12 +44,12 @@
                         <h2 class="card-title">Tranzaksiya</h2>
                     </header>
                     <div class="card-body">
-                        <form class="form-horizontal form-bordered" method="get">
+
                             <div class="form-group row pb-4">
                                 <label class="col-lg-3 control-label text-lg-end pt-2"
                                        for="inputDefault">Ta'rif</label>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="inputDefault">
+                                    {{ form.description }}
                                 </div>
                             </div>
 
@@ -43,58 +57,42 @@
                                 <label class="col-lg-3 control-label text-lg-end pt-2"
                                        for="inputDisabled">Pul turi</label>
                                 <div class="col-lg-6">
-                                    <select class="form-control mb-3">
-														<option>Option 1</option>
-														<option>Option 2</option>
-														<option>Option 3</option>
-													</select>
+                                    {{ form.cash_type }}
                                 </div>
                             </div>
 
                             <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Ikkiyoqlama yozuv</label>
+                                <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Ikkiyoqlama
+                                    yozuv</label>
                                 <div class="col-lg-6">
-                                    <select class="form-control mb-3">
-														<option>Option 1</option>
-														<option>Option 2</option>
-														<option>Option 3</option>
-													</select>
+                                    {{ form.double_entry_accounting }}
                                 </div>
                             </div>
 
                             <div class="form-group row pb-3">
                                 <label class="col-lg-3 control-label text-lg-end pt-2" for="inputHelpText">Mijoz</label>
                                 <div class="col-lg-6">
-                                    <select class="form-control mb-3">
-														<option>Option 1</option>
-														<option>Option 2</option>
-														<option>Option 3</option>
-													</select>
-
+                                    {{ form.client }}
                                 </div>
                             </div>
 
                             <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2" for="inputRounded">Mahsulot</label>
+                                <label class="col-lg-3 control-label text-lg-end pt-2"
+                                       for="inputRounded">Buyurtma</label>
                                 <div class="col-lg-6">
-                                    <select class="form-control mb-3">
-														<option>Option 1</option>
-														<option>Option 2</option>
-														<option>Option 3</option>
-													</select>
+                                    {{ form.order }}
                                 </div>
                             </div>
 
                             <div class="form-group row pb-4">
                                 <label class="col-lg-3 control-label text-lg-end pt-2" for="inputFocus">Summa</label>
                                 <div class="col-lg-6">
-                                    <input class="form-control"  type="number">
+                                    {{ form.balance }}
                                 </div>
                             </div>
 
 
 
-                        </form>
                     </div>
                 </section>
             </div>
@@ -103,8 +101,9 @@
 
         <div class="row action-buttons d-flex justify-content-end">
             <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
-                <a href="{% url 'clients:client_list' %}"
-                   class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Bekor qilish</a>
+                <a href="{% url 'transactions:transaction_list' %}"
+                   class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Bekor
+                    qilish</a>
             </div>
             <div class="col-12 col-md-auto">
                 <button type="submit"
@@ -113,8 +112,6 @@
                     <i class="bx bx-save text-4 me-2"></i> Saqlash
                 </button>
             </div>
-
-
         </div>
     </form>
     <!-- end: page -->
@@ -126,5 +123,32 @@
 {% endblock %}
 <!-- Specific Page Vendor -->
 {% block additional_js %}
+    <!-- Specific Page Vendor -->
+    <script src="{% static 'vendor/jquery-ui/jquery-ui.js' %}"></script>
+    <script src="{% static 'vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js' %}"></script>
+    <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
+    <script src="{% static 'vendor/bootstrapv5-multiselect/js/bootstrap-multiselect.js' %}"></script>
+    <script src="{% static 'vendor/jquery-maskedinput/jquery.maskedinput.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-tagsinput/bootstrap-tagsinput.js' %}"></script>
+    <script src="{% static 'vendor/bootstrapv5-colorpicker/js/bootstrap-colorpicker.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-timepicker/js/bootstrap-timepicker.js' %}"></script>
+    <script src="{% static 'vendor/fuelux/js/spinner.js' %}"></script>
+    <script src="{% static 'vendor/dropzone/dropzone.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-markdown/js/markdown.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-markdown/js/to-markdown.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-markdown/js/bootstrap-markdown.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/lib/codemirror.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/addon/selection/active-line.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/addon/edit/matchbrackets.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/mode/javascript/javascript.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/mode/xml/xml.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/mode/htmlmixed/htmlmixed.js' %}"></script>
+    <script src="{% static 'vendor/codemirror/mode/css/css.js' %}"></script>
+    <script src="{% static 'vendor/summernote/summernote-bs4.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-maxlength/bootstrap-maxlength.js' %}"></script>
+    <script src="{% static 'vendor/ios7-switch/ios7-switch.js' %}"></script>
+    <!-- Examples -->
+    <script src="{% static 'js/examples/examples.advanced.form.js' %}"></script>
+
 
 {% endblock %}

@@ -90,7 +90,8 @@
                             <div class="summary">
 
                                 <div class="info mt-4 text-center">
-                                    <a type="button" href="{% url 'transactions:transaction_add'%}" class="btn btn-success">
+                                    <a type="button" href="{% url 'transactions:transaction_add' %}"
+                                       class="btn btn-success">
                                         <i class="fas fa-plus"></i>Qo'shmoq
                                     </a>
 
@@ -120,32 +121,39 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Muddat</th>
-                            <th class="text-end">Ta'rif</th>
-                            <th class="text-end">Tur</th>
-                            <th class="text-end">Mijoz</th>
-                            <th class="text-end">Mahsulot</th>
-                            <th class="text-end">Debet</th>
-                            <th class="text-end">Kredit</th>
-                            <th class="text-end">Saldo</th>
+                            <th class="text-center">Muddat</th>
+                            <th class="text-center">Ta'rif</th>
+                            <th class="text-center">Tur</th>
+                            <th class="text-center">Mijoz</th>
+                            <th class="text-center">Mahsulot</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for transaction in  transaction_list %}
-
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ transaction.created_at }}</td>
-                            <td class="text-end">{{ transaction.description }}</td>
-                            <td class="text-end">{{ transaction.cash_type }}</td>
-                            <td class="text-end">{{ transaction.client }}</td>
-                            <td class="text-end">{{ transaction.product }}</td>
-                            <td class="text-end">{{ transaction.double_entry_accounting }}</td>
-                            <td class="text-end">{{ transaction.double_entry_accounting }}</td>
-                            <td class="text-end">{{ transaction.balance }}</td>
-                        </tr>
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
+                                <td class="text-center">{{ transaction.description }}</td>
+                                <td class="text-center">{{ transaction.get_cash_type_display }}</td>
+                                <td class="text-center">{{ transaction.client }}</td>
+                                <td class="text-center">{{ transaction.order }}</td>
+                                {% if transaction.double_entry_accounting == 2 %}
+                                    <td class="text-center text-success">
+                                        +{{ transaction.balance|floatformat:"2g" }}</td>
+                                {% else %}
+                                    <td class="text-center">0</td>
+                                {% endif %}
+                                {% if transaction.double_entry_accounting == 1 %}
+                                    <td class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</td>
+                                {% else %}
+                                    <td class="text-center">0</td>
+                                {% endif %}
+                                <td class="text-center">0</td>
+                            </tr>
                         {% endfor %}
-
                         </tbody>
                     </table>
                 </div>

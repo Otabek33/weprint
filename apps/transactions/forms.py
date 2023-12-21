@@ -1,8 +1,8 @@
 from django import forms
 
 from apps.clients.models import Client
-from apps.products.models import (Product)
-from apps.transactions.models import CashType, DoubleEntryAccounting
+from apps.orders.models import Order, OrderStatus
+from apps.transactions.models import CashType, DoubleEntryAccounting, Transaction
 
 
 class TransactionCreateForm(forms.ModelForm):
@@ -22,25 +22,31 @@ class TransactionCreateForm(forms.ModelForm):
 
     client = forms.ModelChoiceField(
         queryset=Client.objects.all(),
-        widget=forms.Select(attrs={"class": "form-control"}),
+        widget=forms.Select(attrs={
+            "class": "form-control",
+            "data-plugin-selectTwo": "",
+            "data-plugin-options": '{"minimumInputLength": 2}',
+        }),
         required=False,
     )
-    product = forms.ModelChoiceField(
-        queryset=Product.objects.all(),
-        widget=forms.Select(attrs={"class": "form-control"}),
+    order = forms.ModelChoiceField(
+        queryset=Order.objects.exclude(order_status=OrderStatus.FINISH),
+        widget=forms.Select(attrs={"class": "form-control",
+                                   "data-plugin-selectTwo": "",
+                                   "data-plugin-options": '{"minimumInputLength": 2}', }),
         required=False,
     )
     balance = forms.DecimalField(
-        widget=forms.NumberInput(attrs={"class": "form-control"}), required=True
+        widget=forms.NumberInput(attrs={"class": "form-control",}), required=True
     )
 
     class Meta:
-        model = Product
+        model = Transaction
         fields = [
             "description",
             "cash_type",
             "double_entry_accounting",
             "client",
-            "product",
+            "order",
             "balance",
         ]
