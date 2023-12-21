@@ -47,7 +47,7 @@ class Product(models.Model):
                                 null=True,
                                 related_name="company", )
 
-    productListByUser = ProductManager()
+
 
     created_by = models.ForeignKey(
         CustomUser,

@@ -17,12 +17,12 @@ class ProductListView(CreateView):
     form_class = ProductCreateForm
     template_name = "products/product_list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context['product_list'] = ProductModel.productListByUser.by_creator(
-            self.request.user.id)
-
-        return context
+    # def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    #     context = super().get_context_data(**kwargs)
+    #     context['product_list'] = ProductModel.productListByUser.by_creator(
+    #         self.request.user.id)
+    #
+    #     return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         product = form.save(commit=False)
@@ -61,7 +61,8 @@ class ProductDeleteView(DeleteView):
     def post(self, request, *args, **kwargs):
         if is_ajax(request):
             pk = request.POST.get("id")
-            project = self.model.productListByUser.by_id(pk)
+            # by_id = self.model.productListByUser.by_id(pk)
+            project = 0
             project.deleted_status = True
             project.updated_at = datetime.now(tz=timezone.utc)
             project.updated_by = self.request.user

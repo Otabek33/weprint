@@ -1,15 +1,9 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
 from typing import Any, Dict
-from datetime import datetime, timezone
+from django.views.generic import (ListView, CreateView, )
 
-from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
-from django.views.generic import (ListView, UpdateView, DeleteView)
-from apps.products.models import Product as ProductModel
-from apps.products.forms import ProductCreateForm, ProductUpdateForm
+from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction
-from utils.helpers import is_ajax
 
 
 class TransactionListView(ListView):
@@ -22,4 +16,13 @@ class TransactionListView(ListView):
         return context
 
 
-product_list = TransactionListView.as_view()
+transaction_list = TransactionListView.as_view()
+
+
+class TransactionAddView(CreateView):
+    model = Transaction
+    form_class = TransactionCreateForm
+    template_name = "transactions/transaction_add.html"
+
+
+transaction_add = TransactionAddView.as_view()

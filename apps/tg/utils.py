@@ -54,8 +54,8 @@ def generate_order_number():
 
 
 def generation_price(order):
-    product = Product.productListByUser.get_product(order.printColor, order.printSize, order.printBindingType)
-    order.price = order.page_number * product.price
+    # product = Product.productListByUser.get_product(order.printColor, order.printSize, order.printBindingType)
+    # order.price = order.page_number * product.price
     order.save()
 
 

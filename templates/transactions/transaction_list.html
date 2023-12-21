@@ -14,7 +14,144 @@
             </ol>
         </div>
     </header>
+    <div class="row">
 
+        <div class="col-lg-3 col-xl-3">
+            <section class="card card-featured-left card-featured-tertiary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-tertiary">
+                                <i class="fas fa-balance-scale"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Balans</h4>
+                                <div class="info mt-4">
+                                    <strong class="amount">$ 14,890.30</strong>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-xl-3">
+            <section class="card card-featured-left card-featured-primary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-primary">
+                                <i class="fas fa-money-bill"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Debet</h4>
+                                <div class="info mt-4">
+                                    <strong class="amount">$ 14,890.30</strong>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-xl-3">
+            <section class="card card-featured-left card-featured-secondary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-secondary">
+                                <i class="fas fa-money-bill"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Kredit</h4>
+                                <div class="info mt-4">
+                                    <strong class="amount">$ 14,890.30</strong>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-3 col-xl-2">
+            <section class="card card-featured-left card-featured-success mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col">
+                            <div class="summary">
+
+                                <div class="info mt-4 text-center">
+                                    <a type="button" href="{% url 'transactions:transaction_add'%}" class="btn btn-success">
+                                        <i class="fas fa-plus"></i>Qo'shmoq
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                </header>
+                <div class="card-body">
+                    <table class="table table-responsive-lg table-bordered table-striped table-sm mb-0">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Muddat</th>
+                            <th class="text-end">Ta'rif</th>
+                            <th class="text-end">Tur</th>
+                            <th class="text-end">Mijoz</th>
+                            <th class="text-end">Mahsulot</th>
+                            <th class="text-end">Debet</th>
+                            <th class="text-end">Kredit</th>
+                            <th class="text-end">Saldo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for transaction in  transaction_list %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ transaction.created_at }}</td>
+                            <td class="text-end">{{ transaction.description }}</td>
+                            <td class="text-end">{{ transaction.cash_type }}</td>
+                            <td class="text-end">{{ transaction.client }}</td>
+                            <td class="text-end">{{ transaction.product }}</td>
+                            <td class="text-end">{{ transaction.double_entry_accounting }}</td>
+                            <td class="text-end">{{ transaction.double_entry_accounting }}</td>
+                            <td class="text-end">{{ transaction.balance }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
 
 
 
