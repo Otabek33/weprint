@@ -44,6 +44,7 @@ class Transaction(models.Model):
                                                   choices=DoubleEntryAccounting.choices,
                                                   default=DoubleEntryAccounting.CREDIT)
     balance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    company_balance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     created_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
