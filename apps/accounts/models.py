@@ -12,8 +12,8 @@ class UserRole(models.Model):
 
     class Meta:
         """Class representing a person"""
-        verbose_name = "Тип пользователя"
-        verbose_name_plural = "Типы пользователей"
+        verbose_name = "Foydaluvchilar turi"
+        verbose_name_plural = "Foydaluvchilar turlari"
 
     def __str__(self) -> str:
         return str(self.name)
@@ -26,12 +26,12 @@ class Company(models.Model):
     address = models.TextField("Адрес", blank=True, max_length=100)
     email = models.EmailField("Почта", max_length=100, null=True, blank=True)
     phone = models.CharField("Телефон", max_length=100, null=True, blank=True)
-    balance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
 
     class Meta:
         """Class representing a person"""
-        verbose_name = "Компания"
-        verbose_name_plural = "Компании"
+        verbose_name = "Kompaniya"
+        verbose_name_plural = "Kompaniyalar"
 
     def __str__(self) -> str:
         return str(self.name)
@@ -46,8 +46,8 @@ class CustomUser(AbstractUser):
         return f"{self.first_name} {self.last_name}"
 
     class Meta:
-        verbose_name = _("Пользователь")
-        verbose_name_plural = _("Пользователи")
+        verbose_name = _("Foydanuvchi")
+        verbose_name_plural = _("Foydalanuvchilar")
 
     # def get_absolute_url(self):
     #     return reverse("accounts:user-detail", kwargs={"pk": self.id})
@@ -68,3 +68,26 @@ class CustomUser(AbstractUser):
     def is_super_user(self):
         """Class representing a person"""
         return self.role.name == 'superuser'
+
+
+class MoneySaver(models.Model):
+    from apps.transactions.models import CashType
+    reester_number = models.CharField("Reyester", blank=True, max_length=55)
+    cashType = models.IntegerField("Pul turi",
+                                   choices=CashType.choices,
+                                   default=CashType.CASH)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+
+    company = models.ForeignKey(Company,
+                                on_delete=models.SET_NULL,
+                                blank=True,
+                                null=True,
+                                related_name="company_moneySaver", )
+
+    class Meta:
+        """Class representing a person"""
+        verbose_name = "Pul saqlash turi"
+        verbose_name_plural = "Pul saqlash turlari"
+
+    def __str__(self) -> str:
+        return str(self.reester_number)

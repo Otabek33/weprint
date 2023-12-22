@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .models import (CustomUser,
-                     UserRole, Company)
+                     UserRole, Company, MoneySaver)
 
 
 @admin.register(CustomUser)
@@ -49,6 +49,14 @@ class CompanyAdmin(admin.ModelAdmin):
         "phone",
 
     ]
+@admin.register(MoneySaver)
+class MoneySaverAdmin(admin.ModelAdmin):
+    list_display = [
+        "reester_number",
+        "cashType",
+        "balance",
+        "company",
 
+    ]
 
 

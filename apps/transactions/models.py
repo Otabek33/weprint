@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import CustomUser
+from apps.accounts.models import CustomUser, Company
 from apps.clients.models import Client
 from apps.orders.models import Order
 from apps.products.models import Product
@@ -46,6 +46,11 @@ class Transaction(models.Model):
                                                   default=DoubleEntryAccounting.CREDIT)
     balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     company_balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    company = models.ForeignKey(Company,
+                                on_delete=models.SET_NULL,
+                                blank=True,
+                                null=True,
+                                related_name="company_transaction", )
     created_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
