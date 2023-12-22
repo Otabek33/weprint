@@ -16,7 +16,7 @@ class TransactionListView(ListView):
 
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['transaction_list'] = Transaction.objects.filter(created_by=self.request.user, deleted_status=False)
+        context['transaction_list'] = Transaction.objects.filter(deleted_status=False)
         return context
 
 
