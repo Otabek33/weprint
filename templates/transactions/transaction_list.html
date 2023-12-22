@@ -122,6 +122,7 @@
                         <tr>
                             <th>#</th>
                             <th class="text-center">Muddat</th>
+                            <th class="text-center">To'lov raqami</th>
                             <th class="text-center">Ta'rif</th>
                             <th class="text-center">Tur</th>
                             <th class="text-center">Mijoz</th>
@@ -136,6 +137,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
+                                <td class="text-center">{{ transaction.payment_order|floatformat:"g" }}</td>
                                 <td class="text-center">{{ transaction.description }}</td>
                                 <td class="text-center">{{ transaction.get_cash_type_display }}</td>
                                 <td class="text-center">{{ transaction.client }}</td>
@@ -151,7 +153,11 @@
                                 {% else %}
                                     <td class="text-center">0</td>
                                 {% endif %}
-                                <td class="text-center">0</td>
+                            {% if transaction.company_balance > 0 %}
+                                <td class="text-center text-success">{{ transaction.company_balance|floatformat:"2g" }}</td>
+                                {% else %}
+                                <td class="text-center text-danger">{{ transaction.company_balance|floatformat:"2g" }}</td>
+                            {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>

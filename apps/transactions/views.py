@@ -8,6 +8,7 @@ from django.views.generic import (ListView, CreateView, )
 
 from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction, CashType
+from apps.transactions.utils import payment_order_generation, company_balance_generation
 
 
 class TransactionListView(ListView):
@@ -29,10 +30,12 @@ class TransactionAddView(CreateView):
     template_name = "transactions/transaction_add.html"
 
     def form_valid(self, form):
-        product = form.save(commit=False)
-        product.created_by = self.request.user
-        product.created_at = datetime.now()
-        product.save()
+        transaction = form.save(commit=False)
+        transaction.created_by = self.request.user
+        transaction.created_at = datetime.now()
+        transaction.payment_order = payment_order_generation()
+        transaction.save()
+        company_balance_generation(transaction, self.request.user)
         return redirect("transactions:transaction_list")
 
     def form_invalid(self, form):

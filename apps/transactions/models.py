@@ -25,6 +25,7 @@ class DoubleEntryAccounting(models.IntegerChoices):
 
 class Transaction(models.Model):
     """Class representing a person"""
+    payment_order = models.IntegerField("To'lov raqami", blank=True, null=True)
 
     description = models.CharField("Ta'rif", blank=True, max_length=55)
     cash_type = models.IntegerField("Pul turi",
@@ -43,8 +44,8 @@ class Transaction(models.Model):
     double_entry_accounting = models.IntegerField("Pul yo'nalishi",
                                                   choices=DoubleEntryAccounting.choices,
                                                   default=DoubleEntryAccounting.CREDIT)
-    balance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
-    company_balance = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    company_balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     created_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
