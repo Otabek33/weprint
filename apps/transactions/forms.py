@@ -29,13 +29,13 @@ class TransactionCreateForm(forms.ModelForm):
         }),
         required=False,
     )
-    order = forms.ModelChoiceField(
-        queryset=Order.objects.exclude(order_status=OrderStatus.FINISH),
-        widget=forms.Select(attrs={"class": "form-control",
-                                   "data-plugin-selectTwo": "",
-                                   "data-plugin-options": '{"minimumInputLength": 2}', }),
-        required=False,
-    )
+    # order = forms.ModelChoiceField(
+    #     queryset=Order.objects.exclude(order_status=OrderStatus.FINISH),
+    #     widget=forms.Select(attrs={"class": "form-control",
+    #                                "data-plugin-selectTwo": "",
+    #                                "data-plugin-options": '{"minimumInputLength": 2}', }),
+    #     required=False,
+    # )
     balance = forms.DecimalField(
         widget=forms.NumberInput(attrs={"class": "form-control",}), required=True
     )
@@ -47,6 +47,6 @@ class TransactionCreateForm(forms.ModelForm):
             "cash_type",
             "double_entry_accounting",
             "client",
-            "order",
+            # "order",
             "balance",
         ]

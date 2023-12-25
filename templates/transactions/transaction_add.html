@@ -80,7 +80,9 @@
                             <label class="col-lg-3 control-label text-lg-end pt-2"
                                    for="inputRounded">Buyurtma</label>
                             <div class="col-lg-6">
-                                {{ form.order }}
+                                <select class="form-control mb-3" id="order_id">
+
+                                </select>
                             </div>
                         </div>
 
@@ -176,7 +178,7 @@
                     },
                     success: function (response) {
                         // Handle the response from the backend
-                        console.log('Backend response:', response);
+                        updateSelectOptions(response.data);
                         // Add your logic here
                     },
                     error: function (error) {
@@ -185,6 +187,30 @@
                     }
                 });
             });
+
+            // Function to update the <select> options
+            function updateSelectOptions(options) {
+                var selectElement = $('#order_id');
+
+                // Clear existing options
+                selectElement.empty();
+                selectElement.append($('<option>'));
+
+
+                // Check if options is defined and is an array
+                if (Array.isArray(options)) {
+                    // Add new options
+                    options.forEach(function (option) {
+                        var optionElement = $('<option>', {
+                            value: option.uuid,
+                            text: option.order_number
+                        });
+                        selectElement.append(optionElement);
+                    });
+                } else {
+                    console.error('Invalid options data:', options);
+                }
+            }
         });
     </script>
 
