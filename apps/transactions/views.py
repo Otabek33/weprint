@@ -8,8 +8,7 @@ from django.views.generic import (ListView, CreateView, )
 
 from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction
-from apps.transactions.utils import payment_order_generation, company_balance_generation, get_company, \
-    generation_header_context
+from apps.transactions.utils import payment_order_generation, company_balance_generation, get_company
 
 
 class TransactionListView(ListView):
@@ -19,7 +18,7 @@ class TransactionListView(ListView):
     def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context['transaction_list'] = Transaction.objects.filter(deleted_status=False)
-        context = generation_header_context(context, self.request.user)
+        context['company'] = get_company(self.request.user)
         return context
 
 

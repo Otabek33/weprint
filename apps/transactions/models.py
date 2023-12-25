@@ -24,7 +24,7 @@ class DoubleEntryAccounting(models.IntegerChoices):
 
 
 class Transaction(models.Model):
-    """Class representing a person"""
+    """Transaction"""
     payment_order = models.IntegerField("To'lov raqami", blank=True, null=True)
 
     description = models.CharField("Ta'rif", blank=True, max_length=55)
@@ -70,7 +70,7 @@ class Transaction(models.Model):
     deleted_status = models.BooleanField(default=False)
 
     class Meta:
-        """Class representing a person"""
+        """Class representing a transaction"""
         verbose_name = "Транзакция"
         verbose_name_plural = "Транзакция"
 

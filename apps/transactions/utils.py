@@ -26,15 +26,18 @@ def process_updating_company_balance(transaction, company):
         company.balance = transaction.company_balance
     else:
         company.balance = +transaction.company_balance
+    company.total_debit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.DEBIT)
+    company.total_credit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.CREDIT)
     company.save()
 
 
-def generation_header_context(context, user):
-    company = user.company
-    context['balance'] = company.balance
-    context['total_debit'] = company.balance
-    context['total_credit'] = company.balance
-    return context
+def generation_total_amount_from_transaction(company, double_entry_accounting):
+    from django.db.models import Sum
+    total_amount = \
+        Transaction.objects.filter(company=company, deleted_status=False,
+                                   double_entry_accounting=double_entry_accounting).aggregate(
+            Sum('balance'))['balance__sum']
+    return total_amount
 
 
 def get_company(user):
