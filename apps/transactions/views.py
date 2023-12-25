@@ -1,4 +1,5 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
+import decimal
 from datetime import datetime, timezone
 from typing import Any, Dict
 
@@ -12,7 +13,7 @@ from apps.orders.models import Order, OrderStatus
 from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction
 from apps.transactions.serializers import OrderSerializer
-from apps.transactions.utils import payment_order_generation, company_balance_generation, get_company
+from apps.transactions.utils import payment_order_generation, company_balance_generation, get_company, get_order_by_id
 from utils.helpers import is_ajax
 
 
@@ -41,7 +42,10 @@ class TransactionAddView(CreateView):
         transaction.created_at = datetime.now()
         transaction.company = get_company(self.request.user)
         transaction.payment_order = payment_order_generation()
-        transaction.company_balance = company_balance_generation(transaction)
+        price = decimal.Decimal(self.request.POST.get('price'))
+        transaction.balance = price
+        transaction.order = get_order_by_id(self.request.POST.get('order'))
+        transaction.company_balance = company_balance_generation(transaction, price)
         transaction.save()
         return redirect("transactions:transaction_list")
 
