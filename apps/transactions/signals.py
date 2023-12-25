@@ -8,4 +8,5 @@ from apps.transactions.utils import process_updating_company_balance
 @receiver(post_save, sender=Transaction)
 def updating_company_balance(sender, instance, created, **kwargs):
     transaction = Transaction.objects.get(id=instance.id)
-    process_updating_company_balance(transaction.balance, transaction.company)
+    process_updating_company_balance(transaction, transaction.company)
+

@@ -47,6 +47,7 @@ class CompanyAdmin(admin.ModelAdmin):
         "address",
         "email",
         "phone",
+        "balance",
 
     ]
 @admin.register(MoneySaver)
