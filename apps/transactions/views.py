@@ -1,14 +1,19 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict
 
-from django.http import HttpResponse
+from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from django.views.generic import (ListView, CreateView, )
+from django.views.generic import (ListView, CreateView, DetailView, )
 
+from apps.clients.models import Client
+from apps.orders.models import Order, OrderStatus
 from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction
+from apps.transactions.serializers import OrderSerializer
 from apps.transactions.utils import payment_order_generation, company_balance_generation, get_company
+from utils.helpers import is_ajax
 
 
 class TransactionListView(ListView):
@@ -45,3 +50,27 @@ class TransactionAddView(CreateView):
 
 
 transaction_add = TransactionAddView.as_view()
+
+
+class TranslateClientChoose(DetailView):
+    model = Client
+
+    def post(self, request, *args, **kwargs):
+        if is_ajax(request):
+            pk = request.POST.get("selectedOption")
+            print(pk)
+            client = self.model.objects.get(uuid=pk)
+            order_list = Order.objects.filter(
+                Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
+            )
+            # Convert the QuerySet to a list of dictionaries
+            # Serialize only specific fields
+            serializer = OrderSerializer(order_list, many=True)
+
+            # Convert the serialized data to JSON
+            serialized_data = serializer.data
+            return JsonResponse({"success": True, "data": serialized_data}, safe=False)
+        return JsonResponse({"success": False, "data": None})
+
+
+transaction_client_choose = TranslateClientChoose.as_view()

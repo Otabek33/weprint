@@ -45,52 +45,51 @@
                     </header>
                     <div class="card-body">
 
-                            <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2"
-                                       for="inputDefault">Ta'rif</label>
-                                <div class="col-lg-6">
-                                    {{ form.description }}
-                                </div>
+                        <div class="form-group row pb-4">
+                            <label class="col-lg-3 control-label text-lg-end pt-2"
+                                   for="inputDefault">Ta'rif</label>
+                            <div class="col-lg-6">
+                                {{ form.description }}
                             </div>
+                        </div>
 
-                            <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2"
-                                       for="inputDisabled">Pul turi</label>
-                                <div class="col-lg-6">
-                                    {{ form.cash_type }}
-                                </div>
+                        <div class="form-group row pb-4">
+                            <label class="col-lg-3 control-label text-lg-end pt-2"
+                                   for="inputDisabled">Pul turi</label>
+                            <div class="col-lg-6">
+                                {{ form.cash_type }}
                             </div>
+                        </div>
 
-                            <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Ikkiyoqlama
-                                    yozuv</label>
-                                <div class="col-lg-6">
-                                    {{ form.double_entry_accounting }}
-                                </div>
+                        <div class="form-group row pb-4">
+                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Ikkiyoqlama
+                                yozuv</label>
+                            <div class="col-lg-6">
+                                {{ form.double_entry_accounting }}
                             </div>
+                        </div>
 
-                            <div class="form-group row pb-3">
-                                <label class="col-lg-3 control-label text-lg-end pt-2" for="inputHelpText">Mijoz</label>
-                                <div class="col-lg-6">
-                                    {{ form.client }}
-                                </div>
+                        <div class="form-group row pb-3">
+                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputHelpText">Mijoz</label>
+                            <div class="col-lg-6">
+                                {{ form.client }}
                             </div>
+                        </div>
 
-                            <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2"
-                                       for="inputRounded">Buyurtma</label>
-                                <div class="col-lg-6">
-                                    {{ form.order }}
-                                </div>
+                        <div class="form-group row pb-4">
+                            <label class="col-lg-3 control-label text-lg-end pt-2"
+                                   for="inputRounded">Buyurtma</label>
+                            <div class="col-lg-6">
+                                {{ form.order }}
                             </div>
+                        </div>
 
-                            <div class="form-group row pb-4">
-                                <label class="col-lg-3 control-label text-lg-end pt-2" for="inputFocus">Summa</label>
-                                <div class="col-lg-6">
-                                    {{ form.balance }}
-                                </div>
+                        <div class="form-group row pb-4">
+                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputFocus">Summa</label>
+                            <div class="col-lg-6">
+                                {{ form.balance }}
                             </div>
-
+                        </div>
 
 
                     </div>
@@ -115,6 +114,9 @@
         </div>
     </form>
     <!-- end: page -->
+
+
+
 
 
 
@@ -150,5 +152,40 @@
     <!-- Examples -->
     <script src="{% static 'js/examples/examples.advanced.form.js' %}"></script>
 
+    <script>
+        const csrftoken = $("[name=csrfmiddlewaretoken]").val();
+        $(document).ready(function () {
+            // Initialize Select2 on your select element
+            $('#id_client').select2({
+                minimumInputLength: 2
+                // Add other Select2 options here if needed
+            });
+
+            // Add a change event listener to the Select2 element
+            $('#id_client').on('change', function () {
+                const selectedOption = $(this).val();
+                console.log(`User selected: ${selectedOption}`);
+                // Add your logic here
+                // Make an AJAX request to the backend
+                $.ajax({
+                    url: '{% url 'transactions:transaction_client_choose' %}',  // Replace with your actual backend endpoint
+                    type: 'POST',  // Change the HTTP method if needed
+                    data: {selectedOption: selectedOption},
+                    headers: {
+                        "X-CSRFToken": csrftoken
+                    },
+                    success: function (response) {
+                        // Handle the response from the backend
+                        console.log('Backend response:', response);
+                        // Add your logic here
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        // Handle the error
+                    }
+                });
+            });
+        });
+    </script>
 
 {% endblock %}
