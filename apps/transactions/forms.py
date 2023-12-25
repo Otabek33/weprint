@@ -36,9 +36,9 @@ class TransactionCreateForm(forms.ModelForm):
     #                                "data-plugin-options": '{"minimumInputLength": 2}', }),
     #     required=False,
     # )
-    balance = forms.DecimalField(
-        widget=forms.NumberInput(attrs={"class": "form-control",}), required=True
-    )
+    # balance = forms.DecimalField(
+    #     widget=forms.NumberInput(attrs={"class": "form-control",}), required=True
+    # )
 
     class Meta:
         model = Transaction
@@ -48,5 +48,5 @@ class TransactionCreateForm(forms.ModelForm):
             "double_entry_accounting",
             "client",
             # "order",
-            "balance",
+            # "balance",
         ]

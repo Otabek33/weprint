@@ -81,7 +81,6 @@
                                    for="inputRounded">Buyurtma</label>
                             <div class="col-lg-6">
                                 <select class="form-control mb-3" id="order_id">
-
                                 </select>
                             </div>
                         </div>
@@ -89,7 +88,7 @@
                         <div class="form-group row pb-4">
                             <label class="col-lg-3 control-label text-lg-end pt-2" for="inputFocus">Summa</label>
                             <div class="col-lg-6">
-                                {{ form.balance }}
+                                <input class="form-control" id="price">
                             </div>
                         </div>
 
@@ -211,6 +210,87 @@
                     console.error('Invalid options data:', options);
                 }
             }
+        });
+
+        $(document).ready(function () {
+            // Initialize Select2 on your select element
+            $('#id_client').select2({
+                minimumInputLength: 2
+                // Add other Select2 options here if needed
+            });
+
+            // Add a change event listener to the Select2 element
+            $('#id_client').on('change', function () {
+                const selectedOption = $(this).val();
+                console.log(`User selected: ${selectedOption}`);
+                // Add your logic here
+                // Make an AJAX request to the backend
+                $.ajax({
+                    url: '{% url 'transactions:transaction_client_choose' %}',  // Replace with your actual backend endpoint
+                    type: 'POST',  // Change the HTTP method if needed
+                    data: {selectedOption: selectedOption},
+                    headers: {
+                        "X-CSRFToken": csrftoken
+                    },
+                    success: function (response) {
+                        // Handle the response from the backend
+                        updateSelectOptions(response.data);
+                        // Add your logic here
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                        // Handle the error
+                    }
+                });
+            });
+
+            // Function to update the <select> options
+            function updateSelectOptions(options) {
+                var selectElement = $('#order_id');
+
+                // Clear existing options
+                selectElement.empty();
+                selectElement.append($('<option>'));
+
+
+                // Check if options is defined and is an array
+                if (Array.isArray(options)) {
+                    // Add new options
+                    options.forEach(function (option) {
+                        var optionElement = $('<option>', {
+                            value: option.uuid,
+                            text: option.order_number
+                        });
+                        selectElement.append(optionElement);
+                    });
+                } else {
+                    console.error('Invalid options data:', options);
+                }
+            }
+
+
+            // Add change event listener to the <select> element
+            $('#order_id').on('change', function () {
+                // Get the selected value
+                var selectedValue = $(this).val();
+
+                // Make AJAX request to the backend with the selected value
+                $.ajax({
+                    url: '{% url 'transactions:transaction_order_price' %}',  // Replace with your actual backend endpoint
+                    type: 'POST',  // Use 'GET' or 'POST' based on your backend view
+                    data: {selectedValue: selectedValue},
+                    headers: {
+                        "X-CSRFToken": csrftoken
+                    },
+                    success: function (response) {
+                        $('#price').val(response.data);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+
         });
     </script>
 

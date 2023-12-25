@@ -72,3 +72,17 @@ class TranslateClientChoose(DetailView):
 
 
 transaction_client_choose = TranslateClientChoose.as_view()
+
+
+class TranslatePrice(DetailView):
+    model = Order
+
+    def post(self, request, *args, **kwargs):
+        if is_ajax(request):
+            pk = request.POST.get("selectedValue")
+            order = self.model.objects.get(uuid=pk)
+            return JsonResponse({"success": True, "data": order.price}, safe=False)
+        return JsonResponse({"success": False, "data": None})
+
+
+transaction_order_price = TranslatePrice.as_view()
