@@ -271,8 +271,6 @@ def get_document(message):
             bot.send_message(message.chat.id, mess, reply_markup=main_menu())
             bot.send_document(chat_id=GROUP_CHAT_ID, document=open(file_path, 'rb'), caption=admin_message)
             os.remove(file_path)
-
-
         else:
             bot.send_message(message.chat.id, "Yuborilayotgan hujjat pdf yoki word ko'rinishida bo'lishi kerak")
             # Save the file content to a local file
