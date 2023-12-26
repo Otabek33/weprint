@@ -37,25 +37,32 @@ def get_or_create_order(message):
     return order.created_by, order
 
 
+def order_generation():
+    last_transaction = len(Order.objects.exclude(order_status=OrderStatus.CREATION).all())
+    if last_transaction is not None:
+        # Transaction exists
+        return last_transaction + 1
+    else:
+        return 1
+
+
 def generate_order_number():
     # Static prefix for the order number
-    prefix = "OB"
+    prefix = "BUY"
 
     # Current timestamp to include in the order number
-    timestamp = datetime.now().strftime("%d%m%H%M")
-
-    # Generate a random UUID and extract the last portion to add some uniqueness
-    unique_id = str(uuid.uuid4())[-2:]
+    timestamp = datetime.now().strftime("%d%m%Y%H%M")
 
     # Combine the elements to create the order number
-    order_number = f"{prefix}-{timestamp}-{unique_id}"
+    order_number = f"{prefix}-{timestamp}-{order_generation()}"
 
     return order_number
 
 
 def generation_price(order):
-    # product = Product.productListByUser.get_product(order.printColor, order.printSize, order.printBindingType)
-    # order.price = order.page_number * product.price
+    product = Product.objects.get(printColor=order.printColor, printSize=order.printSize,
+                                     printBindingType=order.printBindingType)
+    order.price = order.page_number * product.price
     order.save()
 
 

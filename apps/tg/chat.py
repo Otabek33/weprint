@@ -241,8 +241,8 @@ def get_document(message):
 
             order = save_order_file(message, file_path, order_number)
 
-            mess = f'<b>Sizning buyurtmangiz muvoffaqiyatli yaratildi.\nTez orada xodimimiz siz bilan bog\'lanadi!!!</b>\n\n\n' \
-                   f'<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n' \
+            mess = f'<b>Sizning buyurtmangiz muvoffaqiyatli yaratildi.\n\nTez orada xodimimiz siz bilan bog\'lanadi!!!</b>\n\n\n' \
+                   f'<b>Buyurtma 🔍 :</b> {order.order_number}\n\n' \
                    f'<b>Varaqlar soni  📄 : </b> {order.page_number}\n\n' \
                    f'<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n' \
                    f'<b>Rangi 📕 :</b> {order.get_printColor_display()}\n\n' \
@@ -251,7 +251,7 @@ def get_document(message):
                    f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
                    f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
             admin_message = f'<b>Yangi buyurtma </b>' \
-                            f'\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}' \
+                            f'\n\n\n\n<b>Buyurtma  🔍 :</b> {order.order_number}' \
                             f'\n\n<b>Buyurtma beruvchi  👤:</b> {order.created_by}' \
                             f'\n\n<b>Telefon 📞 :</b> {order.created_by.phone}' \
                             f'\n\n<b>To\'lov turi 💳 :</b> {order.get_cash_type_display()}' \
