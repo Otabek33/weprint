@@ -44,8 +44,8 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center">{{ order.order_number }}</td>
                                 <td class="text-center">{{ order.created_at }}</td>
-                                <td class="text-center">{{ order.order_number }}</td>
-                                <td class="text-center">{{ order.userId }}</td>
+                                <td class="text-center">{{ order.get_order_status_display }}</td>
+
                                 <td class="text-center text-success">
                                     +{{ order.total_debit|floatformat:"2g" }}</td>
                                 <td class="text-center text-danger">-{{ order.total_credit|floatformat:"2g" }}</td>

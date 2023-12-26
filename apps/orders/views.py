@@ -4,6 +4,7 @@ from django.views.generic import (ListView, DetailView, DeleteView)
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
 from django.contrib import messages
+from django.db.models import Q
 
 
 class OrderListView(ListView):
@@ -66,7 +67,9 @@ class DebitCreditView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         client = get_object_or_404(Client, pk=self.kwargs["pk"])
-        context["order_list"] = Order.objects.filter(created_by=client)
+        context["order_list"] = Order.objects.filter(
+            Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
+        )
         return context
 
 
