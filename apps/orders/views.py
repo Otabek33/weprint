@@ -55,3 +55,4 @@ class OrderCancelView(DetailView):
 
 
 order_cancel = OrderCancelView.as_view()
+

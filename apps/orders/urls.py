@@ -10,4 +10,5 @@ urlpatterns = [
     path("<uuid:pk>/", order_detail, name="order_detail"),
     path('<uuid:pk>/cancel-order/', order_cancel, name='order_cancel'),
 
+
 ]

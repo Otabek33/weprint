@@ -44,8 +44,8 @@ class Transaction(models.Model):
     double_entry_accounting = models.IntegerField("Pul yo'nalishi",
                                                   choices=DoubleEntryAccounting.choices,
                                                   default=DoubleEntryAccounting.CREDIT)
-    balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    company_balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    company_balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     company = models.ForeignKey(Company,
                                 on_delete=models.SET_NULL,
                                 blank=True,

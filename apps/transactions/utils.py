@@ -1,10 +1,6 @@
-import decimal
-
-from django.db.models.signals import post_save
-
-from apps.accounts.models import Company
-from apps.orders.models import Order, OrderStatus
-from apps.transactions.models import Transaction, CashType, DoubleEntryAccounting
+from datetime import datetime
+from apps.orders.models import Order
+from apps.transactions.models import Transaction, DoubleEntryAccounting
 
 
 def payment_order_generation():
@@ -27,27 +23,58 @@ def process_updating_company_balance(transaction, company):
         company.balance = transaction.company_balance
     else:
         company.balance = +transaction.company_balance
-    company.total_debit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.DEBIT)
-    company.total_credit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.CREDIT)
+    company.total_debit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.DEBIT
+                                                                   )
+    company.total_credit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.CREDIT
+                                                                    )
     company.save()
 
 
 def process_updating_order(transaction, order):
-    transaction_price = transaction.balance
-    order_price = order.price
     if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
-        if transaction_price >= order_price:
-            order.order_status = OrderStatus.FINISH
-            order.save()
+        order.total_credit = transaction.balance
+        if order.total_debit > 0:
+            order.residual_value = order.total_debit - order.total_credit
+        else:
+            order.residual_value = 0 - order.total_credit
+    else:
+        order.total_debit = transaction.balance
+        if order.total_credit > 0:
+            order.residual_value = order.total_debit - order.total_credit
+        else:
+            order.residual_value = order.total_debit - 0
+    order.save()
+
+
+def process_updating_client(transaction, client):
+    if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
+        client.total_credit = +transaction.balance
+        if client.total_debit > 0:
+            client.residual_value = client.total_debit - client.total_credit
+        else:
+            client.residual_value = 0 - client.total_credit
+    else:
+        client.total_debit = +transaction.balance
+        if client.total_credit > 0:
+            client.residual_value = client.total_debit - client.total_credit
+        else:
+            client.residual_value = client.total_debit - 0
+    client.updated_at = datetime.now()
+    client.save()
 
 
 def generation_total_amount_from_transaction(company, double_entry_accounting):
-    from django.db.models import Sum
-    total_amount = \
-        Transaction.objects.filter(company=company, deleted_status=False,
-                                   double_entry_accounting=double_entry_accounting).aggregate(
-            Sum('balance'))['balance__sum']
-    return total_amount
+    from django.db.models import Sum, F
+    # Your existing query
+    result = Transaction.objects.filter(
+        company=company,
+        deleted_status=False,
+        double_entry_accounting=double_entry_accounting
+    ).aggregate(
+        balance_sum=Sum(F('balance'))
+    )
+
+    return result['balance_sum'] or 0
 
 
 def get_company(user):

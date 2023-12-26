@@ -36,9 +36,9 @@ class Client(models.Model):
     )
     updated_at = models.DateTimeField(blank=True, null=True)
     deleted_status = models.BooleanField(default=False)
-    total_debit = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    total_credit = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    residual_value = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    residual_value = models.DecimalField(max_digits=20, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -47,6 +47,6 @@ class Client(models.Model):
         return reverse("clients:client_list")
 
     class Meta:
-        """Class representing a person"""
+        """Class representing a client"""
         verbose_name = _("Client")
         verbose_name_plural = _("Clients")

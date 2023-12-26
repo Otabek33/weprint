@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Transaksiyalar{% endblock %}
+
+
+{% block content %}
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard ></h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span>Debit-Kredit</span></li>
+            </ol>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                </header>
+                <div class="card-body">
+                    <table class="table table-responsive-lg table-bordered table-striped table-sm mb-0">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-center">Mijoz</th>
+                            <th class="text-center">ChatId</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in  client_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td class="text-center">{{ client.first_name }} {{ client.last_name }}</td>
+                                <td class="text-center">{{ client.userId }}</td>
+                                    <td class="text-center text-success">
+                                        +{{ client.total_debit|floatformat:"2g" }}</td>
+                                    <td class="text-center text-danger">-{{ client.total_credit|floatformat:"2g" }}</td>
+
+                                {% if client.residual_value > 0 %}
+                                    <td class="text-center text-success">{{ client.residual_value|floatformat:"2g" }}</td>
+                                {% else %}
+                                    <td class="text-center text-danger">{{ client.residual_value|floatformat:"2g" }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+<!-- Specific Page Vendor -->
+{% block additional_js %}
+
+{% endblock %}

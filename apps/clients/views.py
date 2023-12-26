@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from django.views.generic import (CreateView, UpdateView, DeleteView)
+from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
 from apps.clients.forms import ClientCreateForm, ClientUpdateForm
 from apps.clients.models import Client
 from utils.helpers import is_ajax
@@ -79,3 +79,18 @@ class ClientCreateView(CreateView):
 
 
 client_add = ClientCreateView.as_view()
+
+
+class ClientDebitCredit(ListView):
+    model = Client
+    template_name = "debit_credit/client_debit_credit.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["client_list"] = Client.objects.filter(deleted_status=False).order_by(
+            "created_at")
+
+        return context
+
+
+client_debit_credit = ClientDebitCredit.as_view()
