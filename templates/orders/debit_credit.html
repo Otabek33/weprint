@@ -30,29 +30,30 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th class="text-center">Mijoz</th>
-                            <th class="text-center">ChatId</th>
+                            <th class="text-center">Buyurtma</th>
+                            <th class="text-center">Yaratildi</th>
+                            <th class="text-center">Buyurtma status</th>
                             <th class="text-center">Debet</th>
                             <th class="text-center">Kredit</th>
                             <th class="text-center">Saldo</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for client in  client_list %}
+                        {% for order in  order_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td class="text-center"><a
-                                        href="{% url 'orders:debit_credit' client.uuid %}">{{ client.first_name }} {{ client.last_name }}</a>
-                                </td>
-                                <td class="text-center">{{ client.userId }}</td>
+                                <td class="text-center">{{ order.order_number }}</td>
+                                <td class="text-center">{{ order.created_at }}</td>
+                                <td class="text-center">{{ order.order_number }}</td>
+                                <td class="text-center">{{ order.userId }}</td>
                                 <td class="text-center text-success">
-                                    +{{ client.total_debit|floatformat:"2g" }}</td>
-                                <td class="text-center text-danger">-{{ client.total_credit|floatformat:"2g" }}</td>
+                                    +{{ order.total_debit|floatformat:"2g" }}</td>
+                                <td class="text-center text-danger">-{{ order.total_credit|floatformat:"2g" }}</td>
 
-                                {% if client.residual_value > 0 %}
-                                    <td class="text-center text-success">{{ client.residual_value|floatformat:"2g" }}</td>
+                                {% if order.residual_value > 0 %}
+                                    <td class="text-center text-success">{{ order.residual_value|floatformat:"2g" }}</td>
                                 {% else %}
-                                    <td class="text-center text-danger">{{ client.residual_value|floatformat:"2g" }}</td>
+                                    <td class="text-center text-danger">{{ order.residual_value|floatformat:"2g" }}</td>
                                 {% endif %}
                             </tr>
                         {% endfor %}

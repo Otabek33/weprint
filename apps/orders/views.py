@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import (ListView, DetailView, DeleteView)
+
+from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
 from django.contrib import messages
 
@@ -56,3 +58,16 @@ class OrderCancelView(DetailView):
 
 order_cancel = OrderCancelView.as_view()
 
+
+class DebitCreditView(ListView):
+    model = Order
+    template_name = "orders/debit_credit.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        client = get_object_or_404(Client, pk=self.kwargs["pk"])
+        context["order_list"] = Order.objects.filter(created_by=client)
+        return context
+
+
+debit_credit = DebitCreditView.as_view()
