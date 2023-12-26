@@ -36,6 +36,9 @@ class Client(models.Model):
     )
     updated_at = models.DateTimeField(blank=True, null=True)
     deleted_status = models.BooleanField(default=False)
+    total_debit = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    total_credit = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    residual_value = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

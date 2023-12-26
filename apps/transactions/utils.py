@@ -3,7 +3,7 @@ import decimal
 from django.db.models.signals import post_save
 
 from apps.accounts.models import Company
-from apps.orders.models import Order
+from apps.orders.models import Order, OrderStatus
 from apps.transactions.models import Transaction, CashType, DoubleEntryAccounting
 
 
@@ -16,7 +16,7 @@ def payment_order_generation():
         return 1
 
 
-def company_balance_generation(transaction,price):
+def company_balance_generation(transaction, price):
     return transaction.company.balance - price \
         if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT \
         else transaction.company.balance + price
@@ -30,6 +30,15 @@ def process_updating_company_balance(transaction, company):
     company.total_debit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.DEBIT)
     company.total_credit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.CREDIT)
     company.save()
+
+
+def process_updating_order(transaction, order):
+    transaction_price = transaction.balance
+    order_price = order.price
+    if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
+        if transaction_price >= order_price:
+            order.order_status = OrderStatus.FINISH
+            order.save()
 
 
 def generation_total_amount_from_transaction(company, double_entry_accounting):

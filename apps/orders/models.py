@@ -53,7 +53,10 @@ class Order(models.Model):
                                          null=True,
                                          related_name="printBindingTypes", )
     file = models.FileField(upload_to="uploads/%Y/%m/%d/")
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    price = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
+    total_debit = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    total_credit = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    residual_value = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     page_number = models.IntegerField(default=0)
     order_status = models.IntegerField(
         choices=OrderStatus.choices,
