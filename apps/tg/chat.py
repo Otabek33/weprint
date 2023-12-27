@@ -155,10 +155,15 @@ def get_sms(message):
             elif text == "Buyurtmalar 📦":
                 order_list = get_user_orders(message.chat.id)
                 for order in order_list:
-                    mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
-                           f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
-                           f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
-                           f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
+                    mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n' \
+                           f'<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n' \
+                           f'<b>Varaqlar soni  📄 : </b> {order.page_number}\n\n' \
+                           f'<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n' \
+                           f'<b>Rangi 📕 :</b> {order.get_printColor_display()}\n\n' \
+                           f'<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()}\n\n' \
+                           f'<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+                           f'<b>Yetqazib berish turi 🚚 :   </b> {order.get_delivery_type_display()}  \n\n' \
+                           f'<b>Status : </b> {order.get_order_status_display()} \n\n\n\n' \
                            f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
                     bot.send_message(message.chat.id, mess)
             elif text == "Sozlamalar ⚙️":
