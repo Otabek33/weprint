@@ -83,7 +83,7 @@ client_add = ClientCreateView.as_view()
 
 class ClientDebitCredit(ListView):
     model = Client
-    template_name = "debit_credit/client_debit_credit.html"
+    template_name = "clients/client_debit_credit.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

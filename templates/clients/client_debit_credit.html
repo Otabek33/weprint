@@ -24,17 +24,21 @@
                         <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
                     </div>
 
+                    <h2 class="card-title">Debit-Kredit</h2>
                 </header>
                 <div class="card-body">
-                    <table class="table table-responsive-lg table-bordered table-striped table-sm mb-0">
+
+                    <table class="table table-bordered table-striped mb-0" id="datatable-tabletools">
+
                         <thead>
                         <tr>
-                            <th>#</th>
+                              <th>#</th>
                             <th class="text-center">Mijoz</th>
                             <th class="text-center">ChatId</th>
                             <th class="text-center">Debet</th>
                             <th class="text-center">Kredit</th>
                             <th class="text-center">Saldo</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -67,8 +71,25 @@
 
 
 
+
+
 {% endblock %}
 <!-- Specific Page Vendor -->
 {% block additional_js %}
+<!-- Specific Page Vendor -->
+    <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js' %}"></script>
 
+    <!-- Examples -->
+    <script src="{% static 'js/examples/examples.datatables.default.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
 {% endblock %}
