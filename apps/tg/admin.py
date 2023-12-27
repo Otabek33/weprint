@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.tg.models import Chat, Message, TelegramUser, Theme
+from apps.tg.models import  TelegramUser
 
 # Register your models here.
-admin.site.register([Theme, Chat, TelegramUser, Message])
+admin.site.register([TelegramUser])

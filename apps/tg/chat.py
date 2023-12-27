@@ -9,7 +9,7 @@ from telebot import types
 import logging
 from apps.tg.buttons import main_menu, order_color, order_size, order_binding, order_info, location_request, \
     payment_type, location_share
-from apps.tg.consta import BOT_TOKEN, PAYMENTS_PROVIDER_TOKEN, TIME_MACHINE_IMAGE_URL, MAX_FILE_SIZE_MB, GROUP_CHAT_ID
+from apps.tg.consta import BOT_TOKEN, MAX_FILE_SIZE_MB, GROUP_CHAT_ID
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
