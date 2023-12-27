@@ -35,6 +35,7 @@
                               <th>#</th>
                             <th class="text-center">Buyurtma</th>
                             <th class="text-center">Yaratildi</th>
+                            <th class="text-center">Mijoz</th>
                             <th class="text-center">Buyurtma status</th>
                             <th class="text-center">Debet</th>
                             <th class="text-center">Kredit</th>
@@ -47,7 +48,8 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center">{{ order.order_number }}</td>
-                                <td class="text-center">{{ order.created_at }}</td>
+                                <td class="text-center">{{ order.created_at|date:"d-m-Y H:i"  }}</td>
+                                <td class="text-center">{{ order.created_by }}</td>
                                 <td class="text-center">{{ order.get_order_status_display }}</td>
 
                                 <td class="text-center text-success">

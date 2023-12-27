@@ -62,7 +62,7 @@ order_cancel = OrderCancelView.as_view()
 
 class DebitCreditView(ListView):
     model = Order
-    template_name = "orders/debit_credit.html"
+    template_name = "orders/order_debit_credit.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
