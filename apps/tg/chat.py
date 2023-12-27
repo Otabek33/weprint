@@ -13,7 +13,7 @@ from apps.tg.consta import BOT_TOKEN, PAYMENTS_PROVIDER_TOKEN, TIME_MACHINE_IMAG
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
-    update_delivery
+    update_delivery, get_user_orders
 from apps.orders.models import PrintBindingTypes, ClientAddress
 from apps.tg.message import MESSAGES
 
@@ -141,57 +141,64 @@ def get_sms(message):
     global amount_of_page
     global order_number
     global sending_document
-
-    if attr_value is False:
-        bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
+    if message.chat.id == GROUP_CHAT_ID:
+        bot.send_message(message.chat.id, "GROUP_CHAT_ID", reply_markup=keyboard)
     else:
-        text = message.text
-        if text == "Buyurtma berish 🛒":
-            client, order = get_or_create_order(message)
-            order_number = order.order_number
-            bot.send_message(message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
-        elif text == "Buyurtmalar 📦":
-            bot.send_message(message.chat.id, text)
-        elif text == "Sozlamalar ⚙️":
-            bot.send_message(message.chat.id, text)
-        elif text == "Biz haqimizda ℹ️":
-            bot.send_message(message.chat.id, text)
-        elif amount_of_page:
-            if text.isnumeric():
-                order = get_order(order_number)
-                amount_of_page = False
-                order.page_number = int(text)
-                order.created_at = datetime.now()
-                order.save()
-                generation_price(order)
-                mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
-                       f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
-                       f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
-                       f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
-                       f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
-
-                bot.send_message(message.chat.id, mess, reply_markup=order_info())
-
-            else:
-                bot.send_message(message.chat.id, 'Iltimos sahifalar miqdorini yuboring')
-        elif sending_document:
-            bot.send_message(message.chat.id, 'Iltimos hujjat yuboring')
-        elif sending_location:
-            sending_document = True
-            order = get_order(order_number)
-            # Extract latitude and longitude from the message
-            location, created = ClientAddress.objects.get_or_create(name=text)
-            order.location = location
-            order.file_status = True
-            order.save()
-            bot.delete_message(message.chat.id, message.id)
-            bot.send_photo(message.chat.id, photo=open('media/download.png', 'rb'),
-                           caption="Hujjatni yuboring")
-
-
+        if attr_value is False:
+            bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
         else:
-            markup = main_menu()
-            bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
+            text = message.text
+            if text == "Buyurtma berish 🛒":
+                client, order = get_or_create_order(message.chat.id)
+                order_number = order.order_number
+                bot.send_message(message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
+            elif text == "Buyurtmalar 📦":
+                order_list = get_user_orders(message.chat.id)
+                for order in order_list:
+                    mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+                           f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+                           f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+                           f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
+                           f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
+                    bot.send_message(message.chat.id, mess)
+            elif text == "Sozlamalar ⚙️":
+                bot.send_message(message.chat.id, text)
+            elif text == "Biz haqimizda ℹ️":
+                bot.send_message(message.chat.id, text)
+            elif amount_of_page:
+                if text.isnumeric():
+                    order = get_order(order_number)
+                    amount_of_page = False
+                    order.page_number = int(text)
+                    order.created_at = datetime.now()
+                    order.save()
+                    generation_price(order)
+                    mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
+                           f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
+                           f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
+                           f'<b>Status : </b> {order.get_order_status_display()} \n\n \n\n' \
+                           f'Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n'
+
+                    bot.send_message(message.chat.id, mess, reply_markup=order_info())
+
+                else:
+                    bot.send_message(message.chat.id, 'Iltimos sahifalar miqdorini yuboring')
+            elif sending_document:
+                bot.send_message(message.chat.id, 'Iltimos hujjat yuboring')
+            elif sending_location:
+                sending_document = True
+                order = get_order(order_number)
+                # Extract latitude and longitude from the message
+                location, created = ClientAddress.objects.get_or_create(name=text)
+                order.location = location
+                order.file_status = True
+                order.save()
+                bot.delete_message(message.chat.id, message.id)
+                bot.send_photo(message.chat.id, photo=open('media/download.png', 'rb'),
+                               caption="Hujjatni yuboring")
+            else:
+                markup = main_menu()
+                bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
 
 
 @bot.message_handler(content_types=["contact"])

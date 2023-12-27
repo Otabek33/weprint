@@ -59,9 +59,14 @@ def generate_order_number():
     return order_number
 
 
+def get_user_orders(user_id):
+    client = Client.objects.get(userId=user_id)
+    return Order.objects.filter(created_by=client).exclude(order_status=OrderStatus.CREATION)
+
+
 def generation_price(order):
     product = Product.objects.get(printColor=order.printColor, printSize=order.printSize,
-                                     printBindingType=order.printBindingType)
+                                  printBindingType=order.printBindingType)
     order.price = order.page_number * product.price
     order.save()
 
