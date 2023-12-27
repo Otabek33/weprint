@@ -169,7 +169,28 @@ def get_sms(message):
             elif text == "Sozlamalar ⚙️":
                 bot.send_message(message.chat.id, text)
             elif text == "Biz haqimizda ℹ️":
-                bot.send_message(message.chat.id, text)
+                about_company_text = """
+                   <b>🤖 Botga xush kelibsiz!</b>
+
+                   <b>🌐 Biz haqimizda:</b>
+                   Print Hub-bu sizning g'oyalaringizni hayotga tatbiq etishga bag'ishlangan yetakchi matbaa kompaniyasi hisoblanadi.
+                   Biz kitoblar va nashrlarga alohida e'tibor qaratgan holda keng turdagi mahsulotlar uchun yuqori sifatli bosma xizmatlarni taqdim etishga ixtisoslashganmiz. 
+                   
+                   <b>📖 Bizning tajriba:</b>
+                  Biz  bir qancha turdagi kitob chop etish xizmatlarini taqdim qilamiz .
+                  Bizning zamonaviy bosma uskunalarimiz har bir chop etilayotgan kitobda  aniqlik va sifatni ta'minlaydi.
+                   <b>🌟 Bizning qadriyatlar:</b>
+                   - <i>Sifat:</i> Biz yuqori sifatda mahsulotlar ishlab chiqaramiz.
+                   - <i>Mijozlar Ehtiyojini Qondirish:</i> Sizning mamnunligingiz bizning ustuvor vazifamizdir. Biz har bir buyurtma bilan alohida yondashamiz.
+                   - <i>Innovation:</i> Bizda yangi texnologiyalar va bosib chiqarish texnikalari mavjud.
+
+                   <b>📞 Bog'lanish:</b>
+                   Biz bilan bog'lanmoqchimisiz? 
+                   Biz bilan <a href="#">kebatotabek33@gmail.com</a> manzili orqali bog‘laning yoki qo‘shimcha ma’lumot olish uchun veb-saytimizga tashrif buyuring: <a href="https://www.printhub.com"> www.printhub.com</a>.
+
+                   Bugun buyurtma bering!\nBizga ishonch bildirganingiz uchun rahmat! 🚀
+                   """
+                bot.send_message(message.chat.id, about_company_text)
             elif amount_of_page:
                 if text.isnumeric():
                     order = get_order(order_number)
