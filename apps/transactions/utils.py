@@ -32,13 +32,13 @@ def process_updating_company_balance(transaction, company):
 
 def process_updating_order(transaction, order):
     if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
-        order.total_credit = +transaction.balance
+        order.total_credit += transaction.balance
         if order.total_debit > 0:
             order.residual_value = order.total_debit - order.total_credit
         else:
             order.residual_value = 0 - order.total_credit
     else:
-        order.total_debit = +transaction.balance
+        order.total_debit += transaction.balance
         if order.total_credit > 0:
             order.residual_value = order.total_debit - order.total_credit
         else:
@@ -48,13 +48,13 @@ def process_updating_order(transaction, order):
 
 def process_updating_client(transaction, client):
     if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
-        client.total_credit = +transaction.balance
+        client.total_credit += transaction.balance
         if client.total_debit > 0:
             client.residual_value = client.total_debit - client.total_credit
         else:
             client.residual_value = 0 - client.total_credit
     else:
-        client.total_debit = +transaction.balance
+        client.total_debit += transaction.balance
         if client.total_credit > 0:
             client.residual_value = client.total_debit - client.total_credit
         else:
