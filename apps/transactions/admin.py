@@ -14,5 +14,7 @@ class CompanyAdmin(admin.ModelAdmin):
         "order",
         "balance",
         "company_balance",
+        "deleted_status",
 
     ]
+    list_editable = ["deleted_status"]
