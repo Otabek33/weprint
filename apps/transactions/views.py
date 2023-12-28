@@ -6,7 +6,7 @@ from typing import Any, Dict
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from django.views.generic import (ListView, CreateView, DetailView, )
+from django.views.generic import (ListView, CreateView, DetailView, TemplateView, )
 
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
@@ -90,3 +90,13 @@ class TranslatePrice(DetailView):
 
 
 transaction_order_price = TranslatePrice.as_view()
+
+
+class TransactionDelete(TemplateView):
+    model = Transaction
+
+    def post(self):
+        pass
+
+
+transaction_delete = TransactionDelete.as_view()
