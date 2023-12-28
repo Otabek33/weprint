@@ -10,7 +10,7 @@
         <h2 class="font-weight-bold text-6">Dashboard ></h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>Transaksiyalar</span></li>
+                <li><span><a href="{% url 'transactions:transaction_list' %}">Transaksiyalar</a></span></li>
                 <li><span>{{ object.payment_order }}</span></li>
             </ol>
         </div>
@@ -41,7 +41,7 @@
                                 <th class="text-center">Buyurtma</th>
                                 <th class="text-center">Debet</th>
                                 <th class="text-center">Kredit</th>
-                                <th class="text-center">Saldo</th>
+
 
                             </tr>
                             </thead>
@@ -65,12 +65,6 @@
                                 {% else %}
                                     <td class="text-center">0</td>
                                 {% endif %}
-                                {% if object.company_balance > 0 %}
-                                    <td class="text-center text-success">{{ object.company_balance|floatformat:"2g" }}</td>
-                                {% else %}
-                                    <td class="text-center text-danger">{{ object.company_balance|floatformat:"2g" }}</td>
-                                {% endif %}
-
                             </tr>
 
                             </tbody>

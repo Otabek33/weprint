@@ -5,7 +5,7 @@ from typing import Any, Dict
 
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (ListView, CreateView, DetailView, TemplateView, )
 
 from apps.clients.models import Client
@@ -95,6 +95,12 @@ transaction_order_price = TranslatePrice.as_view()
 class TransactionDetailView(DetailView):
     model = Transaction
     template_name = "transactions/transaction_detail.html"
+
+    def post(self, request, *args, **kwargs):
+        order = get_object_or_404(Transaction, pk=self.kwargs["pk"])
+        order.deleted_status = True
+        order.save()
+        return redirect("transactions:transaction_list")
 
 
 transaction_detail = TransactionDetailView.as_view()
