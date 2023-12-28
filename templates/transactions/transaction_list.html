@@ -197,10 +197,10 @@
                     <div class="col-md-12 text-end">
                         <form method="post" action="{% url 'transactions:transaction_delete' %}">
                             {% csrf_token %}
-                             <input type="hidden" name="transaction_delete"
-                   id="transaction_delete_modal">
-                            <button type="button"  class="btn btn-default modal-dismiss">Bekor qilish</button>
-                            <button type="submit"  class="btn btn-primary modal-confirm">Tasdiqlash</button>
+                            <input type="hidden" name="transaction_delete"
+                                   id="transaction_delete_modal">
+                            <button type="button" class="btn btn-default modal-dismiss">Bekor qilish</button>
+                            <button type="submit" class="btn btn-primary modal-confirm">Tasdiqlash</button>
                         </form>
                     </div>
                 </div>
@@ -233,21 +233,25 @@
     <script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
     <script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
 
+    <!-- Specific Page Vendor -->
 
+    <script src="{% static 'vendor/pnotify/pnotify.custom.js' %}"></script>
     <!-- Examples -->
     <script src="{% static 'js/examples/examples.modals.js' %}"></script>
 
 
 
-    <script type="application/javascript">
-        document.addEventListener("DOMContentLoaded", function (event) {
+    <script>
+
+       document.addEventListener('DOMContentLoaded', function () {
             $('.delete_transaction').click((e) => {
                 document.getElementById('transaction_delete_modal').value = e.target.parentElement.getAttribute('data-id');
                 $('#modalBasic').modal('show');
             })
         });
-
-
+       {# $('.modal-dismiss').click(function () {#}
+       {#     $('#modalBasic').modal('hide').data('bs.modal', null);#}
+       {# });#}
 
 
     </script>

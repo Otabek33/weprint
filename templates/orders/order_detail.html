@@ -61,30 +61,6 @@
                                 </div>
                             </div>
                         </div>
-                        {#                        <div class="form-row">#}
-                        {#                            <div class="form-group col mb-3">#}
-                        {#                                <label>Buyurtma statusi</label>#}
-                        {#                                <select class="form-control form-control-modern" name="orderStatus" required>#}
-                        {##}
-                        {#                                    <option value="on-hold" {% if object.order_status == 1 %}selected{% endif %}>#}
-                        {#                                        Yaratilish#}
-                        {#                                    </option>#}
-                        {#                                    <option value="pending" {% if object.order_status == 2 %}selected{% endif %}>#}
-                        {#                                        Yangi Buyurtma#}
-                        {#                                    </option>#}
-                        {#                                    <option value="processing" {% if object.order_status == 3 %}selected{% endif %}>#}
-                        {#                                        Faol#}
-                        {#                                    </option>#}
-                        {#                                    <option value="cancelled" {% if object.order_status == 4 %}selected{% endif %}>#}
-                        {#                                        Bekor qilingan#}
-                        {#                                    </option>#}
-                        {#                                    <option value="completed" {% if object.order_status == 5 %}selected{% endif %}>#}
-                        {#                                        Yetqazib berilgan#}
-                        {#                                    </option>#}
-                        {##}
-                        {#                                </select>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
                         <div class="form-row">
                             <div class="form-group col mb-3">
                                 <label>Yaratilgan</label>
@@ -248,7 +224,12 @@
                         <h2 class="card-title">Manzil</h2>
                     </header>
                     <div class="card-body">
-                        <div id="map"></div>
+                        {% if order.location.latitude == 1 %}
+                            <h5>Manzil belgilanmagan</h5>
+                        {% else %}
+                            <div id="map"></div>
+                        {% endif %}
+
                     </div>
                 </section>
             </div>
