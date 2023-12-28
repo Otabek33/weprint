@@ -3,7 +3,9 @@
 {% load static %}
 
 {% block title %}Transaksiyalar{% endblock %}
-
+{% block additional_css %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
 
 {% block content %}
     <header class="page-header page-header-left-inline-breadcrumb">
@@ -165,10 +167,9 @@
                                     <td class="text-center text-danger">{{ transaction.company_balance|floatformat:"2g" }}</td>
                                 {% endif %}
                                 <td class="text-center">
-                                    <a href="#modalBasic" class="delete-row modal-basic delete_transaction"
-                                       data-id="{{ transaction.id }}"><i class="far fa-trash-alt"
-                                                                         style="margin-right: 20px"></i></a>
-                                    <a href=""><i class="fas fa-eye"></i></a>
+
+                                    <a href="{% url 'transactions:transaction_detail' transaction.id %}"><i
+                                            class="fas fa-eye"></i></a>
 
 
                                 </td>
@@ -180,36 +181,6 @@
             </section>
         </div>
     </div>
-    <div id="modalBasic" class="modal-block mfp-hide">
-        <section class="card">
-            <header class="card-header">
-                <h2 class="card-title">Tranzaksiyani o'chirish?</h2>
-            </header>
-            <div class="card-body">
-                <div class="modal-wrapper">
-                    <div class="modal-text">
-                        <p class="mb-0">Siz tranzaksiyani o‘chirishni xohlaysizmi ?</p>
-                    </div>
-                </div>
-            </div>
-            <footer class="card-footer">
-                <div class="row">
-                    <div class="col-md-12 text-end">
-                        <form method="post" action="{% url 'transactions:transaction_delete' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="transaction_delete"
-                                   id="transaction_delete_modal">
-                            <button type="button" class="btn btn-default modal-dismiss">Bekor qilish</button>
-                            <button type="submit" class="btn btn-primary modal-confirm">Tasdiqlash</button>
-                        </form>
-                    </div>
-                </div>
-            </footer>
-        </section>
-    </div>
-
-
-
 
 
 
@@ -236,23 +207,9 @@
     <!-- Specific Page Vendor -->
 
     <script src="{% static 'vendor/pnotify/pnotify.custom.js' %}"></script>
-    <!-- Examples -->
-    <script src="{% static 'js/examples/examples.modals.js' %}"></script>
 
 
 
-    <script>
-
-       document.addEventListener('DOMContentLoaded', function () {
-            $('.delete_transaction').click((e) => {
-                document.getElementById('transaction_delete_modal').value = e.target.parentElement.getAttribute('data-id');
-                $('#modalBasic').modal('show');
-            })
-        });
-       {# $('.modal-dismiss').click(function () {#}
-       {#     $('#modalBasic').modal('hide').data('bs.modal', null);#}
-       {# });#}
 
 
-    </script>
 {% endblock %}

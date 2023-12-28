@@ -92,11 +92,9 @@ class TranslatePrice(DetailView):
 transaction_order_price = TranslatePrice.as_view()
 
 
-class TransactionDelete(TemplateView):
+class TransactionDetailView(DetailView):
     model = Transaction
-
-    def post(self):
-        pass
+    template_name = "transactions/transaction_detail.html"
 
 
-transaction_delete = TransactionDelete.as_view()
+transaction_detail = TransactionDetailView.as_view()

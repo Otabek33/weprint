@@ -44,6 +44,11 @@ class CustomUser(AbstractUser):
     role = models.ForeignKey(UserRole, on_delete=models.SET_NULL, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True, blank=True)
 
+
+    # def concatenation_first_(self):
+    #     return self.taskplan_set.filter(deleted_status=False).count()
+
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
