@@ -15,66 +15,141 @@
             </ol>
         </div>
     </header>
+
+
     <div class="row">
-        <div class="col">
-            <section class="card">
-                <header class="card-header">
-                    <div class="card-actions">
-                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-                    </div>
+        <div class="col-xl-6 mb-4 mb-xl-0">
 
-                    <h2 class="card-title">{{ object.payment_order }}</h2>
-                </header>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-ecommerce-simple table-ecommerce-simple-border-bottom table-borderless table-striped mb-0"
-                               style="min-width: 380px;">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th class="text-center">Muddat</th>
-                                <th class="text-center">To'lov<br>raqami</th>
-
-                                <th class="text-center">Tur</th>
-                                <th class="text-center">Mijoz</th>
-                                <th class="text-center">Buyurtma</th>
-                                <th class="text-center">Debet</th>
-                                <th class="text-center">Kredit</th>
-
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td class="text-center">{{ object.created_at|date:"d-m-Y H:i" }}</td>
-                                <td class="text-center">{{ object.payment_order|floatformat:"g" }}</td>
-
-                                <td class="text-center">{{ object.get_cash_type_display }}</td>
-                                <td class="text-center">{{ object.client }}</td>
-                                <td class="text-center">{{ object.order }}</td>
-                                {% if object.double_entry_accounting == 2 %}
-                                    <td class="text-center text-success">
-                                        +{{ object.balance|floatformat:"2g" }}</td>
-                                {% else %}
-                                    <td class="text-center">0</td>
-                                {% endif %}
-                                {% if object.double_entry_accounting == 1 %}
-                                    <td class="text-center text-danger">-{{ object.balance|floatformat:"2g" }}</td>
-                                {% else %}
-                                    <td class="text-center">0</td>
-                                {% endif %}
-                            </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
+            <div class="card card-modern">
+                <div class="card-header">
+                    <h2 class="card-title">Tranzaksiya {{ transaction.payment_order }}</h2>
                 </div>
-            </section>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Muddat</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    <input type="text" class="form-control form-control-modern" name="orderDate"
+                                           value="{{ object.created_at|date:"d-m-Y H:i" }}"
+                                           readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Yaratuvchi</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    <input type="text" class="form-control form-control-modern" name="orderDate"
+                                           value="{{ object.created_by }}"
+                                           readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>To'lov raqami</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    <input type="text" class="form-control form-control-modern" name="orderDate"
+                                           value="{{ object.payment_order|floatformat:"g" }}"
+                                           readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Tur</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    <input type="text" class="form-control form-control-modern"
+                                           value="{{ object.get_cash_type_display }}"
+                                           readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Mijoz</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    <input type="text" class="form-control form-control-modern"
+                                           value="{{ object.client }}"
+                                           readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Buyurtma</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    <input type="text" class="form-control form-control-modern"
+                                           value="{{ object.order }}"
+                                           readonly>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Debet</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    {% if object.double_entry_accounting == 2 %}
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="{{ object.balance|floatformat:"2g" }}"
+                                               readonly>
+                                    {% else %}
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="0"
+                                               readonly>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Kredit</label>
+                            <div class="date-time-field">
+                                <div class="date">
+                                    {% if object.double_entry_accounting == 1 %}
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="{{ object.balance|floatformat:"2g" }}"
+                                               readonly>
+                                    {% else %}
+                                        <input type="text" class="form-control form-control-modern"
+                                               value="0"
+                                               readonly>
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
     </div>
+
+
 
 
     <form class="order-details action-buttons-fixed" method="post" action=".">
