@@ -73,16 +73,34 @@ def generation_price(order):
 
 
 def save_order_file(message, file_oath, order_number):
-    order = Order.objects.get(tg_pk=message.chat.id, order_number=order_number)
-    order.file = file_oath
-    order.file_status = False
-    order.order_status = OrderStatus.ORDERED
-    order.save()
+    try:
+        # Try to get an existing order
+        order = Order.objects.get(tg_pk=message.chat.id, order_number=order_number)
+    except Order.DoesNotExist:
+        # Order doesn't exist, create a new one
+        order = Order.objects.create(
+            tg_pk=message.chat.id,
+            order_number=order_number,
+            file=file_oath,
+            file_status=False,
+            order_status=OrderStatus.ORDERED,
+        )
+    else:
+        # Update the existing order
+        order.file = file_oath
+        order.file_status = False
+        order.order_status = OrderStatus.ORDERED
+        order.save()
+
     return order
 
 
 def get_order(order_number):
-    return Order.objects.get(order_number=order_number)
+    try:
+        order, created = Order.objects.get_or_create(order_number=order_number)
+        return order
+    except Exception as e:
+        return Order.objects.create()
 
 
 def update_delivery(order, delivery_type):
