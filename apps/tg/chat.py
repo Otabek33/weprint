@@ -118,7 +118,7 @@ def callback_query(call):
 
 
 @bot.message_handler(commands=["start", "stop"])
-async def start(message):
+def start(message):
     mess = f'Ассалому алейкум , <b>{message.from_user.first_name}</b>!\nМен - <b>GimsShopBot</b>,\nТизимдан фойдаланишдан олдин Телефон рақамингизни юборинг'
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(types.KeyboardButton(text="Телефон 📱", request_contact=True))
@@ -149,7 +149,7 @@ def get_sms(message):
         else:
             text = message.text
             if text == "Buyurtma berish 🛒":
-                client, order = get_or_create_order(message.chat.id)
+                client, order = get_or_create_order(message)
                 order_number = order.order_number
                 bot.send_message(message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
             elif text == "Buyurtmalar 📦":
