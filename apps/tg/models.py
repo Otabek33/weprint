@@ -35,14 +35,3 @@ class PaymentType(models.IntegerChoices):
     WAIT = 3, _('To\'lanmadi')
 
 
-class TelegramUser(models.Model):
-    user = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
-    tg_pk = models.CharField(max_length=150)
-    current_role_in_chat = models.IntegerField(
-        "Rol",
-        choices=RoleTypeChoices.choices,
-        default=RoleTypeChoices.NOT_SPECIFIED,
-    )
-
-    def __str__(self) -> str:
-        return f"{self.tg_pk}"

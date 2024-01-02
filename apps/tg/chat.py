@@ -12,7 +12,7 @@ from apps.tg.buttons import main_menu, order_color, order_size, order_binding, o
 from apps.tg.consta import BOT_TOKEN, MAX_FILE_SIZE_MB, GROUP_CHAT_ID
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
-from apps.tg.utils import get_or_create_user, get_or_create_order, generation_price, save_order_file, get_order, \
+from apps.tg.utils import get_or_create_client, get_or_create_order, generation_price, save_order_file, get_order, \
     update_delivery, get_user_orders
 from apps.orders.models import PrintBindingTypes, ClientAddress
 from apps.tg.message import MESSAGES
@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 amount_of_page = False
 sending_document = False
 sending_location = False
+user_phone_sharing = False
 order_number = ""
 
 
@@ -119,9 +120,11 @@ def callback_query(call):
 
 @bot.message_handler(commands=["start", "stop"])
 def start(message):
-    mess = f'Ассалому алейкум , <b>{message.from_user.first_name}</b>!\nМен - <b>GimsShopBot</b>,\nТизимдан фойдаланишдан олдин Телефон рақамингизни юборинг'
+    global user_phone_sharing
+    user_phone_sharing = True
+    mess = f'Assalomu aleykum , <b>{message.from_user.first_name}</b>!\nMen - <b>PrintBot</b>man,\nTizimdan foydalanish uchun telefon raqamingizni yuboring'
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.add(types.KeyboardButton(text="Телефон 📱", request_contact=True))
+    keyboard.add(types.KeyboardButton(text="Telefon 📱", request_contact=True))
     bot.send_message(
         message.chat.id, mess, reply_markup=keyboard)
 
@@ -134,17 +137,15 @@ CONTENT_TYPES = ["text", "audio", "document", "photo", "sticker", "video", "vide
 
 @bot.message_handler()
 def get_sms(message):
-    user, tguser = get_or_create_user(message)
-    attr_value = getattr(user, "phone", False)
     keyboard = types.ReplyKeyboardRemove()
-
     global amount_of_page
     global order_number
     global sending_document
+    global user_phone_sharing
     if message.chat.id == GROUP_CHAT_ID:
         bot.send_message(message.chat.id, "GROUP_CHAT_ID", reply_markup=keyboard)
     else:
-        if attr_value is False:
+        if user_phone_sharing:
             bot.send_message(message.chat.id, "Xizmatdan foydalanish uchun telefon raqamingizni yuboring")
         else:
             text = message.text
@@ -229,10 +230,9 @@ def get_sms(message):
 
 @bot.message_handler(content_types=["contact"])
 def get_contact(message):
-    client, tguser = get_or_create_user(message)
-    client.phone = message.contact.phone_number
-    client.save()
-    keyboard = types.ReplyKeyboardRemove()
+    global user_phone_sharing
+    user_phone_sharing = False
+    get_or_create_client(message)
     markup = main_menu()
     bot.send_message(message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
 
