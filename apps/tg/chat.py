@@ -150,8 +150,7 @@ def get_sms(message):
         else:
             text = message.text
             if text == "Buyurtma berish 🛒":
-                client, order = get_or_create_order(message)
-                order_number = order.order_number
+                order_number = get_or_create_order(message)
                 bot.send_message(message.chat.id, "Qaysi rangda chop etmoqchisiz 🖨️ 📄?", reply_markup=order_color())
             elif text == "Buyurtmalar 📦":
                 order_list = get_user_orders(message.chat.id)
