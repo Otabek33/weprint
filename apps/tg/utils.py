@@ -1,9 +1,11 @@
 from django.contrib.auth import get_user_model
 
 from apps.clients.models import Client
-from apps.orders.models import Order, OrderStatus, ClientAddress
+from apps.orders.models import Order, OrderStatus, ClientAddress, PrintBindingTypes
 from apps.products.models import Product
 from datetime import datetime
+
+from apps.tg.models import PrintColor, PrintSize
 
 User = get_user_model()
 
@@ -27,6 +29,28 @@ def get_or_create_order(message):
         order.order_number = generate_order_number()
         order.save()
     return order.order_number
+
+
+def update_order_color(call, order):
+    printColor = PrintColor[call.data]
+    order.printColor = printColor
+    order.save()
+
+
+def update_order_size(call, order):
+    printSize = PrintSize[call.data]
+    order.printSize = printSize
+    order.save()
+
+
+def update_order_binding(call, order):
+    order.printBindingType = PrintBindingTypes.objects.filter(name=call.data).first()
+    order.save()
+
+
+def update_order_file(order):
+    order.file_status = True
+    order.save()
 
 
 def order_generation():
@@ -57,7 +81,7 @@ def get_user_orders(user_id):
     return Order.objects.filter(created_by=client).exclude(order_status__in=excluded_statuses)
 
 
-def generation_price(order):
+def update_order_price(order):
     product = Product.objects.get(printColor=order.printColor, printSize=order.printSize,
                                   printBindingType=order.printBindingType)
     order.price = order.page_number * product.price

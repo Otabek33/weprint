@@ -12,8 +12,8 @@ from apps.tg.buttons import main_menu, order_color, order_size, order_binding, o
 from apps.tg.consta import BOT_TOKEN, MAX_FILE_SIZE_MB, GROUP_CHAT_ID
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
-from apps.tg.utils import get_or_create_client, get_or_create_order, generation_price, save_order_file, get_order, \
-    update_delivery, get_user_orders
+from apps.tg.utils import get_or_create_client, get_or_create_order, update_order_price, save_order_file, get_order, \
+    update_delivery, get_user_orders, update_order_color, update_order_size, update_order_binding, update_order_file
 from apps.orders.models import PrintBindingTypes, ClientAddress
 from apps.tg.message import MESSAGES
 
@@ -34,20 +34,15 @@ def callback_query(call):
     global order_number
     global sending_document
     global sending_location
+    global amount_of_page
     order = get_order(order_number)
     bindings = PrintBindingTypes.objects.all()
     if call.data == "WHITE" or call.data == "COLOURFUL":
-        # bot.answer_callback_query(call.id, "Keyingi bosqichga o'tyapsiz!", show_alert=True)
-        printColor = PrintColor[call.data]
-        order_number = order.order_number
-        order.printColor = printColor
-        order.save()
+        update_order_color(call, order)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Qaysi o'lchamda chop etmoqchisiz", reply_markup=order_size())
     elif call.data == "A5" or call.data == "A4" or call.data == "A3":
-        printSize = PrintSize[call.data]
-        order.printSize = printSize
-        order.save()
+        update_order_size(call, order)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Pereplyot shaklidini tanlang", reply_markup=order_binding())
     elif call.data == "photoOfBinding":
@@ -56,10 +51,8 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Pereplyot shaklidini tanlang", reply_markup=order_binding())
 
     elif PrintBindingTypes.objects.filter(name=call.data).exists():
-        order.printBindingType = PrintBindingTypes.objects.filter(name=call.data).first()
-        order.save()
-        global amount_of_page
         amount_of_page = True
+        update_order_binding(call, order)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(call.message.chat.id, "Sahifalar sonini kiriting")
     elif call.data == "cancel_order":
@@ -70,8 +63,7 @@ def callback_query(call):
     elif call.data == "order_product":
 
         sending_document = True
-        order.file_status = True
-        order.save()
+        update_order_file(order)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
                        caption="Hujjatni yuboring")
@@ -81,8 +73,7 @@ def callback_query(call):
 
     elif call.data == 'Self_Delivery':
         sending_document = True
-        order.file_status = True
-        order.save()
+        update_order_file(order)
         update_delivery(order, DeliveryType.Self_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
@@ -101,11 +92,10 @@ def callback_query(call):
         bot.send_message(call.message.chat.id, "Qaysi o'lchamda chop etmoqchisiz", reply_markup=order_size())
     elif call.data == "backFromLocationChoose":
         bot.delete_message(call.message.chat.id, call.message.id)
-        order = get_order(order_number)
         amount_of_page = False
         order.created_at = datetime.now()
         order.save()
-        generation_price(order)
+        update_order_price(order)
         mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
                f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
                f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
@@ -116,6 +106,9 @@ def callback_query(call):
     else:
         markup = main_menu()
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
+
+
+
 
 
 @bot.message_handler(commands=["start", "stop"])
@@ -198,7 +191,7 @@ def get_sms(message):
                     order.page_number = int(text)
                     order.created_at = datetime.now()
                     order.save()
-                    generation_price(order)
+                    update_order_price(order)
                     mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
                            f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
                            f'\n\n<b>Kitob o\'lchami 📏 : </b> {order.get_printSize_display()} \n\n<b>Narxi 🏷 :   </b> {order.price:.2f} so\'m  \n\n' \
