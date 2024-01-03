@@ -48,7 +48,7 @@ def update_order_binding(call, order):
     order.save()
 
 
-def update_order_file(order):
+def update_order_file_status(order):
     order.file_status = True
     order.save()
 
@@ -85,10 +85,24 @@ def update_order_price(order):
     product = Product.objects.get(printColor=order.printColor, printSize=order.printSize,
                                   printBindingType=order.printBindingType)
     order.price = order.page_number * product.price
+    order.created_at = datetime.now()
     order.save()
 
 
-def save_order_file(message, file_oath, order_number):
+def update_order_page_number(order, text):
+    order.page_number = int(text)
+    order.save()
+
+
+def update_order_location_sentence(order_number, text):
+    order = get_order(order_number)
+    location, created = ClientAddress.objects.get_or_create(name=text)
+    order.location = location
+    order.file_status = True
+    order.save()
+
+
+def update_order_file_path(message, file_oath, order_number):
     try:
         # Try to get an existing order
         order = Order.objects.get(tg_pk=message.chat.id, order_number=order_number)
@@ -109,6 +123,15 @@ def save_order_file(message, file_oath, order_number):
         order.save()
 
     return order
+
+
+def update_order_location_telegram_share(message,order_number):
+    order = get_order(order_number)
+    location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
+                                                            longitude=message.location.longitude)
+    order.location = location
+    order.file_status = True
+    order.save()
 
 
 def get_order(order_number):

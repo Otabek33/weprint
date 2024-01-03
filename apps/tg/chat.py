@@ -12,8 +12,11 @@ from apps.tg.buttons import main_menu, order_color, order_size, order_binding, o
 from apps.tg.consta import BOT_TOKEN, MAX_FILE_SIZE_MB, GROUP_CHAT_ID
 
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
-from apps.tg.utils import get_or_create_client, get_or_create_order, update_order_price, save_order_file, get_order, \
-    update_delivery, get_user_orders, update_order_color, update_order_size, update_order_binding, update_order_file
+from apps.tg.utils import get_or_create_client, get_or_create_order, update_order_price, update_order_file_path, \
+    get_order, \
+    update_delivery, get_user_orders, update_order_color, update_order_size, update_order_binding, \
+    update_order_file_status, \
+    update_order_page_number, update_order_location_sentence, update_order_location_telegram_share
 from apps.orders.models import PrintBindingTypes, ClientAddress
 from apps.tg.message import MESSAGES
 
@@ -63,7 +66,7 @@ def callback_query(call):
     elif call.data == "order_product":
 
         sending_document = True
-        update_order_file(order)
+        update_order_file_status(order)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
                        caption="Hujjatni yuboring")
@@ -73,7 +76,7 @@ def callback_query(call):
 
     elif call.data == 'Self_Delivery':
         sending_document = True
-        update_order_file(order)
+        update_order_file_status(order)
         update_delivery(order, DeliveryType.Self_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(call.message.chat.id, photo=open('media/download.png', 'rb'),
@@ -93,8 +96,6 @@ def callback_query(call):
     elif call.data == "backFromLocationChoose":
         bot.delete_message(call.message.chat.id, call.message.id)
         amount_of_page = False
-        order.created_at = datetime.now()
-        order.save()
         update_order_price(order)
         mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
                f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
@@ -106,9 +107,6 @@ def callback_query(call):
     else:
         markup = main_menu()
         bot.send_message(call.message.chat.id, "Xizmatlardan birini tanlang", reply_markup=markup)
-
-
-
 
 
 @bot.message_handler(commands=["start", "stop"])
@@ -188,9 +186,7 @@ def get_sms(message):
                 if text.isnumeric():
                     order = get_order(order_number)
                     amount_of_page = False
-                    order.page_number = int(text)
-                    order.created_at = datetime.now()
-                    order.save()
+                    update_order_page_number(order, text)
                     update_order_price(order)
                     mess = f'<b>Sizning buyurtmangiz </b>\n\n\n\n<b>Buyurtma raqami 🔍 :</b> {order.order_number}\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}' \
                            f'\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}\n\n<b>Rangi 📕 :</b> {order.get_printColor_display()}' \
@@ -206,12 +202,7 @@ def get_sms(message):
                 bot.send_message(message.chat.id, 'Iltimos hujjat yuboring')
             elif sending_location:
                 sending_document = True
-                order = get_order(order_number)
-                # Extract latitude and longitude from the message
-                location, created = ClientAddress.objects.get_or_create(name=text)
-                order.location = location
-                order.file_status = True
-                order.save()
+                update_order_location_sentence(order_number, text)
                 bot.delete_message(message.chat.id, message.id)
                 bot.send_photo(message.chat.id, photo=open('media/download.png', 'rb'),
                                caption="Hujjatni yuboring")
@@ -264,7 +255,7 @@ def get_document(message):
             bot.send_message(message.chat.id, "Xodimimiz tez orada siz bilan bog'lanadi", disable_notification=False
                              )
 
-            order = save_order_file(message, file_path, order_number)
+            order = update_order_file_path(message, file_path, order_number)
 
             mess = f'<b>Sizning buyurtmangiz muvoffaqiyatli yaratildi.\n\nTez orada xodimimiz siz bilan bog\'lanadi!!!</b>\n\n\n' \
                    f'<b>Buyurtma 🔍 :</b> {order.order_number}\n\n' \
@@ -305,17 +296,8 @@ def get_document(message):
 def get_location(message):
     global sending_document
     sending_document = True
-    order = get_order(order_number)
-    # Extract latitude and longitude from the message
-    location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
-                                                            longitude=message.location.longitude)
-    order.location = location
-    order.file_status = True
-    order.save()
-
-    # Your logic to handle the location data
+    update_order_location_telegram_share(message, order_number)
     bot.delete_message(message.chat.id, message.id)
-
     bot.send_photo(message.chat.id, photo=open('media/download.png', 'rb'),
                    caption="Hujjatni yuboring")
 
