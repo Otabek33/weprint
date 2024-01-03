@@ -22,6 +22,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    <hr class="separator">
                     <li>
                         <a class="nav-link" href="{% url 'orders:order_list' %}">
                             <i class="bx bx-detail" aria-hidden="true"></i>
@@ -68,7 +69,7 @@
                             </li>
                         </ul>
                     </li>
-                     <li class="nav-parent">
+                    <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-transfer" aria-hidden="true"></i>
                             <span>Debit-Kredit</span>
@@ -83,6 +84,27 @@
                             <li>
                                 <a class="nav-link" href="#">
                                     Buyurtmalar
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <hr class="separator">
+                     <li class="nav-parent">
+                        <a class="nav-link" href="#">
+                            <i class="bx bx-info-circle" aria-hidden="true"></i>
+                            <span>Umumiy ma'lumot</span>
+                        </a>
+                        <ul class="nav nav-children">
+
+                            <li>
+                                <a class="nav-link" href="{% url 'clients:debit_credit' %}">
+                                    Kompaniya
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="#">
+                                    Bank
                                 </a>
                             </li>
 
