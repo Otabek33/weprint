@@ -130,14 +130,10 @@
                             <th class="text-center">Muddat</th>
                             <th class="text-center">To'lov<br>raqami</th>
 
-                            <th class="text-center">Tur</th>
+                            <th class="text-center">Pul<br>Turi</th>
                             <th class="text-center">Mijoz</th>
                             <th class="text-center">Buyurtma</th>
-                            <th class="text-center">Debet</th>
-                            <th class="text-center">Kredit</th>
-                            <th class="text-center">Saldo</th>
-                            <th class="text-center">Action</th>
-
+                            <th class="text-center">Debet/Kredit</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -145,31 +141,19 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
-                                <td class="text-center">{{ transaction.payment_order|floatformat:"g" }}</td>
+                                <td class="text-center"><a href="{% url 'transactions:transaction_detail' transaction.id %}">{{ transaction.payment_order|floatformat:"g" }}</a></td>
 
                                 <td class="text-center">{{ transaction.get_cash_type_display }}</td>
                                 <td class="text-center">{{ transaction.client }}</td>
-                                <td class="text-center">{{ transaction.order }}</td>
+                                <td class="text-center">{{ transaction.order }}
+                            <td class="text-center">
                                 {% if transaction.double_entry_accounting == 2 %}
-                                    <td class="text-center text-success">
-                                        +{{ transaction.balance|floatformat:"2g" }}</td>
-                                {% else %}
-                                    <td class="text-center">0</td>
-                                {% endif %}
-                                {% if transaction.double_entry_accounting == 1 %}
-                                    <td class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</td>
-                                {% else %}
-                                    <td class="text-center">0</td>
-                                {% endif %}
-                                {% if transaction.company_balance > 0 %}
-                                    <td class="text-center text-success">{{ transaction.company_balance|floatformat:"2g" }}</td>
-                                {% else %}
-                                    <td class="text-center text-danger">{{ transaction.company_balance|floatformat:"2g" }}</td>
-                                {% endif %}
-                                <td class="text-center">
 
-                                    <a href="{% url 'transactions:transaction_detail' transaction.id %}"><i
-                                            class="fas fa-eye"></i></a>
+                                    <span class="text-center text-success">+{{ transaction.balance|floatformat:"2g" }}</span>
+                                {% elif transaction.double_entry_accounting == 1 %}
+                                    <span class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</span>
+
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% endfor %}

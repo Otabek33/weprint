@@ -63,6 +63,15 @@ def process_updating_client(transaction, client):
     client.save()
 
 
+def process_update_transactions(transaction):
+    filtered_transactions = Transaction.objects.filter(company=transaction.company,
+                                                       payment_order__gte=transaction.payment_order,
+                                                       deleted_status=False)
+
+    for filtered_transaction in filtered_transactions:
+        pass
+
+
 def generation_total_amount_from_transaction(company, double_entry_accounting):
     from django.db.models import Sum, F
     # Your existing query

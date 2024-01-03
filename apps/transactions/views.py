@@ -6,7 +6,7 @@ from typing import Any, Dict
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import (ListView, CreateView, DetailView, TemplateView, )
+from django.views.generic import (ListView, CreateView, DetailView, TemplateView,View )
 
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
@@ -66,10 +66,7 @@ class TranslateClientChoose(DetailView):
             order_list = Order.objects.filter(
                 Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
             )
-            # Convert the QuerySet to a list of dictionaries
-            # Serialize only specific fields
             serializer = OrderSerializer(order_list, many=True)
-            # Convert the serialized data to JSON
             serialized_data = serializer.data
             return JsonResponse({"success": True, "data": serialized_data}, safe=False)
         return JsonResponse({"success": False, "data": None})
@@ -97,10 +94,12 @@ class TransactionDetailView(DetailView):
     template_name = "transactions/transaction_detail.html"
 
     def post(self, request, *args, **kwargs):
-        order = get_object_or_404(Transaction, pk=self.kwargs["pk"])
-        order.deleted_status = True
-        order.save()
+        transaction = get_object_or_404(Transaction, pk=self.kwargs["pk"])
+        transaction.deleted_status = True
+        transaction.save()
         return redirect("transactions:transaction_list")
 
 
 transaction_detail = TransactionDetailView.as_view()
+
+
