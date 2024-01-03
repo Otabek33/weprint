@@ -16,8 +16,53 @@
             </ol>
         </div>
     </header>
+    <div class="row justify-content-between">
+        <div class="col-lg-6 col-xl-5">
+            <section class="card card-featured-left card-featured-tertiary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-tertiary">
+                                <i class="fas fa-cash-register"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Naqt</h4>
+                                <div class="info mt-4">
+                                    <strong class="amount">{{ company.balance|floatformat:"g" }} so'm</strong>
+                                </div>
+                            </div>
 
-    <div class="row">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6 col-xl-5">
+            <section class="card card-featured-left card-featured-primary mb-4">
+                <div class="card-body">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-primary">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Bank</h4>
+                                <div class="info mt-4">
+                                    <strong class="amount">{{ company.total_debit|floatformat:"g" }} so'm</strong>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row justify-content-between">
 
         <div class="col-lg-3 col-xl-3">
             <section class="card card-featured-left card-featured-tertiary mb-4">
@@ -108,7 +153,6 @@
         </div>
 
     </div>
-
     <div class="row">
         <div class="col">
             <section class="card">
@@ -129,7 +173,6 @@
                             <th>#</th>
                             <th class="text-center">Muddat</th>
                             <th class="text-center">To'lov<br>raqami</th>
-
                             <th class="text-center">Pul<br>Turi</th>
                             <th class="text-center">Mijoz</th>
                             <th class="text-center">Buyurtma</th>
@@ -141,17 +184,19 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
-                                <td class="text-center"><a href="{% url 'transactions:transaction_detail' transaction.id %}">{{ transaction.payment_order|floatformat:"g" }}</a></td>
+                                <td class="text-center"><a
+                                        href="{% url 'transactions:transaction_detail' transaction.id %}">{{ transaction.payment_order|floatformat:"g" }}</a>
+                                </td>
 
                                 <td class="text-center">{{ transaction.get_cash_type_display }}</td>
                                 <td class="text-center">{{ transaction.client }}</td>
                                 <td class="text-center">{{ transaction.order }}
-                            <td class="text-center">
-                                {% if transaction.double_entry_accounting == 2 %}
+                                <td class="text-center">
+                                    {% if transaction.double_entry_accounting == 2 %}
 
-                                    <span class="text-center text-success">+{{ transaction.balance|floatformat:"2g" }}</span>
-                                {% elif transaction.double_entry_accounting == 1 %}
-                                    <span class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</span>
+                                        <span class="text-center text-success">+{{ transaction.balance|floatformat:"2g" }}</span>
+                                    {% elif transaction.double_entry_accounting == 1 %}
+                                        <span class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</span>
 
                                     {% endif %}
                                 </td>
@@ -163,9 +208,6 @@
             </section>
         </div>
     </div>
-
-
-
 {% endblock %}
 <!-- Specific Page Vendor -->
 {% block additional_js %}
