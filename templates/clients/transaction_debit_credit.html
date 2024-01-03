@@ -15,6 +15,51 @@
             </ol>
         </div>
     </header>
+
+    <div class="row">
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-6">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+
+                </header>
+                <div class="card-body">
+                    <table class="table table-responsive-md table-bordered mb-0 text-center">
+                        <thead>
+                        <tr>
+                            <th class="text-center">Mijoz</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td>{{ client }}</td>
+                        <td class="text-success">+{{ client.total_debit|floatformat:"2g" }}</td>
+                        <td class="text-danger">-{{ client.total_credit|floatformat:"2g" }}</td>
+                        {% if client.balance > 0 %}
+                            <td class="text-center text-success">
+                                +{{ client.balance|floatformat:"2g" }}</td>
+                        {% else %}
+                            <td class="text-center text-danger">-{{ client.balance|floatformat:"2g" }}</td>
+                        {% endif %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
     <div class="row">
         <div class="col">
             <section class="card">
@@ -80,12 +125,6 @@
             </section>
         </div>
     </div>
-
-
-
-
-
-
 {% endblock %}
 <!-- Specific Page Vendor -->
 {% block additional_js %}

@@ -112,6 +112,7 @@ class TransactionDebitCreditView(ListView):
         context["transaction_list"] = Transaction.objects.filter(
             client=client, deleted_status=False
         )
+        context['client'] = client
         return context
 
 
