@@ -4,15 +4,13 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import CustomUser, Company, CashType
+from apps.accounts.models import CustomUser, Company, MoneySaver
 from apps.clients.models import Client
 from apps.orders.models import Order
 from apps.products.models import Product
 
 
 # Create your models here.
-
-
 
 
 class DoubleEntryAccounting(models.IntegerChoices):
@@ -25,9 +23,11 @@ class Transaction(models.Model):
     payment_order = models.IntegerField("To'lov raqami", blank=True, null=True)
 
     description = models.CharField("Ta'rif", blank=True, max_length=55)
-    cash_type = models.IntegerField("Pul turi",
-                                    choices=CashType.choices,
-                                    default=CashType.CASH)
+    cash_type = models.ForeignKey(MoneySaver,
+                                  on_delete=models.SET_NULL,
+                                  blank=True,
+                                  null=True,
+                                  related_name="moneySaver_transaction", )
     client = models.ForeignKey(Client,
                                on_delete=models.SET_NULL,
                                blank=True,
@@ -68,8 +68,8 @@ class Transaction(models.Model):
 
     class Meta:
         """Class representing a transaction"""
-        verbose_name = "Транзакция"
-        verbose_name_plural = "Транзакция"
+        verbose_name = "Tranzaksiya"
+        verbose_name_plural = "Tranzaksiyalar"
 
     def __str__(self) -> str:
         return str(self.description)
