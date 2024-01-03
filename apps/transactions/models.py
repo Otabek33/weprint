@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from apps.accounts.models import CustomUser, Company
+from apps.accounts.models import CustomUser, Company, CashType
 from apps.clients.models import Client
 from apps.orders.models import Order
 from apps.products.models import Product
@@ -12,9 +12,7 @@ from apps.products.models import Product
 
 # Create your models here.
 
-class CashType(models.IntegerChoices):
-    CASH = 1, _('Naqt')
-    BANK = 2, _('Bank')
+
 
 
 class DoubleEntryAccounting(models.IntegerChoices):

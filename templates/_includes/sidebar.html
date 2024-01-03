@@ -43,7 +43,7 @@
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-money" aria-hidden="true"></i>
-                            <span>Kassa</span>
+                            <span>To'lovlar</span>
                         </a>
                         <ul class="nav nav-children">
                             <li>
@@ -52,13 +52,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link" href="{% url 'clients:debit_credit' %}">
-                                    Mijozlar Debit-Credit
+                                <a class="nav-link" href="#">
+                                    Naqt
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="#">
-                                    Buyurtmalar Debit-Credit
+                                    Bank
                                 </a>
                             </li>
                             <li>
@@ -68,9 +68,26 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                    </li>
+                     <li class="nav-parent">
+                        <a class="nav-link" href="#">
+                            <i class="bx bx-transfer" aria-hidden="true"></i>
+                            <span>Debit-Kredit</span>
+                        </a>
+                        <ul class="nav nav-children">
 
+                            <li>
+                                <a class="nav-link" href="{% url 'clients:debit_credit' %}">
+                                    Mijozlar
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="#">
+                                    Buyurtmalar
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                 </ul>
             </nav>
 

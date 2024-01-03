@@ -50,6 +50,8 @@ class CompanyAdmin(admin.ModelAdmin):
         "balance",
 
     ]
+
+
 @admin.register(MoneySaver)
 class MoneySaverAdmin(admin.ModelAdmin):
     list_display = [
@@ -57,7 +59,4 @@ class MoneySaverAdmin(admin.ModelAdmin):
         "cashType",
         "balance",
         "company",
-
     ]
-
-
