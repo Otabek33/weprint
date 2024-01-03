@@ -1,5 +1,6 @@
 from django.urls import path
-from apps.clients.views import (client_list, client_update, client_delete, client_add,client_debit_credit)
+from apps.clients.views import (client_list, client_update, client_delete, client_add, client_debit_credit,
+                                client_transaction)
 
 app_name = "clients"
 
@@ -10,5 +11,6 @@ urlpatterns = [
     path("update/<uuid:pk>", client_update, name="update"),
     path("delete/<uuid:pk>", client_delete, name="delete"),
     path('debit-credit', client_debit_credit, name='debit_credit'),
+    path('<uuid:pk>/debit-credit/', client_transaction, name='debit_credit'),
 
 ]

@@ -47,7 +47,7 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center"><a
-                                        href="{% url 'orders:debit_credit' client.uuid %}">{{ client.first_name }} {{ client.last_name }}</a>
+                                        href="{% url 'clients:debit_credit' client.uuid %}">{{ client.first_name }} {{ client.last_name }}</a>
                                 </td>
                                 <td class="text-center">{{ client.userId }}</td>
                                 <td class="text-center text-success">

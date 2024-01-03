@@ -15,7 +15,7 @@
             </ol>
         </div>
     </header>
-<div class="row">
+    <div class="row">
         <div class="col">
             <section class="card">
                 <header class="card-header">
@@ -32,11 +32,11 @@
 
                         <thead>
                         <tr>
-                              <th>#</th>
+                            <th>#</th>
                             <th class="text-center">Buyurtma</th>
+                            <th class="text-center">Buyurtma status</th>
                             <th class="text-center">Yaratildi</th>
                             <th class="text-center">Mijoz</th>
-                            <th class="text-center">Buyurtma status</th>
                             <th class="text-center">Debet</th>
                             <th class="text-center">Kredit</th>
                             <th class="text-center">Saldo</th>
@@ -44,22 +44,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for order in  order_list %}
+                        {% for transaction in  transaction_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td class="text-center">{{ order.order_number }}</td>
-                                <td class="text-center">{{ order.created_at|date:"d-m-Y H:i"  }}</td>
-                                <td class="text-center">{{ order.created_by }}</td>
-                                <td class="text-center">{{ order.get_order_status_display }}</td>
-
+                                <td class="text-center">{{ transaction.order_number }}</td>
+                                <td class="text-center">{{ transaction.get_order_status_display }}</td>
+                                <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
+                                <td class="text-center">{{ transaction.created_by }}</td>
                                 <td class="text-center text-success">
-                                    +{{ order.total_debit|floatformat:"2g" }}</td>
-                                <td class="text-center text-danger">-{{ order.total_credit|floatformat:"2g" }}</td>
+                                    {% if transaction.double_entry_accounting == 2 %}
 
-                                {% if order.residual_value > 0 %}
-                                    <td class="text-center text-success">{{ order.residual_value|floatformat:"2g" }}</td>
+                                        <span class="text-center text-success">+{{ transaction.balance|floatformat:"2g" }}</span>
+                                    {% else %}
+                                        <span class="text-center text-success">0</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center text-success">
+                                    {% if transaction.double_entry_accounting == 1 %}
+                                        <span class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</span>
+                                    {% else %}
+                                        <span class="text-center text-danger">0</span>
+                                    {% endif %}
+                                </td>
+                                {% if transaction.double_entry_accounting == 2 %}
+                                    <td class="text-center text-success">
+                                        +{{ transaction.balance|floatformat:"2g" }}</td>
                                 {% else %}
-                                    <td class="text-center text-danger">{{ order.residual_value|floatformat:"2g" }}</td>
+                                    <td class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
@@ -78,7 +89,7 @@
 {% endblock %}
 <!-- Specific Page Vendor -->
 {% block additional_js %}
-<!-- Specific Page Vendor -->
+    <!-- Specific Page Vendor -->
     <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
     <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>

@@ -1,12 +1,18 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
 from typing import Any, Dict
 from datetime import datetime, timezone
+
+from django.db.models import Q
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
+
+from apps.accounts.models import CustomUser
 from apps.clients.forms import ClientCreateForm, ClientUpdateForm
 from apps.clients.models import Client
+from apps.orders.models import OrderStatus
+from apps.transactions.models import Transaction
 from utils.helpers import is_ajax
 
 
@@ -94,3 +100,19 @@ class ClientDebitCredit(ListView):
 
 
 client_debit_credit = ClientDebitCredit.as_view()
+
+
+class TransactionDebitCreditView(ListView):
+    model = Transaction
+    template_name = "clients/transaction_debit_credit.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        client = get_object_or_404(Client, pk=self.kwargs["pk"])
+        context["transaction_list"] = Transaction.objects.filter(
+            client=client, deleted_status=False
+        )
+        return context
+
+
+client_transaction = TransactionDebitCreditView.as_view()

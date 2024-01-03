@@ -65,20 +65,20 @@ class OrderCancelView(DetailView):
 order_cancel = OrderCancelView.as_view()
 
 
-class DebitCreditView(ListView):
-    model = Order
-    template_name = "orders/order_debit_credit.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        client = get_object_or_404(Client, pk=self.kwargs["pk"])
-        context["order_list"] = Order.objects.filter(
-            Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
-        )
-        return context
-
-
-debit_credit = DebitCreditView.as_view()
+# class DebitCreditView(ListView):
+#     model = Order
+#     template_name = "clients/transaction_debit_credit.html"
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         client = get_object_or_404(Client, pk=self.kwargs["pk"])
+#         context["order_list"] = Order.objects.filter(
+#             Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
+#         )
+#         return context
+#
+#
+# debit_credit = DebitCreditView.as_view()
 
 
 class OrderStatusUpdate(TemplateView):
@@ -87,8 +87,6 @@ class OrderStatusUpdate(TemplateView):
         if is_ajax(request):
             order = get_object_or_404(Order, pk=self.kwargs["pk"])
             order.order_status = int(request.POST["status"])
-            # order.updated_at = datetime.now(tz=timezone.utc)
-            # order.updated_by = self.request.user
             order.save()
             message = "Buyurtma statusi o'zgardi"
             return JsonResponse({"success": True, "data": None, "msg": message}, status=200)

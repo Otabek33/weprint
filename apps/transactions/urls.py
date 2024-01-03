@@ -14,4 +14,5 @@ urlpatterns = [
     # path("delete/", transaction_delete, name="transaction_delete"),
     path("<int:pk>/detail/", transaction_detail, name="transaction_detail"),
 
+
 ]
