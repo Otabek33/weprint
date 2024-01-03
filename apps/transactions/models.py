@@ -15,7 +15,6 @@ from apps.products.models import Product
 class CashType(models.IntegerChoices):
     CASH = 1, _('Naqt')
     BANK = 2, _('Bank')
-    PRODUCT = 3, _('Mahsulot')
 
 
 class DoubleEntryAccounting(models.IntegerChoices):

@@ -74,5 +74,5 @@ class Product(models.Model):
         return reverse("products:product_list")
 
     class Meta:
-        verbose_name = "Продукт"
-        verbose_name_plural = "Продукты"
+        verbose_name = "Mahsulot"
+        verbose_name_plural = "Mahsulotlar"
