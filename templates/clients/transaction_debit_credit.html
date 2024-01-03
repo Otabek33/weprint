@@ -80,6 +80,7 @@
                             <th>#</th>
                             <th class="text-center">Buyurtma</th>
                             <th class="text-center">Buyurtma status</th>
+                            <th class="text-center">To'lov turi</th>
                             <th class="text-center">Yaratildi</th>
                             <th class="text-center">Mijoz</th>
                             <th class="text-center">Debet</th>
@@ -94,6 +95,7 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td class="text-center">{{ transaction.order_number }}</td>
                                 <td class="text-center">{{ transaction.get_order_status_display }}</td>
+                                <td class="text-center">{{ transaction.cash_type }}</td>
                                 <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
                                 <td class="text-center">{{ transaction.created_by }}</td>
                                 <td class="text-center text-success">
