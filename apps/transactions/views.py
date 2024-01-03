@@ -1,12 +1,12 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
 import decimal
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, Dict
 
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import (ListView, CreateView, DetailView, TemplateView,View )
+from django.views.generic import (ListView, CreateView, DetailView)
 
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
@@ -44,9 +44,12 @@ class TransactionAddView(CreateView):
         transaction.payment_order = payment_order_generation()
         price = decimal.Decimal(self.request.POST.get('price'))
         transaction.balance = price
-        transaction.order = get_order_by_id(self.request.POST.get('order'))
+        order = self.request.POST.get('order')
+        if order:
+            transaction.order = Order.objects.get(uuid=order)
         transaction.company_balance = company_balance_generation(transaction, price)
         transaction.save()
+
         return redirect("transactions:transaction_list")
 
     def form_invalid(self, form):
@@ -101,5 +104,3 @@ class TransactionDetailView(DetailView):
 
 
 transaction_detail = TransactionDetailView.as_view()
-
-

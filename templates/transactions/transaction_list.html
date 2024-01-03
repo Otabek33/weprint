@@ -16,143 +16,176 @@
             </ol>
         </div>
     </header>
-    <div class="row justify-content-between">
-        <div class="col-lg-6 col-xl-5">
-            <section class="card card-featured-left card-featured-tertiary mb-4">
-                <div class="card-body">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon bg-tertiary">
-                                <i class="fas fa-cash-register"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-                                <h4 class="title">Naqt</h4>
-                                <div class="info mt-4">
-                                    <strong class="amount">0 so'm</strong>
-                                </div>
-                            </div>
-
-                        </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
                     </div>
-                </div>
-            </section>
-        </div>
-        <div class="col-lg-6 col-xl-5">
-            <section class="card card-featured-left card-featured-primary mb-4">
+
+
+                </header>
                 <div class="card-body">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon bg-primary">
-                                <i class="fas fa-building"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-                                <h4 class="title">Bank</h4>
-                                <div class="info mt-4">
-                                    <strong class="amount">0 so'm</strong>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-    <div class="row justify-content-between">
-
-        <div class="col-lg-3 col-xl-3">
-            <section class="card card-featured-left card-featured-tertiary mb-4">
-                <div class="card-body">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon bg-tertiary">
-                                <i class="fas fa-balance-scale"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-                                <h4 class="title">Balans</h4>
-                                <div class="info mt-4">
-                                    <strong class="amount">{{ company.balance|floatformat:"g" }} so'm</strong>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div class="col-lg-3 col-xl-3">
-            <section class="card card-featured-left card-featured-primary mb-4">
-                <div class="card-body">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon bg-primary">
-                                <i class="fas fa-money-bill"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-                                <h4 class="title">Debet</h4>
-                                <div class="info mt-4">
-                                    <strong class="amount">{{ company.total_debit|floatformat:"g" }} so'm</strong>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div class="col-lg-3 col-xl-3">
-            <section class="card card-featured-left card-featured-secondary mb-4">
-                <div class="card-body">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col widget-summary-col-icon">
-                            <div class="summary-icon bg-secondary">
-                                <i class="fas fa-money-bill"></i>
-                            </div>
-                        </div>
-                        <div class="widget-summary-col">
-                            <div class="summary">
-                                <h4 class="title">Kredit</h4>
-                                <div class="info mt-4">
-                                    <strong class="amount">{{ company.total_credit|floatformat:"g" }} so'm</strong>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div class="col-lg-3 col-xl-2">
-            <section class="card card-featured-left card-featured-success mb-4">
-                <div class="card-body">
-                    <div class="widget-summary">
-                        <div class="widget-summary-col">
-                            <div class="summary">
-
-                                <div class="info mt-4 text-center">
-                                    <a type="button" href="{% url 'transactions:transaction_add' %}"
-                                       class="btn btn-success">
+                    <table class="table table-responsive-md table-bordered mb-0 text-center">
+                        <thead>
+                        <tr>
+                            <th >Korxona</th><td>{{ company.name }}</td>
+                            <th >Balans</th><td class="text-primary">{{ company.balance|floatformat:"g" }} so'm</td>
+                            <th >Debit</th><td class="text-success">+{{ company.total_debit|floatformat:"g" }} so'm</td>
+                            <th >Kredit</th><td class="text-danger">-{{ company.total_credit|floatformat:"g" }} so'm</td>
+                            <th >Naqt</th><td>0 so'm</td>
+                            <th >Bank</th><td>0 so'm</td>
+                            <td><a type="button" href="{% url 'transactions:transaction_add' %}"
+                                       class="btn btn-sm  btn-success">
                                         <i class="fas fa-plus"></i>Qo'shmoq
-                                    </a>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                                    </a></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
             </section>
         </div>
 
     </div>
+{#    <div class="row justify-content-between">#}
+{#        <div class="col-lg-6 col-xl-5">#}
+{#            <section class="card card-featured-left card-featured-tertiary mb-4">#}
+{#                <div class="card-body">#}
+{#                    <div class="widget-summary">#}
+{#                        <div class="widget-summary-col widget-summary-col-icon">#}
+{#                            <div class="summary-icon bg-tertiary">#}
+{#                                <i class="fas fa-cash-register"></i>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="widget-summary-col">#}
+{#                            <div class="summary">#}
+{#                                <h4 class="title">Naqt</h4>#}
+{#                                <div class="info mt-4">#}
+{#                                    <strong class="amount">0 so'm</strong>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{#        <div class="col-lg-6 col-xl-5">#}
+{#            <section class="card card-featured-left card-featured-primary mb-4">#}
+{#                <div class="card-body">#}
+{#                    <div class="widget-summary">#}
+{#                        <div class="widget-summary-col widget-summary-col-icon">#}
+{#                            <div class="summary-icon bg-primary">#}
+{#                                <i class="fas fa-building"></i>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="widget-summary-col">#}
+{#                            <div class="summary">#}
+{#                                <h4 class="title">Bank</h4>#}
+{#                                <div class="info mt-4">#}
+{#                                    <strong class="amount">0 so'm</strong>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{#    </div>#}
+{#    <div class="row justify-content-between">#}
+{##}
+{#        <div class="col-lg-3 col-xl-3">#}
+{#            <section class="card card-featured-left card-featured-tertiary mb-4">#}
+{#                <div class="card-body">#}
+{#                    <div class="widget-summary">#}
+{#                        <div class="widget-summary-col widget-summary-col-icon">#}
+{#                            <div class="summary-icon bg-tertiary">#}
+{#                                <i class="fas fa-balance-scale"></i>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="widget-summary-col">#}
+{#                            <div class="summary">#}
+{#                                <h4 class="title">Balans</h4>#}
+{#                                <div class="info mt-4">#}
+{#                                    <strong class="amount">{{ company.balance|floatformat:"g" }} so'm</strong>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{#        <div class="col-lg-3 col-xl-3">#}
+{#            <section class="card card-featured-left card-featured-primary mb-4">#}
+{#                <div class="card-body">#}
+{#                    <div class="widget-summary">#}
+{#                        <div class="widget-summary-col widget-summary-col-icon">#}
+{#                            <div class="summary-icon bg-primary">#}
+{#                                <i class="fas fa-money-bill"></i>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="widget-summary-col">#}
+{#                            <div class="summary">#}
+{#                                <h4 class="title">Debet</h4>#}
+{#                                <div class="info mt-4">#}
+{#                                    <strong class="amount">{{ company.total_debit|floatformat:"g" }} so'm</strong>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{#        <div class="col-lg-3 col-xl-3">#}
+{#            <section class="card card-featured-left card-featured-secondary mb-4">#}
+{#                <div class="card-body">#}
+{#                    <div class="widget-summary">#}
+{#                        <div class="widget-summary-col widget-summary-col-icon">#}
+{#                            <div class="summary-icon bg-secondary">#}
+{#                                <i class="fas fa-money-bill"></i>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="widget-summary-col">#}
+{#                            <div class="summary">#}
+{#                                <h4 class="title">Kredit</h4>#}
+{#                                <div class="info mt-4">#}
+{#                                    <strong class="amount">{{ company.total_credit|floatformat:"g" }} so'm</strong>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{#        <div class="col-lg-3 col-xl-2">#}
+{#            <section class="card card-featured-left card-featured-success mb-4">#}
+{#                <div class="card-body">#}
+{#                    <div class="widget-summary">#}
+{#                        <div class="widget-summary-col">#}
+{#                            <div class="summary">#}
+{##}
+{#                                <div class="info mt-4 text-center">#}
+{##}
+{##}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+
     <div class="row">
         <div class="col">
             <section class="card">
@@ -188,7 +221,7 @@
                                         href="{% url 'transactions:transaction_detail' transaction.id %}">{{ transaction.payment_order|floatformat:"g" }}</a>
                                 </td>
 
-                                <td class="text-center">{{ transaction.get_cash_type_display }}</td>
+                                <td class="text-center">{{ transaction.cash_type }}</td>
                                 <td class="text-center">{{ transaction.client }}</td>
                                 <td class="text-center">{{ transaction.order }}
                                 <td class="text-center">

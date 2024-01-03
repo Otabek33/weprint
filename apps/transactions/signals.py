@@ -3,7 +3,8 @@ from django.dispatch import receiver
 
 from apps.orders.models import Order
 from apps.transactions.models import Transaction
-from apps.transactions.utils import process_updating_company_balance, process_updating_order, process_updating_client,process_update_transactions
+from apps.transactions.utils import process_updating_company_balance, process_updating_order, process_updating_client, \
+    process_update_transactions
 
 transaction_deleted_signal = Signal()
 
@@ -15,11 +16,12 @@ def updating_company_balance(sender, instance, created, update_fields, **kwargs)
         transaction_deleted_signal.send(sender=Transaction, instance=instance)
     transaction = Transaction.objects.get(id=instance.id)
     process_updating_company_balance(transaction, transaction.company)
-    process_updating_order(transaction, transaction.order)
+    if transaction.order:
+        process_updating_order(transaction, transaction.order)
+
     process_updating_client(transaction, transaction.client)
 
 
 @receiver(transaction_deleted_signal)
 def transaction_deleted_signal_handler(sender, instance, **kwargs):
-    # Your custom logic here when the custom signal is sent after the field is updated
     process_update_transactions(instance)
