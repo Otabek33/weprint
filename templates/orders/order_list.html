@@ -43,18 +43,20 @@
                         <tr>
                             <th>#</th>
                             <th class="text-center">Buyurtma raqami</th>
-                            <th class="text-center" >Mijoz telefon<br> raqami</th>
-                            <th class="text-center" >Yaratilgan</th>
-                            <th class="text-center" >Buyurtma statusi</th>
-                            <th class="text-center" >Yetqazib berish<br> turi</th>
-                            <th class="text-center" >Sahifalar soni</th>
-                            <th class="text-center" >Narx</th>
-                            <th class="text-center" >To'lov statusi</th>
-                            <th class="text-center" >Action</th>
+                            <th class="text-center">Mijoz telefon<br> raqami</th>
+                            <th class="text-center">Yaratilgan</th>
+                            <th class="text-center">Buyurtma statusi</th>
+                            <th class="text-center">Yetqazib berish<br> turi</th>
+                            <th class="text-center">Sahifalar soni</th>
+                            <th class="text-center">Narx</th>
+                            <th class="text-center">To'lov statusi</th>
+                            <th class="text-center">Harakat</th>
 
                         </tr>
                         </thead>
                         <tbody>
+                        {% csrf_token %}
+                        <input type="hidden" id="csrf_token_input" value="{% csrf_token %}">
                         {% for order in order_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
@@ -63,11 +65,11 @@
                                 <td>{{ order.created_by.phone }}</td>
                                 <td>{{ order.created_at|date:"d-m-Y H:i" }}</td>
                                 <td>
-                                    <select id="project_fact_status_update"
-                                            onclick="select_status_of_project_fact('{{ project.id }}','{{ csrf_token }}')"
-                                            href="#"
-                                            class="form-control "
-                                            style="width: 150px">
+
+                                    <select
+                                            class="form-control"
+                                            style="width: 150px" id="order_status_update_select"
+                                    >
                                         <option value="2" class="badge badge-warning"
                                                 {% if order.order_status == 2 %}selected{% endif %}>
                                             Yangi Buyurtma
@@ -90,7 +92,13 @@
                                 <td>{{ order.price|floatformat:"2g" }} so'm</td>
                                 <td>{{ order.total_credit|floatformat:"2g" }} so'm</td>
                                 <td>
-                                    <button class="btn btn-primary"> Saqlash</button>
+                                    <form id="order_status_form">
+                                        {% csrf_token %}
+                                        <button class="btn btn-primary" type="submit" id="order_status_update"
+                                                data-action-url="{% url 'orders:status_update' order.uuid %}">
+                                            Saqlash
+                                        </button>
+                                    </form>
                                 </td>
 
                             </tr>
@@ -121,4 +129,44 @@
     <script src="{% static 'js/examples/examples.datatables.default.js' %}"></script>
     <script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
     <script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let form = document.getElementById("order_status_form");
+
+            if (form) {
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault(); // Prevent the default form submission
+                    let select = document.getElementById("order_status_update_select");
+                    let selectedValue = select.value;
+                    select_status_of_order(selectedValue);
+                });
+            } else {
+                console.error("Form not found");
+            }
+        });
+
+        function select_status_of_order(selectedValue) {
+
+            let actionUrl = document.getElementById("order_status_update").getAttribute("data-action-url");
+            let csrftoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;  // Get CSRF token
+            let form_data = {
+                "status": selectedValue,
+                "csrfmiddlewaretoken": csrftoken,
+            };
+
+            $.ajax({
+                method: "POST",
+                url: actionUrl,
+                data: form_data,
+                dataType: 'json',
+                success: function (data) {
+                    // Handle success if needed
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+    </script>
 {% endblock %}

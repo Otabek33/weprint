@@ -77,7 +77,7 @@ def generate_order_number():
 
 def get_user_orders(user_id):
     client = Client.objects.get(userId=user_id)
-    excluded_statuses = [OrderStatus.CREATION, OrderStatus.FINISH]
+    excluded_statuses = [OrderStatus.CREATION]
     return Order.objects.filter(created_by=client).exclude(order_status__in=excluded_statuses)
 
 

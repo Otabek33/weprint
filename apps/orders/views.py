@@ -1,10 +1,15 @@
+from datetime import datetime, timezone
+
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import (ListView, DetailView, DeleteView)
+from django.views.generic import (ListView, DetailView, DeleteView, TemplateView)
 
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
 from django.contrib import messages
 from django.db.models import Q
+
+from utils.helpers import is_ajax
 
 
 class OrderListView(ListView):
@@ -74,3 +79,19 @@ class DebitCreditView(ListView):
 
 
 debit_credit = DebitCreditView.as_view()
+
+
+class OrderStatusUpdate(TemplateView):
+
+    def post(self, request, *args, **kwargs):
+        if is_ajax(request):
+            order = get_object_or_404(Order, pk=self.kwargs["pk"])
+            order.order_status = int(request.POST["status"])
+            # order.updated_at = datetime.now(tz=timezone.utc)
+            # order.updated_by = self.request.user
+            order.save()
+            message = "Buyurtma statusi o'zgardi"
+            return JsonResponse({"success": True, "data": None, "msg": message}, status=200)
+
+
+order_status = OrderStatusUpdate.as_view()
