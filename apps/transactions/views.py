@@ -3,11 +3,12 @@ import decimal
 from datetime import datetime
 from typing import Any, Dict
 
-from django.db.models import Q
+from django.db.models import Q, Sum, Case, When, F, DecimalField
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (ListView, CreateView, DetailView)
 
+from apps.accounts.models import MoneySaver, CashType
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
 from apps.transactions.forms import TransactionCreateForm
@@ -25,6 +26,11 @@ class TransactionListView(ListView):
         context = super().get_context_data(**kwargs)
         context['transaction_list'] = Transaction.objects.filter(deleted_status=False)
         context['company'] = get_company(self.request.user)
+
+        context['money'] = MoneySaver.objects.aggregate(
+            cash=Sum(Case(When(cashType=CashType.CASH, then=F('balance')), default=0, output_field=DecimalField())),
+            bank=Sum(Case(When(cashType=CashType.BANK, then=F('balance')), default=0, output_field=DecimalField()))
+        )
         return context
 
 

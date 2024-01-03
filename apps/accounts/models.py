@@ -52,6 +52,8 @@ class MoneySaver(models.Model):
                                    choices=CashType.choices,
                                    default=CashType.CASH)
     balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
+    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     company = models.ForeignKey(Company,
                                 on_delete=models.SET_NULL,
                                 blank=True,

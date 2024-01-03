@@ -38,7 +38,7 @@ class Client(models.Model):
     deleted_status = models.BooleanField(default=False)
     total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    residual_value = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

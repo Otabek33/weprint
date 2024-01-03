@@ -35,8 +35,8 @@
                             <th >Balans</th><td class="text-primary">{{ company.balance|floatformat:"g" }} so'm</td>
                             <th >Debit</th><td class="text-success">+{{ company.total_debit|floatformat:"g" }} so'm</td>
                             <th >Kredit</th><td class="text-danger">-{{ company.total_credit|floatformat:"g" }} so'm</td>
-                            <th >Naqt</th><td>0 so'm</td>
-                            <th >Bank</th><td>0 so'm</td>
+                            <th >Naqt</th><td>{{ money.cash|floatformat:"g" }} so'm</td>
+                            <th >Bank</th><td>{{ money.bank|floatformat:"g" }} so'm</td>
                             <td><a type="button" href="{% url 'transactions:transaction_add' %}"
                                        class="btn btn-sm  btn-success">
                                         <i class="fas fa-plus"></i>Qo'shmoq

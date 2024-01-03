@@ -56,7 +56,7 @@ class Order(models.Model):
     price = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
     total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    residual_value = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     page_number = models.IntegerField(default=0)
     order_status = models.IntegerField(
         choices=OrderStatus.choices,

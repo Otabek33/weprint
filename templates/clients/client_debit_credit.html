@@ -38,7 +38,7 @@
                             <th class="text-center">ChatId</th>
                             <th class="text-center">Debet</th>
                             <th class="text-center">Kredit</th>
-                            <th class="text-center">Saldo</th>
+                            <th class="text-center">Balans</th>
 
                         </tr>
                         </thead>
@@ -54,10 +54,10 @@
                                     +{{ client.total_debit|floatformat:"2g" }}</td>
                                 <td class="text-center text-danger">-{{ client.total_credit|floatformat:"2g" }}</td>
 
-                                {% if client.residual_value > 0 %}
-                                    <td class="text-center text-success">{{ client.residual_value|floatformat:"2g" }}</td>
+                                {% if client.balance > 0 %}
+                                    <td class="text-center text-success">{{ client.balance|floatformat:"2g" }}</td>
                                 {% else %}
-                                    <td class="text-center text-danger">{{ client.residual_value|floatformat:"2g" }}</td>
+                                    <td class="text-center text-danger">{{ client.balance|floatformat:"2g" }}</td>
                                 {% endif %}
                             </tr>
                         {% endfor %}

@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from apps.accounts.models import MoneySaver
 from apps.orders.models import Order
 from apps.transactions.models import Transaction, DoubleEntryAccounting
 
@@ -31,36 +33,32 @@ def process_updating_company_balance(transaction, company):
 
 
 def process_updating_order(transaction, order):
-    if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
-        order.total_credit += transaction.balance
-        if order.total_debit > 0:
-            order.residual_value = order.total_debit - order.total_credit
-        else:
-            order.residual_value = 0 - order.total_credit
-    else:
-        order.total_debit += transaction.balance
-        if order.total_credit > 0:
-            order.residual_value = order.total_debit - order.total_credit
-        else:
-            order.residual_value = order.total_debit - 0
-    order.save()
+    update_total_amounts(order, transaction)
 
 
 def process_updating_client(transaction, client):
+    update_total_amounts(client, transaction)
+
+
+def process_updating_money_saver(transaction, money_saver):
+    update_total_amounts(money_saver, transaction)
+
+
+def update_total_amounts(obj, transaction):
     if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
-        client.total_credit += transaction.balance
-        if client.total_debit > 0:
-            client.residual_value = client.total_debit - client.total_credit
+        obj.total_credit += transaction.balance
+        if obj.total_debit > 0:
+            obj.balance = obj.total_debit - obj.total_credit
         else:
-            client.residual_value = 0 - client.total_credit
+            obj.balance = 0 - obj.total_credit
     else:
-        client.total_debit += transaction.balance
-        if client.total_credit > 0:
-            client.residual_value = client.total_debit - client.total_credit
+        obj.total_debit += transaction.balance
+        if obj.total_credit > 0:
+            obj.balance = obj.total_debit - obj.total_credit
         else:
-            client.residual_value = client.total_debit - 0
-    client.updated_at = datetime.now()
-    client.save()
+            obj.balance = obj.total_debit - 0
+    obj.updated_at = datetime.now()
+    obj.save()
 
 
 def process_update_transactions(transaction):

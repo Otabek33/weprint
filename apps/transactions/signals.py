@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from apps.orders.models import Order
 from apps.transactions.models import Transaction
 from apps.transactions.utils import process_updating_company_balance, process_updating_order, process_updating_client, \
-    process_update_transactions
+    process_update_transactions, process_updating_money_saver
 
 transaction_deleted_signal = Signal()
 
@@ -12,7 +12,6 @@ transaction_deleted_signal = Signal()
 @receiver(post_save, sender=Transaction)
 def updating_company_balance(sender, instance, created, update_fields, **kwargs):
     if update_fields and 'deleted_status' in update_fields:
-        # Additional logic when 'deleted_status' field is updated
         transaction_deleted_signal.send(sender=Transaction, instance=instance)
     transaction = Transaction.objects.get(id=instance.id)
     process_updating_company_balance(transaction, transaction.company)
@@ -20,6 +19,7 @@ def updating_company_balance(sender, instance, created, update_fields, **kwargs)
         process_updating_order(transaction, transaction.order)
 
     process_updating_client(transaction, transaction.client)
+    process_updating_money_saver(transaction, transaction.cash_type)
 
 
 @receiver(transaction_deleted_signal)
