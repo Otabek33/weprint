@@ -41,42 +41,57 @@
 
                         <thead>
                         <tr>
-                           <th>#</th>
-                            <th>Buyurtma raqami</th>
-                            <th>Mijoz telefon raqami</th>
-                            <th>Yaratilgan</th>
-                            <th>Buyurtma statusi</th>
-                            <th>Yetqazib berish turi</th>
-                            <th>Sahifalar soni</th>
-                            <th>Narx</th>
-                            <th>To'lov statusi</th>
+                            <th>#</th>
+                            <th class="text-center">Buyurtma raqami</th>
+                            <th class="text-center" >Mijoz telefon<br> raqami</th>
+                            <th class="text-center" >Yaratilgan</th>
+                            <th class="text-center" >Buyurtma statusi</th>
+                            <th class="text-center" >Yetqazib berish<br> turi</th>
+                            <th class="text-center" >Sahifalar soni</th>
+                            <th class="text-center" >Narx</th>
+                            <th class="text-center" >To'lov statusi</th>
+                            <th class="text-center" >Action</th>
 
                         </tr>
                         </thead>
                         <tbody>
-                       {% for order in order_list %}
+                        {% for order in order_list %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'orders:order_detail' order.uuid %}">{{ order.order_number }}</a>
                                 </td>
-                            <td>{{ order.created_by.phone }}</td>
+                                <td>{{ order.created_by.phone }}</td>
                                 <td>{{ order.created_at|date:"d-m-Y H:i" }}</td>
                                 <td>
-                                    {% if order.order_status == 2 %}
-                                        <span class="badge badge-warning">{{ order.get_order_status_display }}</span>
-                                    {% elif order.order_status == 3 %}
-                                        <span class="badge badge-success">{{ order.get_order_status_display }}</span>
-                                    {% elif order.order_status == 4 %}
-                                        <span class="badge badge-danger">{{ order.get_order_status_display }}</span>
-                                    {% elif order.order_status == 5 %}
-                                        <span class="badge badge-default">{{ order.get_order_status_display }}</span>
-                                    {% endif %}
-
-
+                                    <select id="project_fact_status_update"
+                                            onclick="select_status_of_project_fact('{{ project.id }}','{{ csrf_token }}')"
+                                            href="#"
+                                            class="form-control "
+                                            style="width: 150px">
+                                        <option value="2" class="badge badge-warning"
+                                                {% if order.order_status == 2 %}selected{% endif %}>
+                                            Yangi Buyurtma
+                                        </option>
+                                        <option value="3" class="badge badge-success"
+                                                {% if order.order_status == 3 %}selected{% endif %}>
+                                            Faol
+                                        </option>
+                                        <option value="4" class="badge badge-danger"
+                                                {% if order.order_status == 4 %}selected{% endif %}>
+                                            Bekor qilingan
+                                        </option>
+                                        <option value="5" class="badge badge-default"
+                                                {% if order.order_status == 5 %}selected{% endif %}>
+                                            Yetqazib berilgan
+                                        </option>
+                                    </select>
                                 <td>{{ order.get_delivery_type_display }}</td>
                                 <td>{{ order.page_number }}</td>
                                 <td>{{ order.price|floatformat:"2g" }} so'm</td>
                                 <td>{{ order.total_credit|floatformat:"2g" }} so'm</td>
+                                <td>
+                                    <button class="btn btn-primary"> Saqlash</button>
+                                </td>
 
                             </tr>
                         {% endfor %}
@@ -91,19 +106,19 @@
 <!-- Specific Page Vendor -->
 {% block additional_js %}
     <!-- Specific Page Vendor -->
-		<script src="{% static 'vendor/select2/js/select2.js' %}"></script>
-		<script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js' %}"></script>
-		<script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js' %}"></script>
+    <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js' %}"></script>
 
     <!-- Examples -->
-		<script src="{% static 'js/examples/examples.datatables.default.js' %}"></script>
-		<script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
-		<script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.default.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
 {% endblock %}
