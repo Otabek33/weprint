@@ -23,11 +23,7 @@ class Transaction(models.Model):
     payment_order = models.IntegerField("To'lov raqami", blank=True, null=True)
 
     description = models.CharField("Ta'rif", blank=True, max_length=55)
-    cash_type = models.ForeignKey(MoneySaver,
-                                  on_delete=models.SET_NULL,
-                                  blank=True,
-                                  null=True,
-                                  related_name="moneySaver_transaction", )
+    cash_type = models.ForeignKey(MoneySaver, blank=True, null=True, on_delete=models.CASCADE, )
     client = models.ForeignKey(Client,
                                on_delete=models.SET_NULL,
                                blank=True,

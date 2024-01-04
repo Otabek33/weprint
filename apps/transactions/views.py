@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import Any, Dict
 
 from django.db.models import Q, Sum, Case, When, F, DecimalField
+from django.db.models.signals import post_save
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (ListView, CreateView, DetailView)
@@ -14,7 +15,8 @@ from apps.orders.models import Order, OrderStatus
 from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction
 from apps.transactions.serializers import OrderSerializer
-from apps.transactions.utils import payment_order_generation, company_balance_generation, get_company, get_order_by_id
+from apps.transactions.signals import transaction_deleted_signal, updating_company_balance
+from apps.transactions.utils import payment_order_generation, get_company, disconnect_signal, reconnect_signal
 from utils.helpers import is_ajax
 
 
@@ -53,7 +55,6 @@ class TransactionAddView(CreateView):
         order = self.request.POST.get('order')
         if order:
             transaction.order = Order.objects.get(uuid=order)
-        transaction.company_balance = company_balance_generation(transaction, price)
         transaction.save()
 
         return redirect("transactions:transaction_list")
@@ -103,9 +104,13 @@ class TransactionDetailView(DetailView):
     template_name = "transactions/transaction_detail.html"
 
     def post(self, request, *args, **kwargs):
+        disconnect_signal(post_save, updating_company_balance, sender=Transaction)
         transaction = get_object_or_404(Transaction, pk=self.kwargs["pk"])
         transaction.deleted_status = True
         transaction.save()
+        reconnect_signal(post_save, updating_company_balance, sender=Transaction)
+        transaction_deleted_signal.send(sender=Transaction, instance=transaction)
+
         return redirect("transactions:transaction_list")
 
 

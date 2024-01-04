@@ -1,3 +1,4 @@
+import uuid as uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -47,6 +48,7 @@ class Company(models.Model):
 
 
 class MoneySaver(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     reester_number = models.CharField("Reyester", blank=True, max_length=55)
     cashType = models.IntegerField("Pul turi",
                                    choices=CashType.choices,

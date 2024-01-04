@@ -14,34 +14,17 @@ def payment_order_generation():
         return 1
 
 
-def company_balance_generation(transaction, price):
-    return transaction.company.balance - price \
-        if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT \
-        else transaction.company.balance + price
+def process_updating_entity(transaction, entity):
+    update_total_amounts(entity, transaction)
 
 
-def process_updating_company_balance(transaction, company):
-    if transaction.double_entry_accounting == DoubleEntryAccounting.CREDIT:
-        company.balance = transaction.company_balance
-    else:
-        company.balance = +transaction.company_balance
-    company.total_debit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.DEBIT
-                                                                   )
-    company.total_credit = generation_total_amount_from_transaction(company, DoubleEntryAccounting.CREDIT
-                                                                    )
-    company.save()
-
-
-def process_updating_order(transaction, order):
-    update_total_amounts(order, transaction)
-
-
-def process_updating_client(transaction, client):
-    update_total_amounts(client, transaction)
-
-
-def process_updating_money_saver(transaction, money_saver):
-    update_total_amounts(money_saver, transaction)
+def process_updating_obj_after_transaction(obj, object_name):
+    obj.total_debit = generation_total_amount_from_transaction(obj, DoubleEntryAccounting.DEBIT,
+                                                               object_name)
+    obj.total_credit = generation_total_amount_from_transaction(obj, DoubleEntryAccounting.CREDIT,
+                                                                object_name)
+    obj.balance = obj.total_debit - obj.total_credit
+    obj.save()
 
 
 def update_total_amounts(obj, transaction):
@@ -61,23 +44,17 @@ def update_total_amounts(obj, transaction):
     obj.save()
 
 
-def process_update_transactions(transaction):
-    filtered_transactions = Transaction.objects.filter(company=transaction.company,
-                                                       payment_order__gte=transaction.payment_order,
-                                                       deleted_status=False)
-
-    for filtered_transaction in filtered_transactions:
-        pass
-
-
-def generation_total_amount_from_transaction(company, double_entry_accounting):
+def generation_total_amount_from_transaction(obj, double_entry_accounting, object_name):
     from django.db.models import Sum, F
+    # Construct the filter using double-underscore notation
+    filter_args = {
+        f"{object_name}": obj,  # Assuming 'object_name' is the related field name
+        'deleted_status': False,
+        'double_entry_accounting': double_entry_accounting
+    }
+
     # Your existing query
-    result = Transaction.objects.filter(
-        company=company,
-        deleted_status=False,
-        double_entry_accounting=double_entry_accounting
-    ).aggregate(
+    result = Transaction.objects.filter(**filter_args).aggregate(
         balance_sum=Sum(F('balance'))
     )
 
