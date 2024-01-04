@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Transaksiyalar{% endblock %}
+
+
+{% block content %}
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard ></h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+
+                <li><span>Bank</span></li>
+            </ol>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-6">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <table class="table table-responsive-md table-bordered mb-0 text-center">
+                        <thead>
+                        <tr>
+                            <th class="text-center">To'lov turi</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td>bank</td>
+                        <td class="text-success">+{{ bank.total_debit|floatformat:"2g" }}</td>
+                        <td class="text-danger">-{{ bank.total_credit|floatformat:"2g" }}</td>
+                        {% if bank.balance > 0 %}
+                            <td class="text-center text-success">
+                                +{{ bank.balance|floatformat:"2g" }}</td>
+                        {% else %}
+                            <td class="text-center text-danger">-{{ bank.balance|floatformat:"2g" }}</td>
+                        {% endif %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Debit-Kredit</h2>
+                </header>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped mb-0" id="datatable-tabletools">
+
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-center">Buyurtma</th>
+                            <th class="text-center">Buyurtma status</th>
+                            <th class="text-center">To'lov turi</th>
+                            <th class="text-center">Yaratildi</th>
+                            <th class="text-center">Mijoz</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for transaction in  transactions_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td class="text-center">{{ transaction.order_number }}</td>
+                                <td class="text-center">{{ transaction.get_order_status_display }}</td>
+                                <td class="text-center">{{ transaction.cash_type }}</td>
+                                <td class="text-center">{{ transaction.created_at|date:"d-m-Y H:i" }}</td>
+                                <td class="text-center">{{ transaction.created_by }}</td>
+                                <td class="text-center text-success">
+                                    {% if transaction.double_entry_accounting == 2 %}
+
+                                        <span class="text-center text-success">+{{ transaction.balance|floatformat:"2g" }}</span>
+                                    {% else %}
+                                        <span class="text-center text-success">0</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center text-success">
+                                    {% if transaction.double_entry_accounting == 1 %}
+                                        <span class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</span>
+                                    {% else %}
+                                        <span class="text-center text-danger">0</span>
+                                    {% endif %}
+                                </td>
+                                {% if transaction.double_entry_accounting == 2 %}
+                                    <td class="text-center text-success">
+                                        +{{ transaction.balance|floatformat:"2g" }}</td>
+                                {% else %}
+                                    <td class="text-center text-danger">-{{ transaction.balance|floatformat:"2g" }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+<!-- Specific Page Vendor -->
+{% block additional_js %}
+    <!-- Specific Page Vendor -->
+    <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js' %}"></script>
+
+    <!-- Examples -->
+    <script src="{% static 'js/examples/examples.datatables.default.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
+    <script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
+{% endblock %}

@@ -53,17 +53,17 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'accounts:cash' user.id %}">
                                     Naqt
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'accounts:bank' user.id %}">
                                     Bank
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link" href="{% url 'transactions:transaction_add' %}">
+                                <a class="nav-link" href="{% url 'transactions:transaction_add'  %}">
                                     Yangi to'lov
                                 </a>
                             </li>
