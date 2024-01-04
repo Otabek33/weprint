@@ -15,7 +15,77 @@
             </ol>
         </div>
     </header>
+    <div class="row">
+        <div class="col-lg-6">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <table class="table table-responsive-md table-bordered mb-0 text-center">
+                        <thead>
+                        <tr>
+                            <th class="text-center">To'lov turi</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td>Bank</td>
+                        <td class="text-success">+{{ bank.total_debit|floatformat:"2g" }}</td>
+                        <td class="text-danger">-{{ bank.total_credit|floatformat:"2g" }}</td>
+                        {% if bank.balance > 0 %}
+                            <td class="text-center text-success">
+                                +{{ bank.balance|floatformat:"2g" }}</td>
+                        {% else %}
+                            <td class="text-center text-danger">-{{ bank.balance|floatformat:"2g" }}</td>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+                </header>
+                <div class="card-body">
+                    <table class="table table-responsive-md table-bordered mb-0 text-center">
+                        <thead>
+                        <tr>
+                            <th class="text-center">To'lov turi</th>
+                            <th class="text-center">Debet</th>
+                            <th class="text-center">Kredit</th>
+                            <th class="text-center">Saldo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <td>Naqt</td>
+                        <td class="text-success">+{{ cash.total_debit|floatformat:"2g" }}</td>
+                        <td class="text-danger">-{{ cash.total_credit|floatformat:"2g" }}</td>
+                        {% if cash.balance > 0 %}
+                            <td class="text-center text-success">
+                                +{{ cash.balance|floatformat:"2g" }}</td>
+                        {% else %}
+                            <td class="text-center text-danger">-{{ cash.balance|floatformat:"2g" }}</td>
+                        {% endif %}
 
+
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </div>
     <div class="row">
         <div class="col">
             <section class="card">
@@ -33,7 +103,7 @@
 
                         <thead>
                         <tr>
-                              <th>#</th>
+                            <th>#</th>
                             <th class="text-center">Mijoz</th>
                             <th class="text-center">ChatId</th>
                             <th class="text-center">Debet</th>
@@ -77,7 +147,7 @@
 {% endblock %}
 <!-- Specific Page Vendor -->
 {% block additional_js %}
-<!-- Specific Page Vendor -->
+    <!-- Specific Page Vendor -->
     <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
     <script src="{% static 'vendor/datatables/media/js/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'vendor/datatables/media/js/dataTables.bootstrap5.min.js' %}"></script>

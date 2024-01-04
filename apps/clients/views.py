@@ -8,7 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
 
-from apps.accounts.models import CustomUser
+from apps.accounts.models import CustomUser, MoneySaver, CashType
 from apps.clients.forms import ClientCreateForm, ClientUpdateForm
 from apps.clients.models import Client
 from apps.orders.models import OrderStatus
@@ -95,7 +95,8 @@ class ClientDebitCredit(ListView):
         context = super().get_context_data(**kwargs)
         context["client_list"] = Client.objects.filter(deleted_status=False).order_by(
             "created_at")
-
+        context["cash"] = MoneySaver.objects.filter(cashType=CashType.CASH).first()
+        context["bank"] = MoneySaver.objects.filter(cashType=CashType.BANK).first()
         return context
 
 

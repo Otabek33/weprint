@@ -110,7 +110,6 @@ class TransactionDetailView(DetailView):
         transaction.save()
         reconnect_signal(post_save, updating_company_balance, sender=Transaction)
         transaction_deleted_signal.send(sender=Transaction, instance=transaction)
-
         return redirect("transactions:transaction_list")
 
 
