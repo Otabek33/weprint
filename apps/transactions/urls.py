@@ -12,7 +12,7 @@ urlpatterns = [
     path("client-choose/", transaction_client_choose, name="transaction_client_choose"),
     path("price/", transaction_order_price, name="transaction_order_price"),
     # path("delete/", transaction_delete, name="transaction_delete"),
-    path("<uuid:pk>/detail/", transaction_detail, name="transaction_detail"),
+    path("<int:pk>/detail/", transaction_detail, name="transaction_detail"),
 
 
 ]
