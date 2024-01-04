@@ -46,7 +46,7 @@
                             <td class="text-center text-success">
                                 +{{ client.balance|floatformat:"2g" }}</td>
                         {% else %}
-                            <td class="text-center text-danger">-{{ client.balance|floatformat:"2g" }}</td>
+                            <td class="text-center text-danger">{{ client.balance|floatformat:"2g" }}</td>
                         {% endif %}
 
 
