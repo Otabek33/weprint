@@ -83,32 +83,36 @@
                 {% endfor %}
 
             </div>
-            <div class="row row-gutter-sm justify-content-between">
+            <div class="row row-gutter-sm justify-content-between pagination">
                 <div class="col-lg-auto order-2 order-lg-1">
-                    <p class="text-center text-lg-left mb-0">Showing 1-8 of 60 results</p>
+                    <p class="text-center text-lg-left mb-0">  {{ page_obj.number }} - Umumiy sahifalar {{ page_obj.paginator.num_pages }}.</p>
                 </div>
                 <div class="col-lg-auto order-1 order-lg-2 mb-3 mb-lg-0">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination pagination-modern pagination-modern-spacing justify-content-center justify-content-lg-start mb-0">
+                         {% if page_obj.has_previous %}
                             <li class="page-item">
-                                <a class="page-link prev" href="#" aria-label="Previous">
+
+                                <a class="page-link prev" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
                                     <span><i class="fas fa-chevron-left" aria-label="Previous"></i></span>
                                 </a>
+
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#" disabled="true">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">15</a></li>
+                         {% endif %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                        {% if page_obj.has_next %}
                             <li class="page-item">
-                                <a class="page-link next" href="#" aria-label="Next">
+                                <a class="page-link next" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
                                     <span><i class="fas fa-chevron-right" aria-label="Next"></i></span>
                                 </a>
                             </li>
+                         {% endif %}
                         </ul>
                     </nav>
                 </div>
             </div>
+
+
         </div>
     </div>
 
