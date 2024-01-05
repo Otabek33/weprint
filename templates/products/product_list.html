@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Mahsulotlar{% endblock %}
+{% block additional_css %}
+    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.theme.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/select2-bootstrap-theme/select2-bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/dropzone/basic.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/dropzone/dropzone.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-markdown/css/bootstrap-markdown.min.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+
+                <li><span>Mahsulotlar</span></li>
+
+                <li><span></span></li>
+            </ol>
+
+        </div>
+    </header>
+
+    <!-- start: page -->
+    <div class="ecommerce-form-sidebar-overlay-wrapper">
+        <div class="ecommerce-form-sidebar-overlay-body">
+            <a href="#" class="ecommerce-form-sidebar-overlay-close"><i class="bx bx-x"></i></a>
+            <div class="scrollable h-100 loading-overlay-showing" data-plugin-scrollable>
+                <div class="loading-overlay">
+                    <div class="bounce-loader">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                </div>
+                <div class="ecommerce-form-sidebar-overlay-content scrollable-content px-3 pb-3 pt-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center justify-content-sm-between pt-2">
+        <div class="col-sm-auto text-center mb-4 mb-sm-0 mt-2 mt-sm-0">
+            <a href="ecommerce-products-form.html"
+               class="ecommerce-sidebar-link btn btn-primary btn-md font-weight-semibold btn-py-2 px-4"
+               data-ajax-url="ajax/ajax-products-form-empty.html">+ Mahsulot qo'shmoq</a>
+        </div>
+
+    </div>
+    <div class="row row-gutter-sm mb-5">
+        <div class="col-lg-3-12">
+            <div class="row row-gutter-sm">
+                {% for product in page_obj  %}
+                    <div class="col-sm-6 col-xl-3 mb-4">
+                        <div class="card card-modern card-modern-alt-padding">
+                            <div class="card-body bg-light">
+                                <div class="image-frame mb-2">
+                                    <div class="image-frame-wrapper">
+
+                                        <a href="ecommerce-products-form.html"><img
+                                                src="{% static 'img/products/product-1.jpg' %}" class="img-fluid"
+                                                alt="Product Short Name"/></a>
+                                    </div>
+                                </div>
+                                <small><a href="ecommerce-products-form.html"
+                                          class="ecommerce-sidebar-link text-color-grey text-color-hover-primary text-decoration-none">Kategoriya</a></small>
+                                <h4 class="text-4 line-height-2 mt-0 mb-2">
+                                    <a href="ecommerce-products-form.html" class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
+                                    {{ product.get_printSize_display }} {{ product.get_printColor_display }}  {{ product.printBindingType.name }}</a>
+                                </h4>
+
+                                <div class="product-price">
+
+                                    <div class="sale-price">{{ product.price|floatformat:"2g" }} so'm</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="row row-gutter-sm justify-content-between">
+                <div class="col-lg-auto order-2 order-lg-1">
+                    <p class="text-center text-lg-left mb-0">Showing 1-8 of 60 results</p>
+                </div>
+                <div class="col-lg-auto order-1 order-lg-2 mb-3 mb-lg-0">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination pagination-modern pagination-modern-spacing justify-content-center justify-content-lg-start mb-0">
+                            <li class="page-item">
+                                <a class="page-link prev" href="#" aria-label="Previous">
+                                    <span><i class="fas fa-chevron-left" aria-label="Previous"></i></span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#" disabled="true">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#">15</a></li>
+                            <li class="page-item">
+                                <a class="page-link next" href="#" aria-label="Next">
+                                    <span><i class="fas fa-chevron-right" aria-label="Next"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+<!-- Specific Page Vendor -->
+<script src="{% static 'vendor/jquery-ui/jquery-ui.js' %}"></script>
+<script src="{% static 'vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js' %}"></script>
+<script src="{% static 'vendor/jquery-validation/jquery.validate.js' %}"></script>
+<script src="{% static 'vendor/select2/js/select2.js' %}"></script>
+<script src="{% static 'vendor/dropzone/dropzone.js' %}"></script>
+<script src="{% static 'vendor/pnotify/pnotify.custom.js' %}"></script>
+
+<!-- Theme Base, Components and Settings -->
+<script src="{% static 'js/theme.js' %}"></script>
+
+<!-- Theme Custom -->
+<script src="{% static 'js/custom.js' %}"></script>
+
+<!-- Theme Initialization Files -->
+<script src="{% static 'js/theme.init.js' %}"></script>
+
+<!-- Examples -->
+<script src="{% static 'js/examples/examples.header.menu.js' %}"></script>
+<script src="{% static 'js/examples/examples.ecommerce.form.js' %}"></script>
+<script src="{% static 'js/examples/examples.ecommerce.sidebar.overlay.js' %}"></script>
+{% block additional_js %}
+
+{% endblock %}

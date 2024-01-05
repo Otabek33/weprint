@@ -2,27 +2,24 @@
 from typing import Any, Dict
 from datetime import datetime, timezone
 
-
 from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
-from django.views.generic import (CreateView, UpdateView, DeleteView)
-from apps.products.models import Product as ProductModel
-from apps.products.forms import ProductCreateForm, ProductUpdateForm
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect
+from django.views.generic import (UpdateView, DeleteView, ListView)
+from apps.products.models import Product
+from apps.products.forms import ProductUpdateForm
 from utils.helpers import is_ajax
 
 
-class ProductListView(CreateView):
-    model = ProductModel
-    form_class = ProductCreateForm
+class ProductListView(ListView):
+    model = Product
+    paginate_by = 8
     template_name = "products/product_list.html"
 
-    # def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
-    #     context = super().get_context_data(**kwargs)
-    #     context['product_list'] = ProductModel.productListByUser.by_creator(
-    #         self.request.user.id)
-    #
-    #     return context
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context['product_list'] = Product.objects.filter(created_by=self.request.user.id)
+        return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         product = form.save(commit=False)
@@ -36,7 +33,7 @@ product_list = ProductListView.as_view()
 
 
 class ProductUpdateView(UpdateView):
-    model = ProductModel
+    model = Product
     form_class = ProductUpdateForm
     template_name = "products/product_update.html"
 
@@ -56,7 +53,7 @@ product_update = ProductUpdateView.as_view()
 
 
 class ProductDeleteView(DeleteView):
-    model = ProductModel
+    model = Product
 
     def post(self, request, *args, **kwargs):
         if is_ajax(request):
