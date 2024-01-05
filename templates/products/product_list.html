@@ -61,15 +61,15 @@
                                 <div class="image-frame mb-2">
                                     <div class="image-frame-wrapper">
 
-                                        <a href="ecommerce-products-form.html"><img
+                                        <a href="{% url 'products:detail' product.uuid %}"><img
                                                 src="{% static 'img/products/product-1.jpg' %}" class="img-fluid"
                                                 alt="Product Short Name"/></a>
                                     </div>
                                 </div>
-                                <small><a href="ecommerce-products-form.html"
-                                          class="ecommerce-sidebar-link text-color-grey text-color-hover-primary text-decoration-none">Kategoriya</a></small>
+                                <small><p
+                                          class="ecommerce-sidebar-link text-color-grey text-color-hover-primary text-decoration-none">Mahsulot</p></small>
                                 <h4 class="text-4 line-height-2 mt-0 mb-2">
-                                    <a href="ecommerce-products-form.html" class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
+                                    <a href="{% url 'products:detail' product.uuid %}" class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
                                     {{ product.get_printSize_display }} {{ product.get_printColor_display }}  {{ product.printBindingType.name }}</a>
                                 </h4>
 

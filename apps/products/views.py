@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from django.views.generic import (UpdateView, DeleteView, ListView)
+from django.views.generic import (UpdateView, DeleteView, ListView, DetailView)
 from apps.products.models import Product
 from apps.products.forms import ProductUpdateForm
 from utils.helpers import is_ajax
@@ -73,3 +73,11 @@ class ProductDeleteView(DeleteView):
 
 
 product_delete = ProductDeleteView.as_view()
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "products/product_detail.html"
+
+
+product_detail = ProductDetailView.as_view()
