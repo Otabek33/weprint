@@ -38,8 +38,6 @@ class ClientAddress(models.Model):
 
 class Company(models.Model):
     """Class representing a person"""
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-
     name = models.CharField("Nomlanishi", blank=True, max_length=55)
     address = models.TextField("Manzil", blank=True, max_length=100)
     email = models.EmailField("Pochta", max_length=100, null=True, blank=True)
