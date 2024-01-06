@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import uuid
+
+from apps.accounts.models import ClientAddress
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
 
 
@@ -25,15 +27,6 @@ class PrintBindingTypes(models.Model):
     class Meta:
         verbose_name = "Binding type"
         verbose_name_plural = "Biding types"
-
-
-class ClientAddress(models.Model):
-    name = models.CharField(max_length=255, default="some place")
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Order(models.Model):

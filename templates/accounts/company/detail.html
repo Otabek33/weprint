@@ -4,12 +4,16 @@
 
 {% block title %}Mahsulotlar{% endblock %}
 {% block additional_css %}
-    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.css' %}"/>
-    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.theme.css' %}"/>
-    <link rel="stylesheet" href="{% static 'vendor/select2-bootstrap-theme/select2-bootstrap.min.css' %}"/>
-    <link rel="stylesheet" href="{% static 'vendor/dropzone/basic.css' %}"/>
-    <link rel="stylesheet" href="{% static 'vendor/dropzone/dropzone.css' %}"/>
-    <link rel="stylesheet" href="{% static 'vendor/bootstrap-markdown/css/bootstrap-markdown.min.css' %}"/>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+    <style>
+
+        #map {
+            height: 500px;
+        }
+
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -114,10 +118,61 @@
                 </section>
             </div>
         </div>
+         <div class="row">
+            <div class="col-lg-8">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                        </div>
+
+                        <h2 class="card-title">Manzil</h2>
+                    </header>
+                    <div class="card-body">
+                        {% if company.location.latitude == 1 %}
+                            <h5>Manzil belgilanmagan</h5>
+                        {% else %}
+                            <div id="map"></div>
+                        {% endif %}
+
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                        </div>
+
+                        <h2 class="card-title">Manzil</h2>
+                    </header>
+                    <div class="card-body" style="height: 530px;">
+
+                        <div class="form-row">
+                            <div class="form-group col mb-3">
+                                <label>Manzil</label>
+                                <div class="date-time-field">
+
+                                        <textarea type="text" class="form-control form-control-modern"
+
+                                                  readonly>{{ company.address }}</textarea>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
         <div class="row action-buttons">
             <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
                 <a href="{% url 'accounts:company_update' company.id %}"
-                        class="delete-button btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  modal-basic ">
+                   class="delete-button btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  modal-basic ">
                     <i class="bx bx-save text-4 me-2"></i> O'zgartirish
                 </a>
             </div>
@@ -128,5 +183,26 @@
 {% endblock %}
 
 {% block additional_js %}
+    <!-- Specific Page Vendor -->
+    <script src="{% static 'vendor/select2/js/select2.js' %}"></script>
+    <script src="{% static 'vendor/pnotify/pnotify.custom.js' %}"></script>
+    <!-- Examples -->
+    <script src="{% static 'js/examples/examples.modals.js' %}"></script>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script>
 
+
+        var map = L.map('map').setView([{{ company.location.latitude }}, {{ company.location.longitude }}], 20);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([{{ company.location.latitude }}, {{ company.location.longitude }}]).addTo(map)
+            .bindPopup('{{ company.address }}')
+            .openPopup();
+
+
+    </script>
 {% endblock %}

@@ -27,8 +27,18 @@ class UserRole(models.Model):
         return str(self.name)
 
 
+class ClientAddress(models.Model):
+    name = models.CharField(max_length=255, default="some place")
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Company(models.Model):
     """Class representing a person"""
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     name = models.CharField("Nomlanishi", blank=True, max_length=55)
     address = models.TextField("Manzil", blank=True, max_length=100)
@@ -37,7 +47,8 @@ class Company(models.Model):
     balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-
+    location = models.OneToOneField(ClientAddress, on_delete=models.CASCADE, null=True, blank=True,
+                                 related_name="company_address")
 
     class Meta:
         """Class representing a person"""

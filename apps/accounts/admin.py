@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .models import (CustomUser,
-                     UserRole, Company, MoneySaver)
+                     UserRole, Company, MoneySaver, ClientAddress)
 
 
 @admin.register(CustomUser)
@@ -60,3 +60,6 @@ class MoneySaverAdmin(admin.ModelAdmin):
         "balance",
         "company",
     ]
+
+
+admin.site.register([ClientAddress])
