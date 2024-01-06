@@ -18,16 +18,13 @@
         <h2 class="font-weight-bold text-6">Dashboard</h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-
                 <li><span><a href="{% url 'products:product_list' %}">Mahsulotlar</a></span></li>
-
-
             </ol>
 
         </div>
     </header>
     <!-- start: page -->
-    <form class="ecommerce-form action-buttons-fixed" action="." method="post">
+    <form class="ecommerce-form action-buttons-fixed" action="" method="post">
     {% csrf_token %}
         <div class="row mt-2">
             <div class="col">
@@ -88,7 +85,7 @@
             <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
                 <button type="submit"
                    class="delete-button btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  modal-basic ">
-                    <i class="bx bx-save text-4 me-2"></i> Yaratish
+                    <i class="bx bx-save text-4 me-2"></i> O'zgartirish
                 </button>
             </div>
         </div>

@@ -70,11 +70,17 @@
                                 <small><p
                                         class="ecommerce-sidebar-link text-color-grey text-color-hover-primary text-decoration-none">
                                     Mahsulot</p></small>
-                                <h4 class="text-4 line-height-2 mt-0 mb-2">
-                                    <a href="{% url 'products:detail' product.uuid %}"
-                                       class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
-                                        {{ product.get_printSize_display }} {{ product.get_printColor_display }} {{ product.printBindingType.name }}</a>
-                                </h4>
+                                <div class="d-flex  justify-content-between">
+                                    <div><h4 class="text-4 line-height-2 mt-0 mb-2">
+                                        <a href="{% url 'products:detail' product.uuid %}"
+                                           class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
+                                            {{ product.get_printSize_display }} {{ product.get_printColor_display }} {{ product.printBindingType.name }}</a>
+                                    </h4></div>
+                                    <div><a href="{% url 'products:update' product.uuid %}"><i class="fas fa-pen-alt"
+                                                                                               aria-label="O'zgartirish"> O'zgartirish</i></a>
+                                    </div>
+                                </div>
+
 
                                 <div class="product-price">
 
