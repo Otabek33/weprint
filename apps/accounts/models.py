@@ -38,6 +38,7 @@ class Company(models.Model):
     total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
 
+
     class Meta:
         """Class representing a person"""
         verbose_name = "Kompaniya"

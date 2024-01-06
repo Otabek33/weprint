@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Mahsulotlar{% endblock %}
+{% block additional_css %}
+    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/jquery-ui/jquery-ui.theme.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/select2-bootstrap-theme/select2-bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/dropzone/basic.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/dropzone/dropzone.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-markdown/css/bootstrap-markdown.min.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span>Korxona</span></li>
+            </ol>
+
+        </div>
+    </header>
+    <!-- start: page -->
+    <form class="ecommerce-form action-buttons-fixed" action="" method="post">
+        {% csrf_token %}
+        <div class="row mt-2">
+            <div class="col">
+                <section class="card card-modern card-big-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2-5 col-xl-1-5">
+                                <i class="card-big-info-icon bx bx-building"></i>
+                                <h2 class="card-big-info-title">Korxona</h2>
+                                <p class="card-big-info-desc">Korxona nomi, manzili ,telefon raqami, pochta</p>
+                            </div>
+
+                            <div class="col-lg-3-5 col-xl-4-5">
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
+                                        nomi</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ company.name }}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
+                                        manzili</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ company.address }}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
+                                        telefon raqam</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ company.phone }}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Pochta</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ company.email }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <section class="card card-modern card-big-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2-5 col-xl-1-5">
+                                <i class="card-big-info-icon bx bx-money"></i>
+                                <h2 class="card-big-info-title">Budjet</h2>
+                                <p class="card-big-info-desc">Korxona balansi, debit va kredit</p>
+                            </div>
+
+                            <div class="col-lg-3-5 col-xl-4-5">
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
+                                        balansi</label>
+                                    <div class="col-lg-7 col-xl-6"><strong>
+                                        {{ company.balance|floatformat:"2g" }} so'm</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Umumiy
+                                        debit</label>
+                                    <div class="col-lg-7 col-xl-6"><strong>
+                                        {{ company.total_debit|floatformat:"2g" }} so'm</strong>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Umumiy
+                                        kredit</label>
+                                    <div class="col-lg-7 col-xl-6"><strong>
+                                        {{ company.total_credit|floatformat:"2g" }} so'm</strong>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row action-buttons">
+            <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+                <a href="{% url 'accounts:company_update' company.id %}"
+                        class="delete-button btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  modal-basic ">
+                    <i class="bx bx-save text-4 me-2"></i> O'zgartirish
+                </a>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock %}
+
+{% block additional_js %}
+
+{% endblock %}
