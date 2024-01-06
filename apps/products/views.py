@@ -5,9 +5,9 @@ from datetime import datetime, timezone
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import (UpdateView, DeleteView, ListView, DetailView)
+from django.views.generic import (UpdateView, DeleteView, ListView, DetailView, CreateView)
 from apps.products.models import Product
-from apps.products.forms import ProductUpdateForm
+from apps.products.forms import ProductUpdateForm, ProductCreateForm
 from utils.helpers import is_ajax
 
 
@@ -73,3 +73,20 @@ class ProductDetailView(DetailView):
 
 
 product_detail = ProductDetailView.as_view()
+
+
+class ProductAddView(CreateView):
+    model = Product
+    form_class = ProductCreateForm
+    template_name = "products/product_add.html"
+
+    def form_valid(self, form):
+        product = form.save(commit=False)
+        product.created_by = self.request.user
+        product.company = self.request.user.company
+        product.created_at = datetime.now()
+        product.save()
+        return redirect("products:product_list")
+
+
+product_add = ProductAddView.as_view()

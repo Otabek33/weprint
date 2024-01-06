@@ -19,9 +19,9 @@
         <div class="right-wrapper">
             <ol class="breadcrumbs">
 
-                <li><span>Mahsulotlar</span></li>
+                <li><span><a href="{% url 'products:product_list' %}">Mahsulotlar</a></span></li>
 
-                <li><span>1</span></li>
+                <li><span>{{ object.uuid }}</span></li>
             </ol>
 
         </div>
