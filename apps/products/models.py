@@ -25,7 +25,7 @@ class ProductManager(models.Manager):
 
 # Create your models here.
 class Product(models.Model):
-    """nimadur"""
+    """mahsulot"""
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     printSize = models.IntegerField(
         choices=PrintSize.choices,

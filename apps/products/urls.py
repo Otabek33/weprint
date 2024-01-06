@@ -6,6 +6,6 @@ app_name = "products"
 urlpatterns = [
     path("", product_list, name="product_list"),
     path("update/<uuid:pk>", product_update, name="update"),
-    path("delete/", product_delete, name="delete"),
+    path("<uuid:pk>/delete/", product_delete, name="delete"),
     path("<uuid:pk>/detail/", product_detail, name="detail")
 ]

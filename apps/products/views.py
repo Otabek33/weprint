@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import (UpdateView, DeleteView, ListView, DetailView)
 from apps.products.models import Product
 from apps.products.forms import ProductUpdateForm
@@ -56,20 +56,12 @@ class ProductDeleteView(DeleteView):
     model = Product
 
     def post(self, request, *args, **kwargs):
-        if is_ajax(request):
-            pk = request.POST.get("id")
-            # by_id = self.model.productListByUser.by_id(pk)
-            project = 0
-            project.deleted_status = True
-            project.updated_at = datetime.now(tz=timezone.utc)
-            project.updated_by = self.request.user
-            project.save()
-            # ProjectSerializer(project, many=False).data
-
-            return JsonResponse(
-                {"success": True, "data": None}
-            )
-        return JsonResponse({"success": False, "data": None})
+        product = get_object_or_404(Product, pk=self.kwargs["pk"])
+        product.deleted_status = True
+        product.updated_at = datetime.now(tz=timezone.utc)
+        product.updated_by = self.request.user
+        product.save()
+        return redirect("products:product_list")
 
 
 product_delete = ProductDeleteView.as_view()
