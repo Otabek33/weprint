@@ -78,7 +78,7 @@ class MoneySaver(models.Model):
         verbose_name_plural = "Pul saqlash turlari"
 
     def __str__(self) -> str:
-        return str(self.get_cashType_display())
+        return self.reester_number
 
 
 class CustomUser(AbstractUser):

@@ -2,7 +2,7 @@ from django import forms
 from django.forms import NumberInput
 from django.utils.html import format_html, format_html_join
 
-from apps.accounts.models import Company
+from apps.accounts.models import Company, CashType, MoneySaver
 
 
 class CurrencyInput(NumberInput):
@@ -51,5 +51,24 @@ class CompanyUpdateForm(forms.ModelForm):
             "balance",
             "total_debit",
             "total_credit",
+
+        ]
+
+
+class MoneySaverCreateForm(forms.ModelForm):
+    reester_number = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    cash_type = forms.Field(
+        widget=forms.Select(
+            choices=CashType.choices, attrs={"class": "form-control"}
+        ),
+    )
+
+    class Meta:
+        model = MoneySaver
+        fields = [
+            "reester_number",
+            "cash_type",
 
         ]

@@ -3,9 +3,9 @@ from datetime import datetime
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView, UpdateView, CreateView
 
-from apps.accounts.forms import CompanyUpdateForm
+from apps.accounts.forms import CompanyUpdateForm, MoneySaverCreateForm
 from apps.accounts.models import CustomUser, MoneySaver, CashType, Company
 from apps.transactions.models import Transaction
 
@@ -105,3 +105,28 @@ class CompanyUpdateView(UpdateView):
 
 
 company_update = CompanyUpdateView.as_view()
+
+
+class MoneySaverListView(ListView):
+    model = MoneySaver
+    template_name = "accounts/banks/money_saver_list.html"
+
+
+money_saver_list = MoneySaverListView.as_view()
+
+
+class MoneySaverAddList(CreateView):
+    model = MoneySaver
+    form_class = MoneySaverCreateForm
+    template_name = "accounts/banks/money_saver_add.html"
+
+    def form_valid(self, form):
+        user = self.request.user
+
+        bank = form.save(commit=False)
+        bank.company = user.company
+        bank.save()
+        return redirect("accounts:money_saver_list", pk=self.request.user.id)
+
+
+money_saver_add = MoneySaverAddList.as_view()

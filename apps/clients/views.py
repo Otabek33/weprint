@@ -74,7 +74,6 @@ class ClientCreateView(CreateView):
     template_name = "clients/client_add.html"
 
     def form_valid(self, form):
-        print("ishladi form valid")
         client = form.save(commit=False)
         client.save()
         return redirect("clients:client_list")

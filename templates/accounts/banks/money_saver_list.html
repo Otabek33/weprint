@@ -9,7 +9,7 @@
         <h2 class="font-weight-bold text-6">Dashbord ></h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>Mijoz</span></li>
+                <li><span>Operatsiya turlari</span></li>
             </ol>
         </div>
     </header>
@@ -22,35 +22,37 @@
                     <div class="card-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <a type="button" href="{% url 'clients:add' %}" class="btn btn-primary">+ Qo'shmoq</a>
+                    <a type="button" href="{% url 'accounts:money_saver_add' user.id %}" class="btn btn-primary">+ Qo'shmoq</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-responsive-md table-bordered mb-0">
+                    <table class="table table-responsive-md table-bordered mb-0 text-center">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Username</th>
-                            <th>Ism</th>
-                            <th>Familiya</th>
-                            <th>Chat Id</th>
-                            <th>Telefon</th>
+                            <th>Korxona</th>
+                            <th>Pul turi</th>
+                            <th>Kodi</th>
+                            <th>Debit</th>
+                            <th>Kredit</th>
+                            <th>Balans</th>
                             <th>Harakat</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for client in client_list %}
+                        {% for money_saver in object_list %}
                             <tr>
 
 
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ client.username }}</td>
-                                <td>{{ client.first_name }}</td>
-                                <td>{{ client.last_name }}</td>
-                                <td>{{ client.userId }}</td>
-                                <td>{{ client.phone }}</td>
-                                <td class="actions text-center">
-                                    <a href="{% url 'clients:update' client.pk %}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="{% url 'clients:delete'  client.pk %}" class="delete-row"><i
+                                <td>{{ money_saver.company }}</td>
+                                <td>{{ money_saver.get_cashType_display }}</td>
+                                <td>{{ money_saver.reester_number }}</td>
+                                <td>{{ money_saver.total_debit|floatformat:"2g" }} so'm</td>
+                                <td>{{ money_saver.total_credit|floatformat:"2g" }} so'm</td>
+                                <td>{{ money_saver.balance|floatformat:"2g" }} so'm</td>
+                                <td class="actions text-center d-flex justify-content-around ">
+                                    <a href="#"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#" class="delete-row"><i
                                             class="far fa-trash-alt"></i></a>
                                 </td>
 
