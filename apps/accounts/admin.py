@@ -44,7 +44,6 @@ class UserRoleAdmin(admin.ModelAdmin):
 class CompanyAdmin(admin.ModelAdmin):
     list_display = [
         "name",
-        "address",
         "email",
         "phone",
         "balance",

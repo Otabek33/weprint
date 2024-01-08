@@ -15,7 +15,7 @@ class CashListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
-        cash = MoneySaver.objects.get(cashType=CashType.CASH, company=user.company)
+        cash = MoneySaver.objects.get(deleted_status=False, cashType=CashType.CASH, company=user.company)
         context["cash"] = cash
         context["transactions_list"] = Transaction.objects.filter(deleted_status=False, cash_type=cash,
                                                                   company=user.company)
@@ -57,7 +57,7 @@ class MoneySaverListView(ListView):
 money_saver_list = MoneySaverListView.as_view()
 
 
-class MoneySaverAddList(CreateView):
+class MoneySaverCreateView(CreateView):
     model = MoneySaver
     form_class = MoneySaverCreateForm
     template_name = "accounts/banks/money_saver_add.html"
@@ -71,7 +71,7 @@ class MoneySaverAddList(CreateView):
         return redirect("accounts:money_saver_list", pk=self.request.user.id)
 
 
-money_saver_add = MoneySaverAddList.as_view()
+money_saver_add = MoneySaverCreateView.as_view()
 
 
 class MoneySaverDelete(DeleteView):

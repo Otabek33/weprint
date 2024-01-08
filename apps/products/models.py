@@ -6,7 +6,41 @@ from django.utils.translation import gettext_lazy as _
 import uuid
 
 from apps.tg.models import PrintSize, PrintColor
-from apps.orders.models import PrintBindingTypes
+
+
+class PrintBindingTypes(models.Model):
+    name = models.CharField(_("Nomi"), max_length=150, blank=True)
+    photo = models.ImageField(upload_to="binding/%Y/%m/%d/")
+    company = models.ForeignKey(Company,
+                                on_delete=models.CASCADE,
+                                blank=True,
+                                null=True,
+                                related_name="binding_company", )
+
+    created_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="bindingTypes_created_by",
+    )
+    created_at = models.DateTimeField(default=datetime.now)
+    updated_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="bindingTypes_updated_by",
+    )
+    updated_at = models.DateTimeField(blank=True, null=True)
+    deleted_status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Bog'lama turi"
+        verbose_name_plural = "Bog'lama turlari"
 
 
 # Create your models here.
@@ -46,8 +80,6 @@ class Product(models.Model):
                                 blank=True,
                                 null=True,
                                 related_name="company", )
-
-
 
     created_by = models.ForeignKey(
         CustomUser,

@@ -62,3 +62,17 @@ class ProductCreateForm(forms.ModelForm):
             "printBindingType",
             "price",
         ]
+
+
+class PrintBindingTypesCreateForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+
+    class Meta:
+        model = PrintBindingTypes
+        fields = [
+            "name",
+            "photo",
+
+        ]

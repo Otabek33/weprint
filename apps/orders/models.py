@@ -1,11 +1,14 @@
+from datetime import datetime
+
 from django.utils import timezone
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import uuid
 
-from apps.accounts.models import ClientAddress
+from apps.accounts.models import ClientAddress, CustomUser
 from apps.tg.models import PrintColor, PrintSize, PaymentType, DeliveryType
+from apps.products.models import PrintBindingTypes
 
 
 # Create your models here.
@@ -15,18 +18,6 @@ class OrderStatus(models.IntegerChoices):
     ACTIVE = 3, _("Faol")
     CANCELLED = 4, _("Bekor qilingan")
     FINISH = 5, _("Yetqazib berilgan")
-
-
-class PrintBindingTypes(models.Model):
-    name = models.CharField(_("Nomi"), max_length=150, blank=True)
-    photo = models.FileField(upload_to="binding/%Y/%m/%d/")
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = "Binding type"
-        verbose_name_plural = "Biding types"
 
 
 class Order(models.Model):

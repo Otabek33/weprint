@@ -40,8 +40,8 @@ class ClientAddress(models.Model):
 
 class Company(models.Model):
     """Class representing a person"""
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField("Nomlanishi", blank=True, max_length=55)
-    address = models.TextField("Manzil", blank=True, max_length=100)
     email = models.EmailField("Pochta", max_length=100, null=True, blank=True)
     phone = models.CharField("Telefon", max_length=100, null=True, blank=True)
     balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)

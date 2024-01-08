@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}Page Title{% endblock %}
+{% block title %}Bank o'chirish{% endblock %}
 
 
 {% block content %}
@@ -63,7 +63,7 @@
                                     <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Umumiy
                                         debit</label>
                                     <div class="col-lg-6">
-                                        <input type="text" value="{{ object.total_debit }}" id="inputReadOnly"
+                                        <input type="text" value="{{ object.total_debit|floatformat:"2g" }} so'm" id="inputReadOnly"
                                                class="form-control"
                                                readonly="readonly">
                                     </div>
@@ -72,7 +72,7 @@
                                     <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Umumiy
                                         kredit</label>
                                     <div class="col-lg-6">
-                                        <input type="text" value="{{ object.total_credit }}" id="inputReadOnly"
+                                        <input type="text" value="{{ object.total_credit|floatformat:"2g" }} so'm" id="inputReadOnly"
                                                class="form-control"
                                                readonly="readonly">
                                     </div>
@@ -81,7 +81,7 @@
                                     <label class="col-lg-3 control-label text-lg-end pt-2"
                                            for="inputReadOnly">Balans</label>
                                     <div class="col-lg-6">
-                                        <input type="text" value="{{ object.balance }}" id="inputReadOnly"
+                                        <input type="text" value="{{ object.balance|floatformat:"2g" }} so'm" id="inputReadOnly"
                                                class="form-control"
                                                readonly="readonly">
                                     </div>
