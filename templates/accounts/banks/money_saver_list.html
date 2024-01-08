@@ -39,7 +39,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for money_saver in object_list %}
+                        {% for money_saver in bank_list %}
                             <tr>
 
 
@@ -52,7 +52,7 @@
                                 <td>{{ money_saver.balance|floatformat:"2g" }} so'm</td>
                                 <td class="actions text-center d-flex justify-content-around ">
                                     <a href="#"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#" class="delete-row"><i
+                                    <a href="{% url 'accounts:money_saver_delete' money_saver.uuid %}" class="delete-row"><i
                                             class="far fa-trash-alt"></i></a>
                                 </td>
 

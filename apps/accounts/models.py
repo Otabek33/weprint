@@ -1,4 +1,6 @@
 import uuid as uuid
+from datetime import datetime
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -57,28 +59,7 @@ class Company(models.Model):
         return str(self.name)
 
 
-class MoneySaver(models.Model):
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    reester_number = models.CharField("Reyester", blank=True, max_length=55)
-    cashType = models.IntegerField("Pul turi",
-                                   choices=CashType.choices,
-                                   default=CashType.CASH)
-    balance = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    company = models.ForeignKey(Company,
-                                on_delete=models.SET_NULL,
-                                blank=True,
-                                null=True,
-                                related_name="company_moneySaver", )
 
-    class Meta:
-        """Class representing a person"""
-        verbose_name = "Pul saqlash turi"
-        verbose_name_plural = "Pul saqlash turlari"
-
-    def __str__(self) -> str:
-        return self.reester_number
 
 
 class CustomUser(AbstractUser):
@@ -112,3 +93,42 @@ class CustomUser(AbstractUser):
     def is_super_user(self):
         """Class representing a person"""
         return self.role.name == 'superuser'
+class MoneySaver(models.Model):
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    reester_number = models.CharField("Reyester", blank=True, max_length=55)
+    cashType = models.IntegerField("Pul turi",
+                                   choices=CashType.choices,
+                                   default=CashType.CASH)
+    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    company = models.ForeignKey(Company,
+                                on_delete=models.SET_NULL,
+                                blank=True,
+                                null=True,
+                                related_name="company_moneySaver", )
+    created_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="bank_created_by",
+    )
+    created_at = models.DateTimeField(default=datetime.now)
+    updated_by = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="bank_updated_by",
+    )
+    updated_at = models.DateTimeField(blank=True, null=True)
+    deleted_status = models.BooleanField(default=False)
+
+    class Meta:
+        """Class representing a person"""
+        verbose_name = "Pul saqlash turi"
+        verbose_name_plural = "Pul saqlash turlari"
+
+    def __str__(self) -> str:
+        return self.reester_number
