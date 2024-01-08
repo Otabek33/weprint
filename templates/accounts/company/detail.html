@@ -152,7 +152,7 @@
 
                                         <textarea type="text" class="form-control form-control-modern"
 
-                                                  readonly>{{ company.address }}</textarea>
+                                                  readonly>{{ company.location.name }}</textarea>
 
 
                                 </div>
@@ -194,7 +194,7 @@
         }).addTo(map);
 
         L.marker([{{ company.location.latitude }}, {{ company.location.longitude }}]).addTo(map)
-            .bindPopup('{{ company.address }}')
+            .bindPopup('{{ company.location.name }}')
             .openPopup();
 
 

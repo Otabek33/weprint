@@ -35,6 +35,9 @@
                             <th>Debit</th>
                             <th>Kredit</th>
                             <th>Balans</th>
+                            <th>address</th>
+                            <th>lat</th>
+                            <th>long</th>
                             <th>Harakat</th>
                         </tr>
                         </thead>
@@ -50,6 +53,9 @@
                                 <td>{{ company.total_debit|floatformat:"2g" }} so'm</td>
                                 <td>{{ company.total_credit|floatformat:"2g" }} so'm</td>
                                 <td>{{ company.balance|floatformat:"2g" }} so'm</td>
+                                <td>{{ company.location.name }}</td>
+                                <td>{{ company.location.latitude }}</td>
+                                <td>{{ company.location.longitude }}</td>
                                 <td class="actions text-center d-flex justify-content-around ">
                                     <a href="{% url 'accounts:company_detail' company.uuid %}"><i class="fas fa-eye"></i></a>
                                     <a href="{% url 'accounts:company_update' company.uuid %}"><i class="fas fa-pencil-alt"></i></a>
