@@ -37,7 +37,6 @@ binding_type_add = BindingTypeCreateView.as_view()
 
 class BindingTypeDeleteView(DeleteView):
     model = PrintBindingTypes
-    form_class = PrintBindingTypesCreateForm
     template_name = 'products/binding_types/binding_type_delete.html'
 
     def get_success_url(self):

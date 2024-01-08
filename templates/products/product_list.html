@@ -54,75 +54,81 @@
     <div class="row row-gutter-sm mb-5">
         <div class="col-lg-3-12">
             <div class="row row-gutter-sm">
-                {% for product in page_obj %}
-                    <div class="col-sm-6 col-xl-3 mb-4">
-                        <div class="card card-modern card-modern-alt-padding">
-                            <div class="card-body bg-light">
-                                <div class="image-frame mb-2">
-                                    <div class="image-frame-wrapper text-center">
+                {% if page_obj %}
+                    {% for product in page_obj %}
+                        <div class="col-sm-6 col-xl-3 mb-4">
+                            <div class="card card-modern card-modern-alt-padding">
+                                <div class="card-body bg-light">
+                                    <div class="image-frame mb-2">
+                                        <div class="image-frame-wrapper text-center">
 
-                                        <a href="{% url 'products:detail' product.uuid %}"><img
-                                                src="{% static 'img/products/product.jpg' %}"
-                                                style="width: 200px;height: 200px" class="img-fluid"
-                                                alt="Product Short Name"/></a>
+                                            <a href="{% url 'products:detail' product.uuid %}"><img
+                                                    src="{% static 'img/products/product.jpg' %}"
+                                                    style="width: 200px;height: 200px" class="img-fluid"
+                                                    alt="Product Short Name"/></a>
+                                        </div>
                                     </div>
-                                </div>
-                                <small><p
-                                        class="ecommerce-sidebar-link text-color-grey text-color-hover-primary text-decoration-none">
-                                    Mahsulot</p></small>
-                                <div class="d-flex  justify-content-between">
-                                    <div><h4 class="text-4 line-height-2 mt-0 mb-2">
-                                        <a href="{% url 'products:detail' product.uuid %}"
-                                           class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
-                                            {{ product.get_printSize_display }} {{ product.get_printColor_display }} {{ product.printBindingType.name }}</a>
-                                    </h4></div>
-                                    <div><a href="{% url 'products:update' product.uuid %}"><i class="fas fa-pen-alt"
-                                                                                               aria-label="O'zgartirish"> O'zgartirish</i></a>
+                                    <small><p
+                                            class="ecommerce-sidebar-link text-color-grey text-color-hover-primary text-decoration-none">
+                                        Mahsulot</p></small>
+                                    <div class="d-flex  justify-content-between">
+                                        <div><h4 class="text-4 line-height-2 mt-0 mb-2">
+                                            <a href="{% url 'products:detail' product.uuid %}"
+                                               class="ecommerce-sidebar-link text-color-dark text-color-hover-primary text-decoration-none">
+                                                {{ product.get_printSize_display }} {{ product.get_printColor_display }} {{ product.printBindingType.name }}</a>
+                                        </h4></div>
+                                        <div><a href="{% url 'products:update' product.uuid %}"><i
+                                                class="fas fa-pen-alt"
+                                                aria-label="O'zgartirish"> O'zgartirish</i></a>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <div class="product-price">
+                                    <div class="product-price">
 
-                                    <div class="sale-price">{{ product.price|floatformat:"2g" }} so'm</div>
+                                        <div class="sale-price">{{ product.price|floatformat:"2g" }} so'm</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    {% endfor %}
+
                     </div>
-                {% endfor %}
+                    <div class="row row-gutter-sm justify-content-between pagination">
+                        <div class="col-lg-auto order-2 order-lg-1">
+                            <p class="text-center text-lg-left mb-0">  {{ page_obj.number }} - Umumiy
+                                sahifalar {{ page_obj.paginator.num_pages }}.</p>
+                        </div>
+                        <div class="col-lg-auto order-1 order-lg-2 mb-3 mb-lg-0">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination pagination-modern pagination-modern-spacing justify-content-center justify-content-lg-start mb-0">
+                                    {% if page_obj.has_previous %}
+                                        <li class="page-item">
 
-            </div>
-            <div class="row row-gutter-sm justify-content-between pagination">
-                <div class="col-lg-auto order-2 order-lg-1">
-                    <p class="text-center text-lg-left mb-0">  {{ page_obj.number }} - Umumiy
-                        sahifalar {{ page_obj.paginator.num_pages }}.</p>
-                </div>
-                <div class="col-lg-auto order-1 order-lg-2 mb-3 mb-lg-0">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination pagination-modern pagination-modern-spacing justify-content-center justify-content-lg-start mb-0">
-                            {% if page_obj.has_previous %}
-                                <li class="page-item">
+                                            <a class="page-link prev" href="?page={{ page_obj.previous_page_number }}"
+                                               aria-label="Previous">
+                                                <span><i class="fas fa-chevron-left" aria-label="Previous"></i></span>
+                                            </a>
 
-                                    <a class="page-link prev" href="?page={{ page_obj.previous_page_number }}"
-                                       aria-label="Previous">
-                                        <span><i class="fas fa-chevron-left" aria-label="Previous"></i></span>
-                                    </a>
-
-                                </li>
-                            {% endif %}
-                            <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
-                            {% if page_obj.has_next %}
-                                <li class="page-item">
-                                    <a class="page-link next" href="?page={{ page_obj.next_page_number }}"
-                                       aria-label="Next">
-                                        <span><i class="fas fa-chevron-right" aria-label="Next"></i></span>
-                                    </a>
-                                </li>
-                            {% endif %}
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+                                        </li>
+                                    {% endif %}
+                                    <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a>
+                                    </li>
+                                    {% if page_obj.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link next" href="?page={{ page_obj.next_page_number }}"
+                                               aria-label="Next">
+                                                <span><i class="fas fa-chevron-right" aria-label="Next"></i></span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>Mahsulot mavjud emas.</p>
+                {% endif %}
 
 
         </div>

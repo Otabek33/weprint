@@ -22,9 +22,6 @@ class CompanyUpdateForm(forms.ModelForm):
     name = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"}), required=True
     )
-    address = forms.CharField(
-        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
-    )
     email = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"}), required=True
     )
@@ -45,7 +42,6 @@ class CompanyUpdateForm(forms.ModelForm):
         model = Company
         fields = [
             "name",
-            "address",
             "email",
             "phone",
             "balance",
