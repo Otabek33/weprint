@@ -51,7 +51,7 @@
                                 <td>{{ money_saver.total_credit|floatformat:"2g" }} so'm</td>
                                 <td>{{ money_saver.balance|floatformat:"2g" }} so'm</td>
                                 <td class="actions text-center d-flex justify-content-around ">
-                                    <a href="#"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{% url 'accounts:money_saver_update' money_saver.uuid %}"><i class="fas fa-pencil-alt"></i></a>
                                     <a href="{% url 'accounts:money_saver_delete' money_saver.uuid %}" class="delete-row"><i
                                             class="far fa-trash-alt"></i></a>
                                 </td>

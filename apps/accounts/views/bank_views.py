@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
 
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import ListView, CreateView, DeleteView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from apps.accounts.forms import MoneySaverCreateForm
 from apps.accounts.models import CustomUser, CashType, MoneySaver
 from apps.transactions.models import Transaction
@@ -87,3 +88,15 @@ class MoneySaverDelete(DeleteView):
 
 
 money_saver_delete = MoneySaverDelete.as_view()
+
+
+class MoneySaverUpdateView(UpdateView):
+    model = MoneySaver
+    form_class = MoneySaverCreateForm
+    template_name = "accounts/banks/money_saver_update.html"
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:money_saver_list', kwargs={'pk': self.request.user.id})
+
+
+money_saver_update = MoneySaverUpdateView.as_view()

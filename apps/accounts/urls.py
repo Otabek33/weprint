@@ -1,6 +1,6 @@
 from django.urls import path
 from .views.account_views import (login_request, logout, home)
-from .views.bank_views import cash, bank, money_saver_list, money_saver_add, money_saver_delete
+from .views.bank_views import cash, bank, money_saver_list, money_saver_add, money_saver_delete,money_saver_update
 from .views.company_views import company_detail, company_update
 
 app_name = "accounts"
@@ -16,5 +16,6 @@ urlpatterns = [
     path("<int:pk>/money-saver-list/", money_saver_list, name="money_saver_list"),
     path("<int:pk>/money-saver-add/", money_saver_add, name="money_saver_add"),
     path("<uuid:pk>/money-saver-delete/", money_saver_delete, name="money_saver_delete"),
+    path("<uuid:pk>/money-saver-update/", money_saver_update, name="money_saver_update"),
 
 ]
