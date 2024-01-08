@@ -44,7 +44,7 @@ bank = BankListView.as_view()
 
 class MoneySaverListView(ListView):
     model = MoneySaver
-    template_name = "accounts/banks/money_saver_list.html"
+    template_name = "accounts/banks/list.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -60,7 +60,7 @@ money_saver_list = MoneySaverListView.as_view()
 class MoneySaverCreateView(CreateView):
     model = MoneySaver
     form_class = MoneySaverCreateForm
-    template_name = "accounts/banks/money_saver_add.html"
+    template_name = "accounts/banks/add.html"
 
     def form_valid(self, form):
         user = self.request.user
@@ -76,7 +76,7 @@ money_saver_add = MoneySaverCreateView.as_view()
 
 class MoneySaverDelete(DeleteView):
     model = MoneySaver
-    template_name = "accounts/banks/money_saver_delete.html"
+    template_name = "accounts/banks/delete.html"
 
     def post(self, request, *args, **kwargs):
         bank = get_object_or_404(MoneySaver, pk=self.kwargs["pk"])
@@ -93,7 +93,7 @@ money_saver_delete = MoneySaverDelete.as_view()
 class MoneySaverUpdateView(UpdateView):
     model = MoneySaver
     form_class = MoneySaverCreateForm
-    template_name = "accounts/banks/money_saver_update.html"
+    template_name = "accounts/banks/update.html"
 
     def get_success_url(self):
         return reverse_lazy('accounts:money_saver_list', kwargs={'pk': self.request.user.id})
