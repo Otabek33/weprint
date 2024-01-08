@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}Bog'lama o'zgartirmoq{% endblock %}
+
+
+{% block content %}
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard ></h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span><a href="{% url 'products:binding_type_list' user.id %}">Bank</a></span></li>
+                <li><span>Qo'shish yoki O'zgartirish</span></li>
+            </ol>
+        </div>
+    </header>
+    <!-- start: page -->
+
+    <form class="ecommerce-form action-buttons-fixed" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col">
+                <section class="card card-modern card-big-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-1-5 col-xl-1-5">
+                                <i class="card-big-info-icon bx bx-user"></i>
+                                <h2 class="card-big-info-title">Bog'lama</h2>
+                                <p class="card-big-info-desc">Bog'lamani o'zgartirish</p>
+                            </div>
+                            <div class="col-lg-3-5 col-xl-4-5">
+
+                                <div class="form-group row pb-4">
+                                    <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Rasm</label>
+                                    <div class="col-lg-6">
+                                        {{ form.photo }}
+                                    </div>
+                                </div>
+                                 <div class="form-group row pb-4">
+                                    <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Nomi</label>
+                                    <div class="col-lg-6">
+                                        {{ form.name }}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row action-buttons d-flex justify-content-between">
+            <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+                <a href="{% url 'products:binding_type_list' user.id %}"
+                   class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">
+                    Orqaga</a>
+            </div>
+            <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+                <button type="submit"
+                        class=" btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  ">
+                    <i class="bx bx-save text-4 me-2"></i> Saqlash
+                </button>
+
+            </div>
+
+
+        </div>
+    </form>
+    <!-- end: page -->
+{% endblock %}
+<!-- Specific Page Vendor -->
+

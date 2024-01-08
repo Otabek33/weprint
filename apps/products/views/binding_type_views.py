@@ -14,14 +14,6 @@ class BindingTypesListView(ListView):
     model = PrintBindingTypes
     template_name = "products/binding_types/binding_type_list.html"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
-    #
-    #     context["binding_types_list"] = PrintBindingTypes.objects.filter(deleted_status=False, cash_type=bank,
-    #                                                               company=user.company)
-    #     return context
-
 
 binding_type_list = BindingTypesListView.as_view()
 
@@ -41,3 +33,29 @@ class BindingTypeCreateView(CreateView):
 
 
 binding_type_add = BindingTypeCreateView.as_view()
+
+
+class BindingTypeDeleteView(DeleteView):
+    model = PrintBindingTypes
+    form_class = PrintBindingTypesCreateForm
+    template_name = 'products/binding_types/binding_type_delete.html'
+
+    def get_success_url(self):
+        user_id = self.kwargs['pk']
+        return reverse_lazy('products:binding_type_list', kwargs={'pk': user_id})
+
+
+binding_type_delete = BindingTypeDeleteView.as_view()
+
+
+class BindingTypeUpdateView(UpdateView):
+    model = PrintBindingTypes
+    form_class = PrintBindingTypesCreateForm
+    template_name = 'products/binding_types/binding_type_update.html'
+
+    def get_success_url(self):
+        user_id = self.kwargs['pk']
+        return reverse_lazy('products:binding_type_list', kwargs={'pk': user_id})
+
+
+binding_type_update = BindingTypeUpdateView.as_view()

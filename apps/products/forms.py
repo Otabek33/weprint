@@ -76,3 +76,5 @@ class PrintBindingTypesCreateForm(forms.ModelForm):
             "photo",
 
         ]
+
+
