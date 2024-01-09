@@ -1,6 +1,8 @@
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
+
+from apps.accounts.models import CustomUser
 
 
 # Create your views here.
@@ -32,3 +34,11 @@ class Dashboard(TemplateView):
 
 
 home = Dashboard.as_view()
+
+
+class UserDetailView(DetailView):
+    model = CustomUser
+    template_name = "accounts/user/detail.html"
+
+
+user_detail = UserDetailView.as_view()

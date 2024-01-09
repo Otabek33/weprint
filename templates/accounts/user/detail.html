@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Foydalanuvchi{% endblock %}
+{% block additional_css %}
+
+
+{% endblock %}
+
+{% block content %}
+
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span></span></li>
+                <li><span>Foydalanuvchi</span></li>
+
+            </ol>
+
+        </div>
+    </header>
+
+    <!-- start: page -->
+
+    <div class="row">
+        <div class="col-lg-4 col-xl-3 mb-4 mb-xl-0">
+
+            <section class="card">
+                <div class="card-body">
+                    <div class="thumb-info mb-3">
+                        <img src="img/!logged-user.jpg" class="rounded img-fluid" alt="John Doe">
+                        <div class="thumb-info-title">
+                            <span class="thumb-info-inner">{{ customuser.first_name }} {{ customuser.last_name }}</span>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-8 col-xl-9">
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="nav-item active">
+                        <button class="nav-link" data-bs-target="#overview" data-bs-toggle="tab">Umumiy ma'lumot
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-target="#edit" data-bs-toggle="tab">O'zgartirmoq</button>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="overview" class="tab-pane active">
+
+                        <div class="p-3">
+
+                            <section class="simple-compose-box mb-3 border-0">
+                                <div class="card-body">
+                                    <form class="form-horizontal form-bordered" method="get">
+
+
+                                        <div class="form-group row pb-4">
+                                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Username
+                                                </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="{{ customuser.username }}" id="inputReadOnly"
+                                                       class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+                                         <div class="form-group row pb-4">
+                                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Ism
+                                                </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="{{ customuser.first_name }}" id="inputReadOnly"
+                                                       class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+                                         <div class="form-group row pb-4">
+                                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Familiya
+                                                </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="{{ customuser.last_name }}" id="inputReadOnly"
+                                                       class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+                                         <div class="form-group row pb-4">
+                                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Pochta
+                                                </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="{{ customuser.email }}" id="inputReadOnly"
+                                                       class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+                                         <div class="form-group row pb-4">
+                                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Korxona
+                                                </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="{{ customuser.company }}" id="inputReadOnly"
+                                                       class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+                                         <div class="form-group row pb-4">
+                                            <label class="col-lg-3 control-label text-lg-end pt-2" for="inputReadOnly">Rol
+                                                </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" value="{{ customuser.role }}" id="inputReadOnly"
+                                                       class="form-control" readonly="readonly">
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                    <div id="edit" class="tab-pane">
+
+                        <form class="p-3">
+                            <h4 class="mb-3 font-weight-semibold text-dark">Personal Information</h4>
+                            <div class="row row mb-4">
+                                <div class="form-group col">
+                                    <label for="inputAddress">Address</label>
+                                    <input type="text" class="form-control" id="inputAddress"
+                                           placeholder="1234 Main St">
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-group col">
+                                    <label for="inputAddress2">Address 2</label>
+                                    <input type="text" class="form-control" id="inputAddress2"
+                                           placeholder="Apartment, studio, or floor">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCity">City</label>
+                                    <input type="text" class="form-control" id="inputCity">
+                                </div>
+                                <div class="form-group col-md-4 border-top-0 pt-0">
+                                    <label for="inputState">State</label>
+                                    <select id="inputState" class="form-control">
+                                        <option selected>Choose...</option>
+                                        <option>...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2 border-top-0 pt-0">
+                                    <label for="inputZip">Zip</label>
+                                    <input type="text" class="form-control" id="inputZip">
+                                </div>
+                            </div>
+
+                            <hr class="dotted tall">
+
+                            <h4 class="mb-3 font-weight-semibold text-dark">Change Password</h4>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">New Password</label>
+                                    <input type="password" class="form-control" id="inputPassword4"
+                                           placeholder="Password">
+                                </div>
+                                <div class="form-group col-md-6 border-top-0 pt-0">
+                                    <label for="inputPassword5">Re New Password</label>
+                                    <input type="password" class="form-control" id="inputPassword5"
+                                           placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-end mt-3">
+                                    <button class="btn btn-primary modal-confirm">Save</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- end: page -->
+
+{% endblock %}
+
+{% block additional_js %}
+
+{% endblock %}
