@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views import defaults as default_views
+from django.views.i18n import set_language
 
 urlpatterns = [
     path("", include("apps.accounts.urls", namespace="accounts")),
@@ -34,6 +35,11 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [
     path("i18 n/", include("django.conf.urls.i18n")),
+]
+
+urlpatterns += [
+    # Other URL patterns
+    path('set-language/<str:language>/', set_language, name='set_language'),
 ]
 
 if settings.DEBUG:
