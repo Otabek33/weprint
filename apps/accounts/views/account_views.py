@@ -1,5 +1,6 @@
 from django.contrib import auth, messages
-from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, DetailView, UpdateView
@@ -8,25 +9,14 @@ from apps.accounts.forms import CustomUserUpdateForm
 from apps.accounts.models import CustomUser
 
 
-# Create your views here.
-def login_request(request):
-    if request.method == "POST":
-        user = auth.authenticate(
-            username=request.POST.get("username"), password=request.POST.get("password")
-        )
-        print("ishladi")
-        print("ishladi")
-        print(user.id)
-        print(user.username)
-        print(user.password)
-        if user is not None:
-            # auth.login(request, user)
-            return redirect("accounts:home")
-        else:
-            messages.error(request, "Неправильное имя пользователя или пароль")
-            return redirect("accounts:login")
+class UserLogIn(LoginView):
+    template_name = "accounts/login.html"
 
-    return render(request, "accounts/login.html")
+    def get_success_url(self):
+        return reverse_lazy('accounts:home')
+
+
+log_in = UserLogIn.as_view()
 
 
 def logout(request):
@@ -34,9 +24,14 @@ def logout(request):
     return redirect("accounts:login")
 
 
-class Dashboard(View):
+class Dashboard(TemplateView):
     model = CustomUser
     template_name = "base.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = get_object_or_404(CustomUser, id=self.request.user.id)
+        return context
 
 
 home = Dashboard.as_view()

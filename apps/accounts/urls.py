@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.account_views import (login_request, logout, home, user_detail, user_update)
+from .views.account_views import ( logout, home, user_detail, user_update, log_in)
 from .views.bank_views import cash, bank, money_saver_list, money_saver_add, money_saver_delete, money_saver_update
 from .views.company_views import company_detail, company_update, company_list, company_add, company_delete
 
@@ -7,7 +7,7 @@ app_name = "accounts"
 
 urlpatterns = [
     path("logout/", logout, name="logout"),
-    path("log-in/", login_request, name="login"),
+    path("log-in/", log_in, name="login"),
     path("", home, name="home"),
     path("<int:pk>/detail/", user_detail, name="user_detail"),
     path("<int:pk>/update/", user_update, name="user_update"),
