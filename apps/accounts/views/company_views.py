@@ -1,8 +1,9 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import DetailView, UpdateView, ListView, CreateView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import DetailView, UpdateView, ListView, CreateView, DeleteView
 
 from apps.accounts.forms import CompanyUpdateForm, CompanyCreateForm
-from apps.accounts.models import Company, CustomUser, ClientAddress
+from apps.accounts.models import Company, ClientAddress
 
 
 class CompanyDetailView(DetailView):
@@ -58,3 +59,14 @@ class CompanyCreateView(CreateView):
 
 
 company_add = CompanyCreateView.as_view()
+
+
+class CompanyDeleteView(DeleteView):
+    model = Company
+    template_name = "accounts/company/delete.html"
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:company_list', kwargs={'pk': self.request.user.id})
+
+
+company_delete = CompanyDeleteView.as_view()

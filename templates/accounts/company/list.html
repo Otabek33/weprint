@@ -59,7 +59,7 @@
                                 <td class="actions text-center d-flex justify-content-around ">
                                     <a href="{% url 'accounts:company_detail' company.uuid %}"><i class="fas fa-eye"></i></a>
                                     <a href="{% url 'accounts:company_update' company.uuid %}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#" class="delete-row"><i
+                                    <a href="{% url 'accounts:company_delete' company.uuid %}" class="delete-row"><i
                                             class="far fa-trash-alt"></i></a>
                                 </td>
 
