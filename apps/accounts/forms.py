@@ -51,6 +51,27 @@ class CompanyUpdateForm(forms.ModelForm):
         ]
 
 
+class CompanyCreateForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    email = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    phone = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+
+    class Meta:
+        model = Company
+        fields = [
+            "name",
+            "email",
+            "phone",
+
+        ]
+
+
 class MoneySaverCreateForm(forms.ModelForm):
     reester_number = forms.CharField(
         widget=forms.TextInput(attrs={"class": "form-control"}), required=True

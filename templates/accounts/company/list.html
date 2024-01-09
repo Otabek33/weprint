@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% block title %}Bank{% endblock %}
+{% block title %}Korxona{% endblock %}
 
 
 {% block content %}
@@ -22,7 +22,7 @@
                     <div class="card-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <a type="button" href="{% url 'accounts:money_saver_add' user.id %}" class="btn btn-primary">+ Qo'shmoq</a>
+                    <a type="button" href="{% url 'accounts:company_add' user.id %}" class="btn btn-primary">+ Qo'shmoq</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-responsive-md table-bordered mb-0 text-center">
