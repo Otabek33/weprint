@@ -48,7 +48,7 @@ class Company(models.Model):
     total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
     location = models.OneToOneField(ClientAddress, on_delete=models.CASCADE, null=True, blank=True,
-                                 related_name="company_address")
+                                    related_name="company_address")
 
     class Meta:
         """Class representing a person"""
@@ -57,9 +57,6 @@ class Company(models.Model):
 
     def __str__(self) -> str:
         return str(self.name)
-
-
-
 
 
 class CustomUser(AbstractUser):
@@ -81,10 +78,6 @@ class CustomUser(AbstractUser):
         return self.role.name == 'user'
 
     @property
-    def is_operator(self):
-        return self.role.name == 'operator'
-
-    @property
     def is_admin(self):
         """Class representing a person"""
         return self.role.name == 'admin'
@@ -93,6 +86,8 @@ class CustomUser(AbstractUser):
     def is_super_user(self):
         """Class representing a person"""
         return self.role.name == 'superuser'
+
+
 class MoneySaver(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     reester_number = models.CharField("Reyester", blank=True, max_length=55)

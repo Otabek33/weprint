@@ -2,7 +2,7 @@ from django import forms
 from django.forms import NumberInput
 from django.utils.html import format_html, format_html_join
 
-from apps.accounts.models import Company, CashType, MoneySaver
+from apps.accounts.models import Company, CashType, MoneySaver, UserRole
 
 
 class CurrencyInput(NumberInput):
@@ -68,6 +68,37 @@ class CompanyCreateForm(forms.ModelForm):
             "name",
             "email",
             "phone",
+
+        ]
+
+
+class CustomUserUpdateForm(forms.ModelForm):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    first_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    last_name = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    email = forms.CharField(
+        widget=forms.TextInput(attrs={"class": "form-control"}), required=True
+    )
+    role = forms.ModelChoiceField(
+        queryset=UserRole.objects.all(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        required=False,
+    )
+
+    class Meta:
+        model = Company
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "role",
 
         ]
 

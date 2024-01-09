@@ -1,7 +1,8 @@
 from django.contrib import auth, messages
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, UpdateView
 
+from apps.accounts.forms import CustomUserUpdateForm
 from apps.accounts.models import CustomUser
 
 
@@ -42,3 +43,12 @@ class UserDetailView(DetailView):
 
 
 user_detail = UserDetailView.as_view()
+
+
+class UserUpdateView(UpdateView):
+    model = CustomUser
+    form_class = CustomUserUpdateForm
+    template_name = "accounts/user/update.html"
+
+
+user_update = UserUpdateView.as_view()

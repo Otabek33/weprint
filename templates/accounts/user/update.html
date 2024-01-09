@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Foydalanuvchi{% endblock %}
+{% block additional_css %}
+
+
+{% endblock %}
+
+{% block content %}
+
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">Dashboard</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span></span></li>
+                <li><span>Foydalanuvchi</span></li>
+                <li><span>O'zgartirmoq</span></li>
+
+            </ol>
+
+        </div>
+    </header>
+
+    <!-- start: page -->
+
+    <div class="row">
+        <div class="col-lg-4 col-xl-3 mb-4 mb-xl-0">
+
+            <section class="card">
+                <div class="card-body">
+                    <div class="thumb-info mb-3">
+                        <img src="img/!logged-user.jpg" class="rounded img-fluid" alt="John Doe">
+                        <div class="thumb-info-title">
+                            <span class="thumb-info-inner">{{ customuser.first_name }} {{ customuser.last_name }}</span>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-8 col-xl-9">
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:user_detail' user.id %}" class="nav-link">Umumiy ma'lumot
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="{% url 'accounts:user_update' user.id %}" class="nav-link">O'zgartirmoq</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+
+
+
+                        <form class="p-3">
+                            <h4 class="mb-3 font-weight-semibold text-dark">Shaxsiy ma'lumotlar</h4>
+                            <div class="row row mb-4">
+                                <div class="form-group col">
+                                    <label for="inputAddress">Username</label>
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="row row mb-4">
+                                <div class="form-group col">
+                                    <label for="inputAddress">Ism</label>
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="row row mb-4">
+                                <div class="form-group col">
+                                    <label for="inputAddress">Familiya</label>
+                                   {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="row row mb-4">
+                                <div class="form-group col">
+                                    <label for="inputAddress">Pochta</label>
+                                     {{ form.email }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-md-12 border-top-0 pt-0">
+                                    <label for="inputState">Rol</label>
+                                    {{ form.role }}
+                                </div>
+
+                            </div>
+
+                            <hr class="dotted tall">
+
+                            <h4 class="mb-3 font-weight-semibold text-dark">Parolni o'zgartirish</h4>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Yangi parol</label>
+                                    <input type="password" class="form-control" id="inputPassword4"
+                                           placeholder="Password">
+                                </div>
+                                <div class="form-group col-md-6 border-top-0 pt-0">
+                                    <label for="inputPassword5">Takrorlash yangi parol</label>
+                                    <input type="password" class="form-control" id="inputPassword5"
+                                           placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-end mt-3">
+                                    <button class="btn btn-primary modal-confirm">Saqlash</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- end: page -->
+
+{% endblock %}
+
+{% block additional_js %}
+
+{% endblock %}
