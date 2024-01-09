@@ -7,8 +7,8 @@ app_name = "accounts"
 
 urlpatterns = [
     path("logout/", logout, name="logout"),
-    path("", login_request, name="login"),
-    path("home/", home, name="home"),
+    path("log-in/", login_request, name="login"),
+    path("", home, name="home"),
     path("<int:pk>/detail/", user_detail, name="user_detail"),
     path("<int:pk>/update/", user_update, name="user_update"),
     path("<int:pk>/cash/", cash, name="cash"),
