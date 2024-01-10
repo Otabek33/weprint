@@ -17,22 +17,22 @@ class CashType(models.IntegerChoices):
 class UserRole(models.Model):
     """Class representing a person"""
 
-    name = models.CharField("Nomlanishi", blank=True, max_length=55)
-    code = models.CharField("Kod", max_length=55)
+    name = models.CharField(_("Nomlanishi"), blank=True, max_length=55)
+    code = models.CharField(_("Kod"), max_length=55)
 
     class Meta:
         """Class representing a person"""
-        verbose_name = "Foydaluvchilar turi"
-        verbose_name_plural = "Foydaluvchilar turlari"
+        verbose_name = _("Foydaluvchilar turi")
+        verbose_name_plural = _("Foydaluvchilar turlari")
 
     def __str__(self) -> str:
         return str(self.name)
 
 
 class ClientAddress(models.Model):
-    name = models.CharField(max_length=255, default="some place")
-    latitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    name = models.CharField(_("Nomi"), max_length=255, default="some place")
+    latitude = models.DecimalField(_("Latitude"), max_digits=9, decimal_places=6, blank=True, null=True)
+    longitude = models.DecimalField(_("Longitude"), max_digits=9, decimal_places=6, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -41,19 +41,19 @@ class ClientAddress(models.Model):
 class Company(models.Model):
     """Class representing a person"""
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField("Nomlanishi", blank=True, max_length=55)
-    email = models.EmailField("Pochta", max_length=100, null=True, blank=True)
-    phone = models.CharField("Telefon", max_length=100, null=True, blank=True)
-    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    name = models.CharField(_("Nomi"), blank=True, max_length=55)
+    email = models.EmailField(_("Pochta"), max_length=100, null=True, blank=True)
+    phone = models.CharField(_("Telefon"), max_length=100, null=True, blank=True)
+    balance = models.DecimalField(_("Balans"), max_digits=20, decimal_places=2, default=0)
+    total_debit = models.DecimalField(_("Umumiy deit"), max_digits=20, decimal_places=2, default=0)
+    total_credit = models.DecimalField(_("Umumiy kredit"), max_digits=20, decimal_places=2, default=0)
     location = models.OneToOneField(ClientAddress, on_delete=models.CASCADE, null=True, blank=True,
                                     related_name="company_address")
 
     class Meta:
         """Class representing a person"""
-        verbose_name = "Kompaniya"
-        verbose_name_plural = "Kompaniyalar"
+        verbose_name = _("Kompaniya")
+        verbose_name_plural = _("Kompaniyalar")
 
     def __str__(self) -> str:
         return str(self.name)
@@ -90,13 +90,13 @@ class CustomUser(AbstractUser):
 
 class MoneySaver(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    reester_number = models.CharField("Reyester", blank=True, max_length=55)
-    cashType = models.IntegerField("Pul turi",
+    reester_number = models.CharField(_("Reyester"), blank=True, max_length=55)
+    cashType = models.IntegerField(_("Pul turi"),
                                    choices=CashType.choices,
                                    default=CashType.CASH)
-    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    balance = models.DecimalField(_("Balans"), max_digits=20, decimal_places=2, default=0)
+    total_debit = models.DecimalField(_("Umumiy debit"), max_digits=20, decimal_places=2, default=0)
+    total_credit = models.DecimalField(_("Umumiy kredit"), max_digits=20, decimal_places=2, default=0)
     company = models.ForeignKey(Company,
                                 on_delete=models.SET_NULL,
                                 blank=True,
@@ -109,7 +109,7 @@ class MoneySaver(models.Model):
         null=True,
         related_name="bank_created_by",
     )
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(_("Yaratilgan vaqt"), default=datetime.now)
     updated_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -117,13 +117,13 @@ class MoneySaver(models.Model):
         null=True,
         related_name="bank_updated_by",
     )
-    updated_at = models.DateTimeField(blank=True, null=True)
-    deleted_status = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(_("O'zgartirilgan vaqt"), blank=True, null=True)
+    deleted_status = models.BooleanField(_("O'chirilganlik statusi"), default=False)
 
     class Meta:
         """Class representing a person"""
-        verbose_name = "Pul saqlash turi"
-        verbose_name_plural = "Pul saqlash turlari"
+        verbose_name = _("Pul saqlash turi")
+        verbose_name_plural = _("Pul saqlash turlari")
 
     def __str__(self) -> str:
         return self.reester_number

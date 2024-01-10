@@ -23,49 +23,49 @@ class OrderStatus(models.IntegerChoices):
 class Order(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     order_number = models.CharField(_("Buyurtma raqami"), max_length=150, blank=True)
-    printSize = models.IntegerField(
-        choices=PrintSize.choices,
-        default=PrintSize.A4,
-    )
-    printColor = models.IntegerField(
-        choices=PrintColor.choices,
-        default=PrintColor.WHITE,
-    )
+    printSize = models.IntegerField(_("Hajmi"),
+                                    choices=PrintSize.choices,
+                                    default=PrintSize.A4,
+                                    )
+    printColor = models.IntegerField(_("Rang"),
+                                     choices=PrintColor.choices,
+                                     default=PrintColor.WHITE,
+                                     )
     printBindingType = models.ForeignKey(PrintBindingTypes,
                                          on_delete=models.CASCADE,
                                          blank=True,
                                          null=True,
                                          related_name="printBindingTypes", )
-    file = models.FileField(upload_to="uploads/%Y/%m/%d/")
-    price = models.DecimalField(max_digits=20, decimal_places=2, default=0.0)
-    total_debit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    total_credit = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    page_number = models.IntegerField(default=0)
-    order_status = models.IntegerField(
-        choices=OrderStatus.choices,
-        default=OrderStatus.CREATION,
-    )
+    file = models.FileField(_("Fayl"), upload_to="uploads/%Y/%m/%d/")
+    price = models.DecimalField(_("Narx"), max_digits=20, decimal_places=2, default=0.0)
+    total_debit = models.DecimalField(_("Umumiy debit"), max_digits=20, decimal_places=2, default=0)
+    total_credit = models.DecimalField(_("Umumiy kredit"), max_digits=20, decimal_places=2, default=0)
+    balance = models.DecimalField(_("Balans"), max_digits=20, decimal_places=2, default=0)
+    page_number = models.IntegerField(_("Sahifa soni"), default=0)
+    order_status = models.IntegerField(_("Buyurtma statusi"),
+                                       choices=OrderStatus.choices,
+                                       default=OrderStatus.CREATION,
+                                       )
     created_by = models.ForeignKey("clients.Client", verbose_name=_("Created by"), on_delete=models.SET_NULL,
                                    blank=True, null=True, related_name="order_created_by")
     updated_by = models.ForeignKey("clients.Client", verbose_name=_("Updated by"), on_delete=models.SET_NULL,
                                    blank=True, null=True, related_name="order_updated_by")
-    created_at = models.DateTimeField(default=timezone.now)
-    tg_pk = models.CharField(max_length=150, default=0)
-    file_status = models.BooleanField(default=False)
-    cash_type = models.IntegerField(
-        choices=PaymentType.choices,
-        default=PaymentType.WAIT,
-    )
-    delivery_type = models.IntegerField(
-        choices=DeliveryType.choices,
-        default=DeliveryType.Self_Delivery,
-    )
+    created_at = models.DateTimeField(_("Yaratilgan vaqt"), default=timezone.now)
+    tg_pk = models.CharField(_("Telegram id"), max_length=150, default=0)
+    file_status = models.BooleanField(_("Fayl statusi"), default=False)
+    cash_type = models.IntegerField(_("Pul turi"),
+                                    choices=PaymentType.choices,
+                                    default=PaymentType.WAIT,
+                                    )
+    delivery_type = models.IntegerField(_("Yetqazib berish turi"),
+                                        choices=DeliveryType.choices,
+                                        default=DeliveryType.Self_Delivery,
+                                        )
     location = models.OneToOneField(ClientAddress, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.order_number)
 
     class Meta:
-        verbose_name = "Order"
-        verbose_name_plural = "Orders"
+        verbose_name = _("Buyurtma")
+        verbose_name_plural = _("Buyurtmalar")

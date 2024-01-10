@@ -20,9 +20,9 @@ class DoubleEntryAccounting(models.IntegerChoices):
 
 class Transaction(models.Model):
     """Transaction"""
-    payment_order = models.IntegerField("To'lov raqami", blank=True, null=True)
+    payment_order = models.IntegerField(_("To'lov raqami"), blank=True, null=True)
 
-    description = models.CharField("Ta'rif", blank=True, max_length=55)
+    description = models.CharField(_("Ta'rif"), blank=True, max_length=55)
     cash_type = models.ForeignKey(MoneySaver, blank=True, null=True, on_delete=models.CASCADE, )
     client = models.ForeignKey(Client,
                                on_delete=models.SET_NULL,
@@ -34,11 +34,11 @@ class Transaction(models.Model):
                               blank=True,
                               null=True,
                               related_name="order_transaction", )
-    double_entry_accounting = models.IntegerField("Pul yo'nalishi",
+    double_entry_accounting = models.IntegerField(_("Pul yo'nalishi"),
                                                   choices=DoubleEntryAccounting.choices,
                                                   default=DoubleEntryAccounting.CREDIT)
-    balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
-    company_balance = models.DecimalField(max_digits=20, decimal_places=2, default=0)
+    balance = models.DecimalField(_("Balans"), max_digits=20, decimal_places=2, default=0)
+    company_balance = models.DecimalField(_("Korxona balansi"), max_digits=20, decimal_places=2, default=0)
     company = models.ForeignKey(Company,
                                 on_delete=models.SET_NULL,
                                 blank=True,
@@ -51,7 +51,7 @@ class Transaction(models.Model):
         null=True,
         related_name="transaction_created_by",
     )
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(_("Yaratilgan vaqt"), default=datetime.now)
     updated_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -59,13 +59,13 @@ class Transaction(models.Model):
         null=True,
         related_name="transaction_updated_by",
     )
-    updated_at = models.DateTimeField(blank=True, null=True)
-    deleted_status = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(_("O'zgartirilgan vaqt"), blank=True, null=True)
+    deleted_status = models.BooleanField(_("O'chirilganlik status"), default=False)
 
     class Meta:
         """Class representing a transaction"""
-        verbose_name = "Tranzaksiya"
-        verbose_name_plural = "Tranzaksiyalar"
+        verbose_name = _("Tranzaksiya")
+        verbose_name_plural = _("Tranzaksiyalar")
 
     def __str__(self) -> str:
         return str(self.description)

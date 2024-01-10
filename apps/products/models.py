@@ -10,7 +10,7 @@ from apps.tg.models import PrintSize, PrintColor
 
 class PrintBindingTypes(models.Model):
     name = models.CharField(_("Nomi"), max_length=150, blank=True)
-    photo = models.ImageField(upload_to="binding/%Y/%m/%d/")
+    photo = models.ImageField(_("Rasm"),upload_to="binding/%Y/%m/%d/")
     company = models.ForeignKey(Company,
                                 on_delete=models.CASCADE,
                                 blank=True,
@@ -24,7 +24,7 @@ class PrintBindingTypes(models.Model):
         null=True,
         related_name="bindingTypes_created_by",
     )
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(_("Yaratilgan vaqt"),default=datetime.now)
     updated_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -32,15 +32,15 @@ class PrintBindingTypes(models.Model):
         null=True,
         related_name="bindingTypes_updated_by",
     )
-    updated_at = models.DateTimeField(blank=True, null=True)
-    deleted_status = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(_("O'zgartirilgan vaqt"),blank=True, null=True)
+    deleted_status = models.BooleanField(_("O'chirilganlik statusi"),default=False)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "Bog'lama turi"
-        verbose_name_plural = "Bog'lama turlari"
+        verbose_name = _("Bog'lama turi")
+        verbose_name_plural = _("Bog'lama turlari")
 
 
 # Create your models here.
@@ -61,11 +61,11 @@ class ProductManager(models.Manager):
 class Product(models.Model):
     """mahsulot"""
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    printSize = models.IntegerField(
+    printSize = models.IntegerField(_("Hajm"),
         choices=PrintSize.choices,
         default=PrintSize.A5,
     )
-    printColor = models.IntegerField(
+    printColor = models.IntegerField(_("Rang"),
         choices=PrintColor.choices,
         default=PrintColor.WHITE,
     )
@@ -74,7 +74,7 @@ class Product(models.Model):
                                          blank=True,
                                          null=True,
                                          related_name="printBindingTypess", )
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    price = models.DecimalField(_("Narx"),max_digits=10, decimal_places=2, default=0.0)
     company = models.ForeignKey(Company,
                                 on_delete=models.CASCADE,
                                 blank=True,
@@ -88,7 +88,7 @@ class Product(models.Model):
         null=True,
         related_name="_created_by",
     )
-    created_at = models.DateTimeField(default=datetime.now)
+    created_at = models.DateTimeField(_("Yaratilgan vaqt"),default=datetime.now)
     updated_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
@@ -96,8 +96,8 @@ class Product(models.Model):
         null=True,
         related_name="_updated_by",
     )
-    updated_at = models.DateTimeField(blank=True, null=True)
-    deleted_status = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(_("O'zgartirilgan vaqt"),blank=True, null=True)
+    deleted_status = models.BooleanField(_("O'chirilganlik statusi"),default=False)
 
     def __str__(self):
         return f"Size - {self.get_printSize_display()} \n; Color - {self.get_printColor_display()} ; Binding  - {self.printBindingType.name} ; Price  - {str(self.price)};"
@@ -106,5 +106,5 @@ class Product(models.Model):
         return reverse("products:product_list")
 
     class Meta:
-        verbose_name = "Mahsulot"
-        verbose_name_plural = "Mahsulotlar"
+        verbose_name = _("Mahsulot")
+        verbose_name_plural = _("Mahsulotlar")
