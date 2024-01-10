@@ -14,28 +14,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views import defaults as default_views
-from django.views.i18n import set_language
 
-urlpatterns = [
+
+urlpatterns = (i18n_patterns(
     path("", include("apps.accounts.urls", namespace="accounts")),
     path("clients/", include("apps.clients.urls", namespace="clients")),
     path("orders/", include("apps.orders.urls", namespace="orders")),
     path("products/", include("apps.products.urls", namespace="products")),
     path("transactions/", include("apps.transactions.urls", namespace="transactions")),
-    path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls)
 
-]
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-urlpatterns += [
-    path("i18 n/", include("django.conf.urls.i18n")),
-]
 
 urlpatterns += [
     path('i18n/', include('django.conf.urls.i18n')),
@@ -66,4 +63,3 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
-

@@ -15,7 +15,7 @@
     </div>
 
     <!-- start: search & user box -->
-    <div  x-data="{ isOpen: false }" class="header-right">
+    <div x-data="{ isOpen: false }" class="header-right">
         {% get_available_languages as LANGUAGES %}
         {% get_current_language as LANGUAGE_CODE %}
         {% get_language_info_list for LANGUAGES as languages %}
@@ -28,7 +28,6 @@
                 <img src="{% static 'img/blank.gif' %}" class="flag flag-{{ LANGUAGE_CODE }}"
                      alt="{{ LANGUAGE_CODE }}"/> {{ LANGUAGE_CODE|language_name_local }}
             {% endif %}
-            (DEBUG: {{ request.LANGUAGE_CODE }})
             <i class="fas fa-chevron-down"></i>
         </a>
 
@@ -130,13 +129,13 @@
                     <li>
                         <a role="menuitem" tabindex="-1" href="{% url 'accounts:user_detail' user.id %}"><i
                                 class="bx bx-user"></i>
-                            My Profile</a>
+                            Profil</a>
                     </li>
 
                     <li>
                         <a role="menuitem" tabindex="-1" href="{% url 'accounts:logout' %}"><i
                                 class="bx bx-log-out"></i>
-                            Logout</a>
+                            Chiqish</a>
                     </li>
                 </ul>
             </div>

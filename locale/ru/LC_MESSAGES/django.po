@@ -23,12 +23,12 @@ msgstr ""
 #: .\apps\accounts\models.py:13 .\apps\tg\models.py:33
 #: .\templates\_includes\sidebar.html:57
 msgid "Naqt"
-msgstr ""
+msgstr "Наличка"
 
 #: .\apps\accounts\models.py:14 .\templates\_includes\sidebar.html:62
 #: .\templates\_includes\sidebar.html:107
 msgid "Bank"
-msgstr ""
+msgstr "Банк"
 
 #: .\apps\accounts\models.py:71
 msgid "Foydanuvchi"
@@ -152,15 +152,12 @@ msgstr ""
 
 #: .\apps\transactions\models.py:17
 msgid "Kredit"
-msgstr ""
+msgstr "Кредит"
 
 #: .\apps\transactions\models.py:18
 msgid "Debit"
-msgstr ""
+msgstr "Дебет"
 
-#: .\templates\_includes\navbar.html:37
-msgid "Til"
-msgstr ""
 
 #: .\templates\_includes\sidebar.html:22
 msgid "Dashboard"
@@ -172,39 +169,39 @@ msgstr "Заказы"
 
 #: .\templates\_includes\sidebar.html:35 .\templates\_includes\sidebar.html:81
 msgid "Mijozlar"
-msgstr ""
+msgstr "Клиенты"
 
 #: .\templates\_includes\sidebar.html:41
 msgid "Mahsulotlar"
-msgstr ""
+msgstr "Продукты"
 
 #: .\templates\_includes\sidebar.html:47
 msgid "To'lovlar"
-msgstr ""
+msgstr "Платежы"
 
 #: .\templates\_includes\sidebar.html:52
 msgid "To'lov operatsiyalar"
-msgstr ""
+msgstr "Платежные операции"
 
 #: .\templates\_includes\sidebar.html:67
 msgid "Yangi to'lov"
-msgstr ""
+msgstr "Новый платеж"
 
 #: .\templates\_includes\sidebar.html:75
 msgid "Debit-Kredit"
-msgstr ""
+msgstr "Дебет-Кредит"
 
 #: .\templates\_includes\sidebar.html:96
 msgid "Umumiy ma'lumot"
-msgstr ""
+msgstr "Общие сведения"
 
 #: .\templates\_includes\sidebar.html:102
 msgid "Kompaniya"
-msgstr ""
+msgstr "Компания"
 
 #: .\templates\_includes\sidebar.html:112
 msgid "Bog'lama turi"
-msgstr ""
+msgstr "Тип крепления"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 10:14+0500\n"
+"POT-Creation-Date: 2024-01-10 12:31+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1407,10 +1407,10 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#: .\wePrint\settings.py:116
-msgid "O'zbek"
+#: .\wePrint\settings.py:117
+msgid "Russian"
 msgstr ""
 
-#: .\wePrint\settings.py:117
-msgid "Русский"
+#: .\wePrint\settings.py:118
+msgid "Uzbek"
 msgstr ""

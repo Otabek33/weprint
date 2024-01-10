@@ -14,9 +14,8 @@ from pathlib import Path
 
 from django.conf import global_settings
 from django.utils.translation import gettext_lazy as _
-
-import django
-
+# Add custom languages not provided by Django
+import django.conf.locale
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -52,11 +51,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "django.middleware.locale.LocaleMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    'django.middleware.locale.LocaleMiddleware',
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -77,6 +76,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.i18n",
             ],
         },
     },
@@ -113,46 +113,34 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+LANGUAGES = [
+    ('ru', _('Russian')),
+    ('uz', _('Uzbek')),
+]
+
 EXTRA_LANG_INFO = {
-    "uzc": {
-        "bidi": False,
-        "code": "uzc",
-        "name": "Ozbek",
-        "name_local": "Ўзбек",
-    },
-    "uz": {
-        "bidi": False,
-        "code": "uz",
-        "name": "Uzbek",
-        "name_local": "O'zb",
+    'uz': {
+        'bidi': False,  # right-to-left
+        'code': 'uz',
+        'name': 'Uzbek',
+        'name_local': "O'zbek",
     },
 }
 
-LANG_INFO = {**django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO}
+
+
+LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
 django.conf.locale.LANG_INFO = LANG_INFO
-global_settings.LANGUAGES = global_settings.LANGUAGES + [("uzc", "Ўзбек")]
-
-RUSSIAN = 'ru'
-UZBEK = 'uz'
-CYRILLIC = 'uzc'
-LANGUAGE_CODE = UZBEK
-
-LANGUAGES = (
-    (RUSSIAN, _("Русcкий")),
-    (UZBEK, _("O'zbek")),
-    (CYRILLIC, _("Ўзбек")),
-)
-
+global_settings.LANGUAGES = global_settings.LANGUAGES + [("uz", 'Uzbek')]
 TIME_ZONE = 'Asia/Tashkent'
-
+LANGUAGE_CODE = 'uz'
 USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-]
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
+LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
