@@ -1,0 +1,18 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+IPYTHONDIR=/app/.ipython
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+
+# Flower
+CELERY_FLOWER_USER=rcTguBUjLwYiwuMQbUeyFDFGUDiXVGFP
+CELERY_FLOWER_PASSWORD=HbuozhQB4XbvM3bxN6DsvAFhTvDHYqQOXKcXWLClWFoS983jurzVcbqTC3BLTCbN
+
+# Deputy list
+# ------------------------------------------------------------------------------
+DEPUTY_LIST_API=https://deputy.track.uz/mobile/api/v1/deputies/
