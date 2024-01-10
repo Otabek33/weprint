@@ -19,52 +19,52 @@
                     <li>
                         <a class="nav-link" href="{% url 'accounts:home' %}">
                             <i class="bx bx-home-alt" aria-hidden="true"></i>
-                            <span>{% trans Dashboard %}</span>
+                            <span>{% trans "Dashboard" %}</span>
                         </a>
                     </li>
                     <hr class="separator">
                     <li>
                         <a class="nav-link" href="{% url 'orders:order_list' %}">
                             <i class="bx bx-detail" aria-hidden="true"></i>
-                            <span>{% trans Buyurtmalar %}</span>
+                            <span>{% trans "Buyurtmalar" %}</span>
                         </a>
                     </li>
                     <li>
                         <a class="nav-link" href="{% url 'clients:client_list' %}">
                             <i class="bx bx-user" aria-hidden="true"></i>
-                            <span>{% trans Mijozlar %}</span>
+                            <span>{% trans "Mijozlar" %}</span>
                         </a>
                     </li>
                     <li>
                         <a class="nav-link" href="{% url 'products:product_list' %}">
                             <i class="bx bxl-product-hunt" aria-hidden="true"></i>
-                            <span>{% trans Mahsulotlar %}</span>
+                            <span>{% trans "Mahsulotlar" %}</span>
                         </a>
                     </li>
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-money" aria-hidden="true"></i>
-                            <span>{% trans Tolovlar %}</span>
+                            <span>{% trans "To'lovlar" %}</span>
                         </a>
                         <ul class="nav nav-children">
                             <li>
                                 <a class="nav-link" href="{% url 'transactions:transaction_list' %}">
-                                    {% trans Tolov operatsiyalar %}
+                                    {% trans "To'lov operatsiyalar" %}
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="{% url 'accounts:cash' user.id %}">
-                                    {% trans Naqt %}
+                                    {% trans "Naqt" %}
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="{% url 'accounts:bank' user.id %}">
-                                    {% trans Bank %}
+                                    {% trans "Bank" %}
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="{% url 'transactions:transaction_add' %}">
-                                    {% trans Yangi tolov %}
+                                    {% trans "Yangi to'lov" %}
                                 </a>
                             </li>
                         </ul>
@@ -72,18 +72,18 @@
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-transfer" aria-hidden="true"></i>
-                            <span>{% trans Debit-Kredit %}</span>
+                            <span>{% trans "Debit-Kredit" %}</span>
                         </a>
                         <ul class="nav nav-children">
 
                             <li>
                                 <a class="nav-link" href="{% url 'clients:debit_credit' %}">
-                                    {% trans Mijozlar %}
+                                    {% trans "Mijozlar" %}
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="#">
-                                    {% trans Buyurtmalar %}
+                                    {% trans "Buyurtmalar" %}
                                 </a>
                             </li>
 
@@ -93,23 +93,23 @@
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-info-circle" aria-hidden="true"></i>
-                            <span>{% trans Umumiy malumot %}</span>
+                            <span>{% trans "Umumiy ma'lumot" %}</span>
                         </a>
                         <ul class="nav nav-children">
 
                             <li>
                                 <a class="nav-link" href="{% url 'accounts:company_list' user.id %}">
-                                    {% trans Kompaniya %}
+                                    {% trans "Kompaniya" %}
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="{% url 'accounts:money_saver_list' user.id %}">
-                                    {% trans Bank %}
+                                    {% trans "Bank" %}
                                 </a>
                             </li>
                             <li>
                                 <a class="nav-link" href="{% url 'products:binding_type_list' user.id %}">
-                                    {% trans Boglama turi %}
+                                    {% trans "Bog'lama turi" %}
                                 </a>
                             </li>
 

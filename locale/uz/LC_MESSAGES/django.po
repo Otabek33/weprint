@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-09 16:52+0500\n"
+"POT-Creation-Date: 2024-01-10 10:14+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,10 +19,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: .\apps\accounts\models.py:13 .\apps\tg\models.py:33
+#: .\templates\_includes\sidebar.html:57
 msgid "Naqt"
 msgstr ""
 
-#: .\apps\accounts\models.py:14
+#: .\apps\accounts\models.py:14 .\templates\_includes\sidebar.html:62
+#: .\templates\_includes\sidebar.html:107
 msgid "Bank"
 msgstr ""
 
@@ -154,8 +156,48 @@ msgstr ""
 msgid "Debit"
 msgstr ""
 
-#: .\templates\_includes\navbar.html:37
-msgid "Til"
+#: .\templates\_includes\sidebar.html:22
+msgid "Dashboard"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:29 .\templates\_includes\sidebar.html:86
+msgid "Buyurtmalar"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:35 .\templates\_includes\sidebar.html:81
+msgid "Mijozlar"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:41
+msgid "Mahsulotlar"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:47
+msgid "To'lovlar"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:52
+msgid "To'lov operatsiyalar"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:67
+msgid "Yangi to'lov"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:75
+msgid "Debit-Kredit"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:96
+msgid "Umumiy ma'lumot"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:102
+msgid "Kompaniya"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:112
+msgid "Bog'lama turi"
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15

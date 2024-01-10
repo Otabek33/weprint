@@ -38,8 +38,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    # Other URL patterns
-    path('set-language/<str:language>/', set_language, name='set_language'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
 
 if settings.DEBUG:
@@ -67,3 +66,4 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+

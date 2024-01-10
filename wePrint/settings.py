@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+
+from django.conf import global_settings
 from django.utils.translation import gettext_lazy as _
+
+import django
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,7 +50,6 @@ INSTALLED_APPS = [
     "apps.products",
     "apps.transactions",
 ]
-
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -110,13 +114,35 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+EXTRA_LANG_INFO = {
+    "uzc": {
+        "bidi": False,
+        "code": "uzc",
+        "name": "Ozbek",
+        "name_local": "Ўзбек",
+    },
+    "uz": {
+        "bidi": False,
+        "code": "uz",
+        "name": "Uzbek",
+        "name_local": "O'zb",
+    },
+}
 
+LANG_INFO = {**django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO}
+django.conf.locale.LANG_INFO = LANG_INFO
+global_settings.LANGUAGES = global_settings.LANGUAGES + [("uzc", "Ўзбек")]
 
-LANGUAGES = [
-    ('uz', _('O\'zbek')),
-    ('ru', _('Русский')),
-]
-LANGUAGE_CODE = 'uz'
+RUSSIAN = 'ru'
+UZBEK = 'uz'
+CYRILLIC = 'uzc'
+LANGUAGE_CODE = UZBEK
+
+LANGUAGES = (
+    (RUSSIAN, _("Русcкий")),
+    (UZBEK, _("O'zbek")),
+    (CYRILLIC, _("Ўзбек")),
+)
 
 TIME_ZONE = 'Asia/Tashkent'
 
@@ -124,7 +150,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -138,4 +166,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
