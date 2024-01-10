@@ -28,6 +28,7 @@ urlpatterns = (i18n_patterns(
     path("orders/", include("apps.orders.urls", namespace="orders")),
     path("products/", include("apps.products.urls", namespace="products")),
     path("transactions/", include("apps.transactions.urls", namespace="transactions")),
+    path("bot/", include("apps.tg.urls", namespace="bot")),
     path("admin/", admin.site.urls)
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
