@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import (UpdateView, DeleteView, ListView, DetailView, CreateView)
 from apps.products.models import Product
 from apps.products.forms import ProductUpdateForm, ProductCreateForm
@@ -55,13 +56,8 @@ product_update = ProductUpdateView.as_view()
 class ProductDeleteView(DeleteView):
     model = Product
 
-    def post(self, request, *args, **kwargs):
-        product = get_object_or_404(Product, pk=self.kwargs["pk"])
-        product.deleted_status = True
-        product.updated_at = datetime.now(tz=timezone.utc)
-        product.updated_by = self.request.user
-        product.save()
-        return redirect("products:product_list")
+    def get_success_url(self):
+        return reverse_lazy('products:product_list')
 
 
 product_delete = ProductDeleteView.as_view()
