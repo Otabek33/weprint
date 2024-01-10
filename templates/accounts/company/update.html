@@ -207,8 +207,16 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
     <script>
+
+    var latitudeWithComma = "{{ company.location.latitude }}";
+        var longitudeWithComma = "{{ company.location.longitude }}";
+
+        // Replace commas with dots
+        var latitude = latitudeWithComma.replace(',', '.');
+        var longitude = longitudeWithComma.replace(',', '.');
+
         let mapOptions = {
-            center: [41.44434969087804, 69.55308079719545],
+            center: [latitude, longitude],
             zoom: 15
         }
 
@@ -231,7 +239,7 @@
             document.getElementById('longitude').value = event.latlng.lng;
 
         })
-        L.marker([{{ company.location.latitude }}, {{ company.location.longitude }}]).addTo(map)
+        L.marker([latitude, longitude]).addTo(map)
             .bindPopup('{{ company.location.name }}')
             .openPopup();
     </script>

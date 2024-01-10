@@ -107,7 +107,7 @@
                 </section>
             </div>
         </div>
-         <div class="row">
+        <div class="row">
             <div class="col-lg-8">
                 <section class="card">
                     <header class="card-header">
@@ -159,10 +159,10 @@
             </div>
         </div>
         <div class="row action-buttons">
-             <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
-                <a href="{% url 'accounts:company_list' user.id  %}"
+            <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+                <a href="{% url 'accounts:company_list' user.id %}"
                    class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">
-                   {% trans "Orqaga" %}</a>
+                    {% trans "Orqaga" %}</a>
             </div>
 
         </div>
@@ -180,15 +180,19 @@
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <script>
+        var latitudeWithComma = "{{ company.location.latitude }}";
+        var longitudeWithComma = "{{ company.location.longitude }}";
 
+        // Replace commas with dots
+        var latitude = latitudeWithComma.replace(',', '.');
+        var longitude = longitudeWithComma.replace(',', '.');
 
-        var map = L.map('map').setView([{{ company.location.latitude }}, {{ company.location.longitude }}], 20);
+        var map = L.map('map').setView([latitude, longitude], 15);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+         }).addTo(map);
 
-        L.marker([{{ company.location.latitude }}, {{ company.location.longitude }}]).addTo(map)
+        L.marker([latitude, longitude]).addTo(map)
             .bindPopup('{{ company.location.name }}')
             .openPopup();
 
