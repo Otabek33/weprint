@@ -129,13 +129,13 @@
                     <li>
                         <a role="menuitem" tabindex="-1" href="{% url 'accounts:user_detail' user.id %}"><i
                                 class="bx bx-user"></i>
-                            Profil</a>
+                            {% trans "Profil" %}</a>
                     </li>
 
                     <li>
                         <a role="menuitem" tabindex="-1" href="{% url 'accounts:logout' %}"><i
                                 class="bx bx-log-out"></i>
-                            Chiqish</a>
+                            {% trans "Chiqish" %}</a>
                     </li>
                 </ul>
             </div>

@@ -16,12 +16,11 @@ class PrintSize(models.IntegerChoices):
 
 
 class PrintBindingTypes(models.IntegerChoices):
-    SPIRAL = 1, _("Cпиральный")
-    SADDLE_STITCH = 2, _("Скрипкаланган")
-    PERFECT_BINDING = 3, _("китоб")
-    CASE = 4, _("Диплом ишига ухшаб")
-    PLASTIC_COMB = 5, _("Пласмаса переплет")
-    NO_BINDING = 6, _("Переплетсиз")
+    SPIRAL = 1, _("Spiral")
+    SADDLE_STITCH = 2, _("Skriplangan")
+    PERFECT_BINDING = 3, _("Yumshoq muqova")
+    CASE = 4, _("Qattiq muqova")
+    PLASTIC_COMB = 5, _("Plastik")
 
 
 class DeliveryType(models.IntegerChoices):

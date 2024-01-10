@@ -2,7 +2,7 @@
 
 {% load static i18n %}
 
-{% block title %}Korxona{% endblock %}
+{% block title %}{% trans "Korxona" %}{% endblock %}
 {% block additional_css %}
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
@@ -19,11 +19,11 @@
 {% block content %}
 
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Dashboard</h2>
+        <h2 class="font-weight-bold text-6">{% trans "Dashboard" %}</h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>Korxona</span></li>
-                <li><span>O'zgartirish</span></li>
+                <li><span>{% trans "Korxona" %}</span></li>
+                <li><span>{% trans "O'zgartirish" %}</span></li>
             </ol>
 
         </div>
@@ -38,28 +38,26 @@
                         <div class="row">
                             <div class="col-lg-2-5 col-xl-1-5">
                                 <i class="card-big-info-icon bx bx-building"></i>
-                                <h2 class="card-big-info-title">Korxona</h2>
-                                <p class="card-big-info-desc">Korxona nomi, manzili ,telefon raqami, pochta</p>
+                                <h2 class="card-big-info-title">{% trans "Korxona" %}</h2>
+                                <p class="card-big-info-desc">{% trans "Korxona nomi, manzili ,telefon raqami, pochta" %}</p>
                             </div>
 
                             <div class="col-lg-3-5 col-xl-4-5">
                                 <div class="form-group row align-items-center pb-3">
-                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
-                                        nomi</label>
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Korxona nomi" %}</label>
                                     <div class="col-lg-7 col-xl-6">
                                         {{ form.name }}
                                     </div>
                                 </div>
 
                                 <div class="form-group row align-items-center pb-3">
-                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
-                                        telefon raqam</label>
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Korxona telefon raqam" %}</label>
                                     <div class="col-lg-7 col-xl-6">
                                         {{ form.phone }}
                                     </div>
                                 </div>
                                 <div class="form-group row align-items-center pb-3">
-                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Pochta</label>
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Pochta" %}</label>
                                     <div class="col-lg-7 col-xl-6">
                                         {{ form.email }}
                                     </div>
@@ -80,7 +78,7 @@
                             <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
                         </div>
 
-                        <h2 class="card-title">Manzil</h2>
+                        <h2 class="card-title">{% trans "Manzil" %}</h2>
                     </header>
                     <div class="card-body">
 
@@ -97,13 +95,13 @@
                             <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
                         </div>
 
-                        <h2 class="card-title">Manzil</h2>
+                        <h2 class="card-title">{% trans "Manzil" %}</h2>
                     </header>
                     <div class="card-body" style="height: 530px;">
 
                         <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Manzil</label>
+                                <label>{% trans "Manzil" %}</label>
                                 <div class="text">
 
                                         <textarea type="text" name="address" class="form-control form-control-modern "
@@ -116,7 +114,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Latitude</label>
+                                <label>{% trans "Latitude" %}</label>
                                 <div class="text">
 
                                     <input type="text" name="latitude" class="form-control" id="latitude"
@@ -129,7 +127,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col mb-3">
-                                <label>Longitude</label>
+                                <label>{% trans "Longitude" %}</label>
                                 <div class="text">
 
                                     <input type="text" name="longitude" class="form-control" id="longitude"
@@ -152,28 +150,25 @@
                         <div class="row">
                             <div class="col-lg-2-5 col-xl-1-5">
                                 <i class="card-big-info-icon bx bx-money"></i>
-                                <h2 class="card-big-info-title">Budjet</h2>
-                                <p class="card-big-info-desc">Korxona balansi, debit va kredit</p>
+                                <h2 class="card-big-info-title">{% trans "Budjet" %}</h2>
+                                <p class="card-big-info-desc">{% trans "Korxona balansi, debit va kredit" %}</p>
                             </div>
 
                             <div class="col-lg-3-5 col-xl-4-5">
                                 <div class="form-group row align-items-center pb-3">
-                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Korxona
-                                        balansi</label>
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Korxona balansi" %}</label>
                                     <div class="col-lg-7 col-xl-6"><strong>
                                         {{ form.balance }} </strong>
                                     </div>
                                 </div>
                                 <div class="form-group row align-items-center pb-3">
-                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Umumiy
-                                        debit</label>
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Umumiy debit" %}</label>
                                     <div class="col-lg-7 col-xl-6"><strong>
                                         {{ form.total_debit }} </strong>
                                     </div>
                                 </div>
                                 <div class="form-group row align-items-center pb-3">
-                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">Umumiy
-                                        kredit</label>
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Umumiy kredit" %}</label>
                                     <div class="col-lg-7 col-xl-6"><strong>
                                         {{ form.total_credit }} </strong>
                                     </div>
@@ -192,12 +187,12 @@
             <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
                 <a href="{% url 'accounts:company_list' user.id %}"
                    class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">
-                    Orqaga</a>
+                    {% trans "Orqaga" %}</a>
             </div>
             <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
                 <button type="submit"
                         class=" btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  ">
-                    <i class="bx bx-save text-4 me-2"></i> Saqlash
+                    <i class="bx bx-save text-4 me-2"></i> {% trans "Saqlash" %}
                 </button>
 
             </div>

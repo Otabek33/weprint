@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% load static i18n %}
-{% block title %}Korxona{% endblock %}
+{% block title %}{% trans "Korxona" %}{% endblock %}
 
 
 {% block content %}
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Dashbord ></h2>
+        <h2 class="font-weight-bold text-6">{% trans "Dashbord" %} ></h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>Korxona</span></li>
+                <li><span>{% trans "Korxona" %}</span></li>
             </ol>
         </div>
     </header>
@@ -22,23 +22,23 @@
                     <div class="card-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <a type="button" href="{% url 'accounts:company_add' user.id %}" class="btn btn-primary">+ Qo'shmoq</a>
+                    <a type="button" href="{% url 'accounts:company_add' user.id %}" class="btn btn-primary">+ {% trans "Qo'shmoq" %}</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-responsive-md table-bordered mb-0 text-center">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Korxona</th>
-                            <th>Pochta</th>
-                            <th>Telefon</th>
-                            <th>Debit</th>
-                            <th>Kredit</th>
-                            <th>Balans</th>
-                            <th>address</th>
-                            <th>lat</th>
-                            <th>long</th>
-                            <th>Harakat</th>
+                            <th>{% trans "Korxona" %}</th>
+                            <th>{% trans "Pochta" %}</th>
+                            <th>{% trans "Telefon" %}</th>
+                            <th>{% trans "Debit" %}</th>
+                            <th>{% trans "Kredit" %}</th>
+                            <th>{% trans "Balans" %}</th>
+                            <th>{% trans "address" %}</th>
+                            <th>{% trans "lat" %}</th>
+                            <th>{% trans "long" %}</th>
+                            <th>{% trans "Harakat" %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,9 +50,9 @@
                                 <td>{{ company }}</td>
                                 <td>{{ company.email }}</td>
                                 <td>{{ company.phone }}</td>
-                                <td>{{ company.total_debit|floatformat:"2g" }} so'm</td>
-                                <td>{{ company.total_credit|floatformat:"2g" }} so'm</td>
-                                <td>{{ company.balance|floatformat:"2g" }} so'm</td>
+                                <td>{{ company.total_debit|floatformat:"2g" }} {% trans "so'm" %}</td>
+                                <td>{{ company.total_credit|floatformat:"2g" }} {% trans "so'm" %}</td>
+                                <td>{{ company.balance|floatformat:"2g" }} {% trans "so'm" %}</td>
                                 <td>{{ company.location.name }}</td>
                                 <td>{{ company.location.latitude }}</td>
                                 <td>{{ company.location.longitude }}</td>

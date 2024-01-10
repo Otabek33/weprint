@@ -26,7 +26,7 @@ class Client(models.Model):
         null=True,
         related_name="client_created_by",
     )
-    created_at = models.DateTimeField(_(""),default=datetime.now)
+    created_at = models.DateTimeField(_("Yaratilgan vaqt"),default=datetime.now)
     updated_by = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,

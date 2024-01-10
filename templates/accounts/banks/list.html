@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% load static i18n %}
-{% block title %}Bank{% endblock %}
+{% block title %}{% trans "Bank" %}{% endblock %}
 
 
 {% block content %}
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Dashbord ></h2>
+        <h2 class="font-weight-bold text-6">{% trans "Dashbord" %} ></h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>Bank turlari</span></li>
+                <li><span>{% trans "Bank turlari" %}</span></li>
             </ol>
         </div>
     </header>
@@ -22,20 +22,20 @@
                     <div class="card-actions">
                         <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
                     </div>
-                    <a type="button" href="{% url 'accounts:money_saver_add' user.id %}" class="btn btn-primary">+ Qo'shmoq</a>
+                    <a type="button" href="{% url 'accounts:money_saver_add' user.id %}" class="btn btn-primary">+ {% trans "Qo'shmoq" %}</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-responsive-md table-bordered mb-0 text-center">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Korxona</th>
-                            <th>Pul turi</th>
-                            <th>Kodi</th>
-                            <th>Debit</th>
-                            <th>Kredit</th>
-                            <th>Balans</th>
-                            <th>Harakat</th>
+                            <th>{% trans "Korxona" %}</th>
+                            <th>{% trans "Pul turi" %}</th>
+                            <th>{% trans "Kodi" %}</th>
+                            <th>{% trans "Debit" %}</th>
+                            <th>{% trans "Kredit" %}</th>
+                            <th>{% trans "Balans" %}</th>
+                            <th>{% trans "Harakat" %}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,9 +47,9 @@
                                 <td>{{ money_saver.company }}</td>
                                 <td>{{ money_saver.get_cashType_display }}</td>
                                 <td>{{ money_saver.reester_number }}</td>
-                                <td>{{ money_saver.total_debit|floatformat:"2g" }} so'm</td>
-                                <td>{{ money_saver.total_credit|floatformat:"2g" }} so'm</td>
-                                <td>{{ money_saver.balance|floatformat:"2g" }} so'm</td>
+                                <td>{{ money_saver.total_debit|floatformat:"2g" }} {% trans "so'm" %}</td>
+                                <td>{{ money_saver.total_credit|floatformat:"2g" }} {% trans "so'm" %}</td>
+                                <td>{{ money_saver.balance|floatformat:"2g" }} {% trans "so'm" %}</td>
                                 <td class="actions text-center d-flex justify-content-around ">
                                     <a href="{% url 'accounts:money_saver_update' money_saver.uuid %}"><i class="fas fa-pencil-alt"></i></a>
                                     <a href="{% url 'accounts:money_saver_delete' money_saver.uuid %}" class="delete-row"><i

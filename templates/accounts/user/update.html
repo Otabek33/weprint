@@ -2,7 +2,7 @@
 
 {% load static i18n %}
 
-{% block title %}Foydalanuvchi{% endblock %}
+{% block title %}{% trans "Foydalanuvchi" %}{% endblock %}
 {% block additional_css %}
 
 
@@ -11,12 +11,12 @@
 {% block content %}
 
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Dashboard</h2>
+        <h2 class="font-weight-bold text-6">{% trans "Dashboard" %}</h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
                 <li><span></span></li>
-                <li><span>Foydalanuvchi</span></li>
-                <li><span>O'zgartirmoq</span></li>
+                <li><span>{% trans "Foydalanuvchi" %}</span></li>
+                <li><span>{% trans "O'zgartirmoq" %}</span></li>
 
             </ol>
 
@@ -44,11 +44,11 @@
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
                     <li class="nav-item">
-                        <a href="{% url 'accounts:user_detail' user.id %}" class="nav-link">Umumiy ma'lumot
+                        <a href="{% url 'accounts:user_detail' user.id %}" class="nav-link">{% trans "Umumiy ma'lumot" %}
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="{% url 'accounts:user_update' user.id %}" class="nav-link">O'zgartirmoq</a>
+                        <a href="{% url 'accounts:user_update' user.id %}" class="nav-link">{% trans "O'zgartirmoq" %}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -56,28 +56,28 @@
 
                     <form class="p-3" action="" method="post">
                         {% csrf_token %}
-                        <h4 class="mb-3 font-weight-semibold text-dark">Shaxsiy ma'lumotlar</h4>
+                        <h4 class="mb-3 font-weight-semibold text-dark">{% trans "Shaxsiy ma'lumotlar" %}</h4>
                         <div class="row row mb-4">
                             <div class="form-group col">
-                                <label for="inputAddress">Username</label>
+                                <label for="inputAddress">{% trans "Username" %}</label>
                                 {{ form.username }}
                             </div>
                         </div>
                         <div class="row row mb-4">
                             <div class="form-group col">
-                                <label for="inputAddress">Ism</label>
+                                <label for="inputAddress">{% trans "Ism" %}</label>
                                 {{ form.first_name }}
                             </div>
                         </div>
                         <div class="row row mb-4">
                             <div class="form-group col">
-                                <label for="inputAddress">Familiya</label>
+                                <label for="inputAddress">{% trans "Familiya" %}</label>
                                 {{ form.last_name }}
                             </div>
                         </div>
                         <div class="row row mb-4">
                             <div class="form-group col">
-                                <label for="inputAddress">Pochta</label>
+                                <label for="inputAddress">{% trans "Pochta" %}</label>
                                 {{ form.email }}
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                         <div class="row">
 
                             <div class="form-group col-md-12 border-top-0 pt-0">
-                                <label for="inputState">Rol</label>
+                                <label for="inputState">{% trans "Rol" %}</label>
                                 {{ form.role }}
                             </div>
 
@@ -93,23 +93,9 @@
 
                         <hr class="dotted tall">
 
-{#                        <h4 class="mb-3 font-weight-semibold text-dark">Parolni o'zgartirish</h4>#}
-{#                        <div class="row">#}
-{#                            <div class="form-group col-md-6">#}
-{#                                <label for="inputPassword4">Yangi parol</label>#}
-{#                                <input type="password" class="form-control" id="inputPassword4"#}
-{#                                       placeholder="Password">#}
-{#                            </div>#}
-{#                            <div class="form-group col-md-6 border-top-0 pt-0">#}
-{#                                <label for="inputPassword5">Takrorlash yangi parol</label>#}
-{#                                <input type="password" class="form-control" id="inputPassword5"#}
-{#                                       placeholder="Password">#}
-{#                            </div>#}
-{#                        </div>#}
-
                         <div class="row">
                             <div class="col-md-12 text-end mt-3">
-                                <button type="submit" class="btn btn-primary modal-confirm">Saqlash</button>
+                                <button type="submit" class="btn btn-primary modal-confirm">{% trans "Saqlash" %}</button>
                             </div>
                         </div>
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-10 09:11+0500\n"
+"POT-Creation-Date: 2024-01-10 15:11+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,160 +20,410 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\apps\accounts\models.py:13 .\apps\tg\models.py:33
+#: .\apps\accounts\models.py:13 .\apps\tg\models.py:32
 #: .\templates\_includes\sidebar.html:57
 msgid "Naqt"
 msgstr "Наличка"
 
 #: .\apps\accounts\models.py:14 .\templates\_includes\sidebar.html:62
 #: .\templates\_includes\sidebar.html:107
+#: .\templates\accounts\banks\add.html:12
+#: .\templates\accounts\banks\add.html:28
+#: .\templates\accounts\banks\delete.html:12
+#: .\templates\accounts\banks\list.html:4
+#: .\templates\accounts\banks\update.html:11
+#: .\templates\accounts\banks\update.html:27
 msgid "Bank"
 msgstr "Банк"
 
+#: .\apps\accounts\models.py:20
+msgid "Nomlanishi"
+msgstr "Название"
+
+#: .\apps\accounts\models.py:21
+msgid "Kod"
+msgstr "Код"
+
+#: .\apps\accounts\models.py:25
+msgid "Foydaluvchilar turi"
+msgstr "Тип пользователей"
+
+#: .\apps\accounts\models.py:26
+msgid "Foydaluvchilar turlari"
+msgstr "Типы пользователей"
+
+#: .\apps\accounts\models.py:33 .\apps\accounts\models.py:44
+#: .\apps\products\models.py:12
+msgid "Nomi"
+msgstr "Наименование"
+
+#: .\apps\accounts\models.py:34 .\templates\accounts\company\add.html:117
+#: .\templates\accounts\company\update.html:117
+msgid "Latitude"
+msgstr "Широта"
+
+#: .\apps\accounts\models.py:35 .\templates\accounts\company\add.html:130
+#: .\templates\accounts\company\update.html:130
+msgid "Longitude"
+msgstr "Долгота"
+
+#: .\apps\accounts\models.py:45 .\templates\accounts\company\add.html:60
+#: .\templates\accounts\company\delete.html:59
+#: .\templates\accounts\company\detail.html:59
+#: .\templates\accounts\company\list.html:33
+#: .\templates\accounts\company\update.html:60
+#: .\templates\accounts\user\detail.html:88
+#: .\templates\accounts\user\update.html:80
+msgid "Pochta"
+msgstr "Почта"
+
+#: .\apps\accounts\models.py:46 .\apps\clients\models.py:14
+#: .\templates\accounts\company\list.html:34
+msgid "Telefon"
+msgstr "Телефон"
+
+#: .\apps\accounts\models.py:47 .\apps\accounts\models.py:97
+#: .\apps\clients\models.py:41 .\apps\orders\models.py:43
+#: .\apps\transactions\models.py:40 .\templates\accounts\banks\delete.html:78
+#: .\templates\accounts\banks\list.html:37
+#: .\templates\accounts\company\list.html:37
+msgid "Balans"
+msgstr "Баланс"
+
+#: .\apps\accounts\models.py:48
+#, fuzzy
+#| msgid "Umumiy ma'lumot"
+msgid "Umumiy deit"
+msgstr "Общие дебит"
+
+#: .\apps\accounts\models.py:49 .\apps\accounts\models.py:99
+#: .\apps\clients\models.py:40 .\apps\orders\models.py:42
+#: .\templates\accounts\banks\delete.html:69
+#: .\templates\accounts\company\delete.html:97
+#: .\templates\accounts\company\detail.html:97
+#: .\templates\accounts\company\update.html:171
+msgid "Umumiy kredit"
+msgstr "Общие кредит"
+
+#: .\apps\accounts\models.py:55 .\templates\_includes\sidebar.html:102
+msgid "Kompaniya"
+msgstr "Компания"
+
+#: .\apps\accounts\models.py:56
+#, fuzzy
+#| msgid "Kompaniya"
+msgid "Kompaniyalar"
+msgstr "Компании"
+
 #: .\apps\accounts\models.py:71
 msgid "Foydanuvchi"
-msgstr ""
+msgstr "Пользователь"
 
 #: .\apps\accounts\models.py:72
 msgid "Foydalanuvchilar"
-msgstr ""
+msgstr "Пользователи"
 
-#: .\apps\clients\models.py:17
-msgid "username"
-msgstr ""
+#: .\apps\accounts\models.py:93
+msgid "Reyester"
+msgstr "Реестр"
 
-#: .\apps\clients\models.py:20
-msgid "first name"
-msgstr ""
+#: .\apps\accounts\models.py:94 .\apps\orders\models.py:56
+#: .\templates\accounts\banks\add.html:33
+#: .\templates\accounts\banks\list.html:33
+#: .\templates\accounts\banks\update.html:32
+msgid "Pul turi"
+msgstr "Тип денег"
 
-#: .\apps\clients\models.py:21
-msgid "last name"
-msgstr ""
+#: .\apps\accounts\models.py:98 .\apps\clients\models.py:39
+#: .\apps\orders\models.py:41 .\templates\accounts\banks\delete.html:61
+#: .\templates\accounts\company\delete.html:91
+#: .\templates\accounts\company\detail.html:91
+#: .\templates\accounts\company\update.html:165
+msgid "Umumiy debit"
+msgstr "Общие дебит"
+
+#: .\apps\accounts\models.py:112 .\apps\clients\models.py:29
+#: .\apps\orders\models.py:53 .\apps\products\models.py:27
+#: .\apps\products\models.py:91 .\apps\transactions\models.py:54
+msgid "Yaratilgan vaqt"
+msgstr "Время создания"
+
+#: .\apps\accounts\models.py:120 .\apps\clients\models.py:37
+#: .\apps\products\models.py:35 .\apps\products\models.py:99
+#: .\apps\transactions\models.py:62
+msgid "O'zgartirilgan vaqt"
+msgstr "Изменено время"
+
+#: .\apps\accounts\models.py:121 .\apps\clients\models.py:38
+#: .\apps\products\models.py:36 .\apps\products\models.py:100
+msgid "O'chirilganlik statusi"
+msgstr "Статус выключен"
+
+#: .\apps\accounts\models.py:125
+msgid "Pul saqlash turi"
+msgstr "Тип хранения денег"
+
+#: .\apps\accounts\models.py:126
+msgid "Pul saqlash turlari"
+msgstr "Виды хранения денег"
+
+#: .\apps\clients\models.py:13
+msgid "Chat id"
+msgstr "Идентификатор чата"
+
+#: .\apps\clients\models.py:17 .\templates\accounts\user\detail.html:64
+#: .\templates\accounts\user\update.html:62
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: .\apps\clients\models.py:20 .\templates\accounts\user\detail.html:72
+#: .\templates\accounts\user\update.html:68
+msgid "Ism"
+msgstr "Имя"
+
+#: .\apps\clients\models.py:21 .\templates\accounts\user\detail.html:80
+#: .\templates\accounts\user\update.html:74
+msgid "Familiya"
+msgstr "Фамилия"
 
 #: .\apps\clients\models.py:51
-msgid "Client"
-msgstr ""
+#, fuzzy
+#| msgid "Mijozlar"
+msgid "Mijoz"
+msgstr "Клиенты"
 
-#: .\apps\clients\models.py:52
-msgid "Clients"
-msgstr ""
+#: .\apps\clients\models.py:52 .\templates\_includes\sidebar.html:35
+#: .\templates\_includes\sidebar.html:81
+msgid "Mijozlar"
+msgstr "Клиенты"
 
 #: .\apps\orders\models.py:16
 msgid "Yaratilish"
-msgstr ""
+msgstr "Создание"
 
 #: .\apps\orders\models.py:17
 msgid "Yangi Buyurtma"
-msgstr ""
+msgstr "Новый заказ"
 
 #: .\apps\orders\models.py:18
 msgid "Faol"
-msgstr ""
+msgstr "Активный"
 
 #: .\apps\orders\models.py:19
 msgid "Bekor qilingan"
-msgstr ""
+msgstr "Отменено"
 
 #: .\apps\orders\models.py:20
 msgid "Yetqazib berilgan"
-msgstr ""
+msgstr "Доставленный"
 
 #: .\apps\orders\models.py:25
 msgid "Buyurtma raqami"
-msgstr ""
+msgstr "Номер заказа"
+
+#: .\apps\orders\models.py:26
+msgid "Hajmi"
+msgstr "Размер"
+
+#: .\apps\orders\models.py:30 .\apps\products\models.py:68
+msgid "Rang"
+msgstr "Цвет"
+
+#: .\apps\orders\models.py:39
+msgid "Fayl"
+msgstr "Файл"
+
+#: .\apps\orders\models.py:40 .\apps\products\models.py:77
+msgid "Narx"
+msgstr "Цена"
+
+#: .\apps\orders\models.py:44
+msgid "Sahifa soni"
+msgstr "Номер страницы"
+
+#: .\apps\orders\models.py:45
+#, fuzzy
+#| msgid "Buyurtmalar"
+msgid "Buyurtma statusi"
+msgstr "Заказы"
 
 #: .\apps\orders\models.py:49
 msgid "Created by"
-msgstr ""
+msgstr "Создано"
 
 #: .\apps\orders\models.py:51
 msgid "Updated by"
 msgstr ""
 
-#: .\apps\products\models.py:12
-msgid "Nomi"
+#: .\apps\orders\models.py:54
+msgid "Telegram id"
 msgstr ""
 
-#: .\apps\tg\models.py:9
-msgid "Oq qora"
-msgstr ""
+#: .\apps\orders\models.py:55
+msgid "Fayl statusi"
+msgstr "Статус файла"
 
-#: .\apps\tg\models.py:10
-msgid "Rangli"
-msgstr ""
+#: .\apps\orders\models.py:60
+msgid "Yetqazib berish turi"
+msgstr "Тип доставки"
 
-#: .\apps\tg\models.py:14
-msgid "A5"
-msgstr ""
+#: .\apps\orders\models.py:70
+#, fuzzy
+#| msgid "Buyurtmalar"
+msgid "Buyurtma"
+msgstr "Заказы"
 
-#: .\apps\tg\models.py:15
-msgid "A4"
-msgstr ""
-
-#: .\apps\tg\models.py:19
-msgid "Cпиральный"
-msgstr ""
-
-#: .\apps\tg\models.py:20
-msgid "Скрипкаланган"
-msgstr ""
-
-#: .\apps\tg\models.py:21
-msgid "китоб"
-msgstr ""
-
-#: .\apps\tg\models.py:22
-msgid "Диплом ишига ухшаб"
-msgstr ""
-
-#: .\apps\tg\models.py:23
-msgid "Пласмаса переплет"
-msgstr ""
-
-#: .\apps\tg\models.py:24
-msgid "Переплетсиз"
-msgstr ""
-
-#: .\apps\tg\models.py:28
-msgid "O'zim olib ketaman"
-msgstr ""
-
-#: .\apps\tg\models.py:29
-msgid "Kuryerlik xizmati"
-msgstr ""
-
-#: .\apps\tg\models.py:34
-msgid "Karta orqali"
-msgstr ""
-
-#: .\apps\tg\models.py:35
-msgid "To'lanmadi"
-msgstr ""
-
-#: .\apps\transactions\models.py:17
-msgid "Kredit"
-msgstr "Кредит"
-
-#: .\apps\transactions\models.py:18
-msgid "Debit"
-msgstr "Дебет"
-
-
-#: .\templates\_includes\sidebar.html:22
-msgid "Dashboard"
-msgstr ""
-
-#: .\templates\_includes\sidebar.html:29 .\templates\_includes\sidebar.html:86
+#: .\apps\orders\models.py:71 .\templates\_includes\sidebar.html:29
+#: .\templates\_includes\sidebar.html:86
 msgid "Buyurtmalar"
 msgstr "Заказы"
 
-#: .\templates\_includes\sidebar.html:35 .\templates\_includes\sidebar.html:81
-msgid "Mijozlar"
-msgstr "Клиенты"
+#: .\apps\products\models.py:13
+msgid "Rasm"
+msgstr "Картина"
 
-#: .\templates\_includes\sidebar.html:41
+#: .\apps\products\models.py:42 .\templates\_includes\sidebar.html:112
+msgid "Bog'lama turi"
+msgstr "Тип крепления"
+
+#: .\apps\products\models.py:43
+#, fuzzy
+#| msgid "Bog'lama turi"
+msgid "Bog'lama turlari"
+msgstr "Тип крепления"
+
+#: .\apps\products\models.py:64
+msgid "Hajm"
+msgstr "Объем"
+
+#: .\apps\products\models.py:109
+#, fuzzy
+#| msgid "Mahsulotlar"
+msgid "Mahsulot"
+msgstr "Продукты"
+
+#: .\apps\products\models.py:110 .\templates\_includes\sidebar.html:41
+#: .\templates\accounts\company\delete.html:5
+#: .\templates\accounts\company\detail.html:5
 msgid "Mahsulotlar"
 msgstr "Продукты"
+
+#: .\apps\tg\models.py:9
+msgid "Oq qora"
+msgstr "Черное и белое"
+
+#: .\apps\tg\models.py:10
+msgid "Rangli"
+msgstr "Красочный"
+
+#: .\apps\tg\models.py:14
+msgid "A5"
+msgstr "A5"
+
+#: .\apps\tg\models.py:15
+msgid "A4"
+msgstr "A4"
+
+#: .\apps\tg\models.py:19
+msgid "Spiral"
+msgstr ""
+
+#: .\apps\tg\models.py:20
+#, fuzzy
+#| msgid "Bekor qilingan"
+msgid "Skriplangan"
+msgstr "Отменено"
+
+#: .\apps\tg\models.py:21
+msgid "Yumshoq muqova"
+msgstr ""
+
+#: .\apps\tg\models.py:22
+msgid "Qattiq muqova"
+msgstr ""
+
+#: .\apps\tg\models.py:23
+msgid "Plastik"
+msgstr ""
+
+#: .\apps\tg\models.py:27
+msgid "O'zim olib ketaman"
+msgstr ""
+
+#: .\apps\tg\models.py:28
+msgid "Kuryerlik xizmati"
+msgstr ""
+
+#: .\apps\tg\models.py:33
+msgid "Karta orqali"
+msgstr ""
+
+#: .\apps\tg\models.py:34
+msgid "To'lanmadi"
+msgstr ""
+
+#: .\apps\transactions\models.py:17 .\templates\accounts\banks\list.html:36
+#: .\templates\accounts\company\list.html:36
+msgid "Kredit"
+msgstr "Кредит"
+
+#: .\apps\transactions\models.py:18 .\templates\accounts\banks\list.html:35
+#: .\templates\accounts\company\list.html:35
+msgid "Debit"
+msgstr "Дебет"
+
+#: .\apps\transactions\models.py:23
+#, fuzzy
+#| msgid "To'lovlar"
+msgid "To'lov raqami"
+msgstr "Платежы"
+
+#: .\apps\transactions\models.py:25
+msgid "Ta'rif"
+msgstr ""
+
+#: .\apps\transactions\models.py:37
+msgid "Pul yo'nalishi"
+msgstr ""
+
+#: .\apps\transactions\models.py:41
+#: .\templates\accounts\company\delete.html:85
+#: .\templates\accounts\company\detail.html:85
+#: .\templates\accounts\company\update.html:159
+msgid "Korxona balansi"
+msgstr ""
+
+#: .\apps\transactions\models.py:63
+msgid "O'chirilganlik status"
+msgstr ""
+
+#: .\apps\transactions\models.py:67
+msgid "Tranzaksiya"
+msgstr ""
+
+#: .\apps\transactions\models.py:68
+msgid "Tranzaksiyalar"
+msgstr ""
+
+#: .\templates\_includes\navbar.html:132
+msgid "Profil"
+msgstr ""
+
+#: .\templates\_includes\navbar.html:138
+msgid "Chiqish"
+msgstr ""
+
+#: .\templates\_includes\sidebar.html:22 .\templates\accounts\banks\add.html:9
+#: .\templates\accounts\banks\delete.html:9
+#: .\templates\accounts\banks\update.html:8
+#: .\templates\accounts\company\add.html:22
+#: .\templates\accounts\company\delete.html:22
+#: .\templates\accounts\company\detail.html:22
+#: .\templates\accounts\company\update.html:22
+#: .\templates\accounts\user\detail.html:14
+#: .\templates\accounts\user\update.html:14
+msgid "Dashboard"
+msgstr "Панель"
 
 #: .\templates\_includes\sidebar.html:47
 msgid "To'lovlar"
@@ -192,16 +442,229 @@ msgid "Debit-Kredit"
 msgstr "Дебет-Кредит"
 
 #: .\templates\_includes\sidebar.html:96
+#: .\templates\accounts\banks\delete.html:30
+#: .\templates\accounts\user\detail.html:46
+#: .\templates\accounts\user\update.html:47
 msgid "Umumiy ma'lumot"
 msgstr "Общие сведения"
 
-#: .\templates\_includes\sidebar.html:102
-msgid "Kompaniya"
-msgstr "Компания"
+#: .\templates\accounts\banks\add.html:4
+msgid "Bank qo'shmoq"
+msgstr "Добавить банк"
 
-#: .\templates\_includes\sidebar.html:112
-msgid "Bog'lama turi"
-msgstr "Тип крепления"
+#: .\templates\accounts\banks\add.html:13
+#: .\templates\accounts\banks\update.html:12
+msgid "Qo'shish yoki O'zgartirish"
+msgstr "Добавить или изменить"
+
+#: .\templates\accounts\banks\add.html:29
+msgid "Yangi to'lov operatorini qo'shish"
+msgstr "Добавить нового платежного оператора"
+
+#: .\templates\accounts\banks\add.html:39
+#: .\templates\accounts\banks\delete.html:36
+#: .\templates\accounts\banks\update.html:38
+msgid "Reester raqami"
+msgstr "Регистрационный номер"
+
+#: .\templates\accounts\banks\add.html:56
+#: .\templates\accounts\banks\delete.html:98
+#: .\templates\accounts\banks\update.html:55
+#: .\templates\accounts\company\add.html:152
+#: .\templates\accounts\company\delete.html:165
+#: .\templates\accounts\company\detail.html:165
+#: .\templates\accounts\company\update.html:190
+msgid "Orqaga"
+msgstr "Назад"
+
+#: .\templates\accounts\banks\add.html:61
+#: .\templates\accounts\banks\update.html:60
+#: .\templates\accounts\company\add.html:157
+#: .\templates\accounts\company\update.html:195
+#: .\templates\accounts\user\update.html:98
+msgid "Saqlash"
+msgstr "Сохранять"
+
+#: .\templates\accounts\banks\delete.html:4
+msgid "Bank o'chirish"
+msgstr "Выключите банк"
+
+#: .\templates\accounts\banks\delete.html:13
+#: .\templates\accounts\banks\delete.html:103
+#: .\templates\accounts\company\delete.html:172
+msgid "O'chirish"
+msgstr "Выключать"
+
+#: .\templates\accounts\banks\delete.html:31
+msgid "To'lov operator haqida to'loq ma'lumot"
+msgstr "Полная информация о платежном операторе"
+
+#: .\templates\accounts\banks\delete.html:44
+#, fuzzy
+#| msgid "To'lovlar"
+msgid "To'lov turi"
+msgstr "Платежы"
+
+#: .\templates\accounts\banks\delete.html:53
+#: .\templates\accounts\banks\list.html:32
+#: .\templates\accounts\company\add.html:5
+#: .\templates\accounts\company\add.html:25
+#: .\templates\accounts\company\add.html:41
+#: .\templates\accounts\company\delete.html:25
+#: .\templates\accounts\company\delete.html:40
+#: .\templates\accounts\company\detail.html:25
+#: .\templates\accounts\company\detail.html:40
+#: .\templates\accounts\company\list.html:4
+#: .\templates\accounts\company\list.html:12
+#: .\templates\accounts\company\list.html:32
+#: .\templates\accounts\company\update.html:5
+#: .\templates\accounts\company\update.html:25
+#: .\templates\accounts\company\update.html:41
+#: .\templates\accounts\user\detail.html:96
+msgid "Korxona"
+msgstr "Предприятие"
+
+#: .\templates\accounts\banks\list.html:9
+#: .\templates\accounts\company\list.html:9
+msgid "Dashbord"
+msgstr "Панель"
+
+#: .\templates\accounts\banks\list.html:12
+msgid "Bank turlari"
+msgstr "Типы банков"
+
+#: .\templates\accounts\banks\list.html:25
+#: .\templates\accounts\company\list.html:25
+msgid "Qo'shmoq"
+msgstr "Добавить"
+
+#: .\templates\accounts\banks\list.html:34
+msgid "Kodi"
+msgstr "Код"
+
+#: .\templates\accounts\banks\list.html:38
+#: .\templates\accounts\company\list.html:41
+msgid "Harakat"
+msgstr "Действие"
+
+#: .\templates\accounts\banks\list.html:50
+#: .\templates\accounts\banks\list.html:51
+#: .\templates\accounts\banks\list.html:52
+#: .\templates\accounts\company\delete.html:87
+#: .\templates\accounts\company\delete.html:93
+#: .\templates\accounts\company\delete.html:99
+#: .\templates\accounts\company\detail.html:87
+#: .\templates\accounts\company\detail.html:93
+#: .\templates\accounts\company\detail.html:99
+#: .\templates\accounts\company\list.html:53
+#: .\templates\accounts\company\list.html:54
+#: .\templates\accounts\company\list.html:55
+msgid "so'm"
+msgstr "Сум"
+
+#: .\templates\accounts\banks\update.html:3
+msgid "Bank o'zgartirmoq"
+msgstr "Сменить банк"
+
+#: .\templates\accounts\banks\update.html:28
+#, fuzzy
+#| msgid "To'lov operatsiyalar"
+msgid "To'lov operatorini o'zgartirish"
+msgstr "Смена платежного оператора"
+
+#: .\templates\accounts\company\add.html:26
+#: .\templates\accounts\company\update.html:26
+msgid "O'zgartirish"
+msgstr "Изменить"
+
+#: .\templates\accounts\company\add.html:42
+#: .\templates\accounts\company\delete.html:41
+#: .\templates\accounts\company\detail.html:41
+#: .\templates\accounts\company\update.html:42
+msgid "Korxona nomi, manzili ,telefon raqami, pochta"
+msgstr "Название компании, адрес, номер телефона, почта"
+
+#: .\templates\accounts\company\add.html:47
+#: .\templates\accounts\company\delete.html:46
+#: .\templates\accounts\company\detail.html:46
+#: .\templates\accounts\company\update.html:47
+msgid "Korxona nomi"
+msgstr "Название предприятия"
+
+#: .\templates\accounts\company\add.html:54
+#: .\templates\accounts\company\delete.html:53
+#: .\templates\accounts\company\detail.html:53
+#: .\templates\accounts\company\update.html:54
+msgid "Korxona telefon raqam"
+msgstr "Номер телефона предприятия"
+
+#: .\templates\accounts\company\add.html:81
+#: .\templates\accounts\company\add.html:98
+#: .\templates\accounts\company\add.html:104
+#: .\templates\accounts\company\delete.html:119
+#: .\templates\accounts\company\delete.html:139
+#: .\templates\accounts\company\delete.html:145
+#: .\templates\accounts\company\detail.html:119
+#: .\templates\accounts\company\detail.html:139
+#: .\templates\accounts\company\detail.html:145
+#: .\templates\accounts\company\update.html:81
+#: .\templates\accounts\company\update.html:98
+#: .\templates\accounts\company\update.html:104
+msgid "Manzil"
+msgstr "Адрес"
+
+#: .\templates\accounts\company\delete.html:79
+#: .\templates\accounts\company\detail.html:79
+#: .\templates\accounts\company\update.html:153
+msgid "Budjet"
+msgstr "Бюджет"
+
+#: .\templates\accounts\company\delete.html:80
+#: .\templates\accounts\company\detail.html:80
+#: .\templates\accounts\company\update.html:154
+msgid "Korxona balansi, debit va kredit"
+msgstr "Баланс предприятия, дебет и кредит"
+
+#: .\templates\accounts\company\delete.html:123
+#: .\templates\accounts\company\detail.html:123
+msgid "Manzil belgilanmagan"
+msgstr "Адрес не указан"
+
+#: .\templates\accounts\company\list.html:38
+msgid "address"
+msgstr "Адрес"
+
+#: .\templates\accounts\company\list.html:39
+msgid "lat"
+msgstr "lat"
+
+#: .\templates\accounts\company\list.html:40
+msgid "long"
+msgstr "long"
+
+#: .\templates\accounts\user\detail.html:5
+#: .\templates\accounts\user\detail.html:18
+#: .\templates\accounts\user\update.html:5
+#: .\templates\accounts\user\update.html:18
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+#: .\templates\accounts\user\detail.html:50
+#: .\templates\accounts\user\update.html:19
+#: .\templates\accounts\user\update.html:51
+msgid "O'zgartirmoq"
+msgstr "Изменить"
+
+#: .\templates\accounts\user\detail.html:104
+#: .\templates\accounts\user\update.html:88
+msgid "Rol"
+msgstr "Роль"
+
+#: .\templates\accounts\user\update.html:59
+#, fuzzy
+#| msgid "Umumiy ma'lumot"
+msgid "Shaxsiy ma'lumotlar"
+msgstr "Общие сведения"
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"
@@ -1410,10 +1873,10 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#: .\wePrint\settings.py:116
-msgid "O'zbek"
+#: .\wePrint\settings.py:117
+msgid "Russian"
 msgstr ""
 
-#: .\wePrint\settings.py:117
-msgid "Русский"
+#: .\wePrint\settings.py:118
+msgid "Uzbek"
 msgstr ""
