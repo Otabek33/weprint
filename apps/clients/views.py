@@ -11,11 +11,9 @@ from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
 from apps.accounts.models import CustomUser, MoneySaver, CashType
 from apps.clients.forms import ClientCreateForm, ClientUpdateForm
 from apps.clients.models import Client
-from apps.orders.models import OrderStatus
 from apps.transactions.models import Transaction
-from utils.helpers import is_ajax
 
-print("test")
+
 class ClientListView(CreateView):
     model = Client
     form_class = ClientCreateForm
