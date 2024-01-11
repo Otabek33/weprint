@@ -15,7 +15,7 @@ from apps.orders.models import OrderStatus
 from apps.transactions.models import Transaction
 from utils.helpers import is_ajax
 
-print("ishladi")
+
 class ClientListView(CreateView):
     model = Client
     form_class = ClientCreateForm
