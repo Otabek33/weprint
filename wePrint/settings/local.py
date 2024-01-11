@@ -6,6 +6,7 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
+
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
     default="UivvcRCYBkUXJVx4hWo8jdlAe1rv0U6GLlwnbHyJxTjLLxJxnF3CgHdbUIX4U3mh",
@@ -25,13 +26,10 @@ CACHES = {
 
 SELECT2_CACHE_BACKEND = "default"
 
-
-
 # WhiteNoise
 # ------------------------------------------------------------------------------
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
 INSTALLED_APPS = ["whitenoise.runserver_nostatic"] + INSTALLED_APPS  # noqa F405
-
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
@@ -44,8 +42,6 @@ DEBUG_TOOLBAR_CONFIG = {
     "DISABLE_PANELS": ["debug_toolbar.panels.redirects.RedirectsPanel"],
     "SHOW_TEMPLATE_CONTEXT": True,
 }
-
-
 
 # django-extensions
 # ------------------------------------------------------------------------------

@@ -8,16 +8,28 @@ import django.conf.locale
 import environ
 from django.conf import global_settings
 from django.utils.translation import gettext_lazy as _
+from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 APPS_DIR = BASE_DIR / "wePrint"
 env = environ.Env()
+# Path to the .django file
+env_files = ['.django', '.postgres']
+
+
+def read_env_file(file_name):
+    """Read environment variables from the specified file."""
+    env_file_path = os.path.join(BASE_DIR, '.envs', '.local', file_name)
+    env.read_env(env_file_path)
+
+
+# Read environment variables from each file
+[read_env_file(file_name) for file_name in env_files]
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(BASE_DIR / ".env"))
-
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
@@ -209,7 +221,7 @@ TEMPLATES = [
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+FORM_RENDERER = "django.forms.renderers.DjangoTemplates"
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_TEMPLATE_PACK = "bootstrap4"
