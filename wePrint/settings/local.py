@@ -12,7 +12,8 @@ SECRET_KEY = env(
     default="UivvcRCYBkUXJVx4hWo8jdlAe1rv0U6GLlwnbHyJxTjLLxJxnF3CgHdbUIX4U3mh",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost', '0.0.0.0']
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -47,3 +48,9 @@ DEBUG_TOOLBAR_CONFIG = {
 # ------------------------------------------------------------------------------
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
 INSTALLED_APPS += ["django_extensions"]  # noqa F405
+
+INTERNAL_IPS = [
+
+    '127.0.0.1',
+    'localhost',
+]
