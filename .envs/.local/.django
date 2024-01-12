@@ -1,6 +1,7 @@
 # General
 
 DJANGO_SECRET_KEY=!ep6r8(_l9m@gj35q3p(=u@puq8m+s#nv(-68g8p0p0ba$4mzg
+DJANGO_ALLOWED_HOSTS=print-book.uz,www.print-book.uz
 # Redis
 # ------------------------------------------------------------------------------
 REDIS_URL=redis://redis:6379/0

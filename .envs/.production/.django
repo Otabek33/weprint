@@ -1,0 +1,29 @@
+# General
+# ------------------------------------------------------------------------------
+# DJANGO_READ_DOT_ENV_FILE=True
+DJANGO_SETTINGS_MODULE=wePrint.settings.production
+DJANGO_SECRET_KEY=8dIfgl361gIPUGeUAxDcyCAB1BBEZB3xcsMqaxxMy0ncrbVeBCIILXiP0V21bX7I
+DJANGO_ADMIN_URL=WW94knxVgqvs9jH4hfPt5JQ20A1thgcS/
+DJANGO_ALLOWED_HOSTS=.print-book.uz,sub.print-book.uz,176.221.28.147
+
+# Security
+# ------------------------------------------------------------------------------
+# TIP: better off using DNS, however, redirect is OK too
+DJANGO_SECURE_SSL_REDIRECT=False
+
+# django-allauth
+# ------------------------------------------------------------------------------
+DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
+
+# secure-hsts-preload
+# ------------------------------------------------------------------------------
+DJANGO_SECURE_HSTS_PRELOAD=False
+# Gunicorn
+# ------------------------------------------------------------------------------
+WEB_CONCURRENCY=4
+
+
+# Redis
+# ------------------------------------------------------------------------------
+REDIS_URL=redis://redis:6379/0
+
