@@ -1,8 +1,7 @@
 # PostgreSQL
 # ------------------------------------------------------------------------------
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/print
-POSTGRES_HOST=postgres
+POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_DB=print_book
+POSTGRES_DB=print
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres

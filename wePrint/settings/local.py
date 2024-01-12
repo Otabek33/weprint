@@ -1,6 +1,33 @@
 from .base import *  # noqa
 from .base import env
 
+# DATABASES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
+# DATABASE_URL = env('DATABASE_URL', default='sqlite://db.sqlite3')
+#
+# if 'sqlite' in DATABASE_URL:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }
+#     }
+# else:
+#     # Use PostgreSQL for production
+#     DATABASES = {
+#         'default': env.db(),
+#     }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),  # Set to the address of your PostgreSQL server
+        'PORT': env('POSTGRES_PORT'),
+    }
+}
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
