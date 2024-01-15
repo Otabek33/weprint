@@ -1,7 +1,7 @@
 # PostgreSQL
 # ------------------------------------------------------------------------------
-POSTGRES_HOST=postgres
+POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
-POSTGRES_DB=print_book
-POSTGRES_USER=NgCHJDnWjAZetBIMnLviiIIEKOfBTGvp
-POSTGRES_PASSWORD=KqSFyj9maDX4dcr03iuxQ12jSGSVUhrzv8ElWDM8IkRLpdgaFxKokojcSPGhLlNF
+POSTGRES_DB=print
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres

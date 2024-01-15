@@ -4,20 +4,6 @@ from .base import env
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-# DATABASE_URL = env('DATABASE_URL', default='sqlite://db.sqlite3')
-#
-# if 'sqlite' in DATABASE_URL:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#         }
-#     }
-# else:
-#     # Use PostgreSQL for production
-#     DATABASES = {
-#         'default': env.db(),
-#     }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -80,4 +66,33 @@ INTERNAL_IPS = [
 
     '127.0.0.1',
     'localhost',
+]
+# TEMPLATES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#templates
+TEMPLATES = [
+    {
+        # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+        "DIRS": [str(BASE_DIR / "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
+            # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
+
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+
+            ],
+        },
+    }
 ]

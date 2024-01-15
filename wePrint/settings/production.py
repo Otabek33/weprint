@@ -3,6 +3,8 @@ from .base import env
 
 # GENERAL
 # ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#debug
+DEBUG = env.bool("DJANGO_DEBUG")
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
@@ -10,7 +12,16 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["print-book.uz"])
 
 # DATABASES
 # ------------------------------------------------------------------------------
-DATABASES["default"] = env.db("DATABASE_URL")  # noqa F405
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),  # Set to the address of your PostgreSQL server
+        'PORT': env('POSTGRES_PORT'),
+    }
+}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 # CACHES
@@ -37,9 +48,9 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
 # TODO: set this to 60 seconds first and then to 518400 once you prove the former works
@@ -51,7 +62,7 @@ SECURE_HSTS_PRELOAD = env.bool("DJANGO_SECURE_HSTS_PRELOAD", default=True)
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
     "DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True
 )
-
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # STATIC
 # ------------------------
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
@@ -117,6 +128,35 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
-
+X_FRAME_OPTIONS = 'DENY'
 # Max file upload size in production 50 MB in bytes
 FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800
+
+# TEMPLATES
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#templates
+TEMPLATES = [
+    {
+        # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+        "DIRS": [str(BASE_DIR / "templates")],
+        "OPTIONS": {
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
+            # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
+
+            # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+
+            ],
+        },
+    }
+]

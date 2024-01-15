@@ -5,11 +5,11 @@ DJANGO_SETTINGS_MODULE=wePrint.settings.production
 DJANGO_SECRET_KEY=8dIfgl361gIPUGeUAxDcyCAB1BBEZB3xcsMqaxxMy0ncrbVeBCIILXiP0V21bX7I
 DJANGO_ADMIN_URL=WW94knxVgqvs9jH4hfPt5JQ20A1thgcS/
 DJANGO_ALLOWED_HOSTS=.print-book.uz,sub.print-book.uz,176.221.28.147
-
+DJANGO_DEBUG=False
 # Security
 # ------------------------------------------------------------------------------
 # TIP: better off using DNS, however, redirect is OK too
-DJANGO_SECURE_SSL_REDIRECT=False
+DJANGO_SECURE_SSL_REDIRECT=True
 
 # django-allauth
 # ------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
 
 # secure-hsts-preload
 # ------------------------------------------------------------------------------
-DJANGO_SECURE_HSTS_PRELOAD=False
+DJANGO_SECURE_HSTS_PRELOAD=True
 # Gunicorn
 # ------------------------------------------------------------------------------
 WEB_CONCURRENCY=4

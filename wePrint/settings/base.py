@@ -19,7 +19,7 @@ env_files = ['.django', '.postgres']
 
 def read_env_file(file_name):
     """Read environment variables from the specified file."""
-    env_file_path = os.path.join(BASE_DIR, '.envs', '.local', file_name)
+    env_file_path = os.path.join(BASE_DIR, '.envs', '.production', file_name)
     env.read_env(env_file_path)
 
 
@@ -32,8 +32,7 @@ if READ_DOT_ENV_FILE:
     env.read_env(str(BASE_DIR / ".env"))
 # GENERAL
 # ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = env.bool("DJANGO_DEBUG", False)
+
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -174,35 +173,7 @@ MEDIA_ROOT = str(BASE_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
 
-# TEMPLATES
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#templates
-TEMPLATES = [
-    {
-        # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        "DIRS": [str(BASE_DIR / "templates")],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
-            # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
 
-            # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.template.context_processors.i18n",
-                "django.template.context_processors.media",
-                "django.template.context_processors.static",
-                "django.template.context_processors.tz",
-                "django.contrib.messages.context_processors.messages",
-
-            ],
-        },
-    }
-]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
 FORM_RENDERER = "django.forms.renderers.DjangoTemplates"
