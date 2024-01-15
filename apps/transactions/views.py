@@ -3,20 +3,23 @@ import decimal
 from datetime import datetime
 from typing import Any, Dict
 
-from django.db.models import Q, Sum, Case, When, F, DecimalField
+from django.db.models import Case, DecimalField, F, Q, Sum, When
 from django.db.models.signals import post_save
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import (ListView, CreateView, DetailView)
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import CreateView, DetailView, ListView
 
-from apps.accounts.models import MoneySaver, CashType
+from apps.accounts.models import CashType, MoneySaver
 from apps.clients.models import Client
 from apps.orders.models import Order, OrderStatus
 from apps.transactions.forms import TransactionCreateForm
 from apps.transactions.models import Transaction
 from apps.transactions.serializers import OrderSerializer
-from apps.transactions.signals import transaction_deleted_signal, updating_company_balance
-from apps.transactions.utils import payment_order_generation, get_company, disconnect_signal, reconnect_signal
+from apps.transactions.signals import (transaction_deleted_signal,
+                                       updating_company_balance)
+from apps.transactions.utils import (disconnect_signal, get_company,
+                                     payment_order_generation,
+                                     reconnect_signal)
 from utils.helpers import is_ajax
 
 
@@ -24,14 +27,26 @@ class TransactionListView(ListView):
     model = Transaction
     template_name = "transactions/transaction_list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['transaction_list'] = Transaction.objects.filter(deleted_status=False)
-        context['company'] = get_company(self.request.user)
+        context["transaction_list"] = Transaction.objects.filter(deleted_status=False)
+        context["company"] = get_company(self.request.user)
 
-        context['money'] = MoneySaver.objects.aggregate(
-            cash=Sum(Case(When(cashType=CashType.CASH, then=F('balance')), default=0, output_field=DecimalField())),
-            bank=Sum(Case(When(cashType=CashType.BANK, then=F('balance')), default=0, output_field=DecimalField()))
+        context["money"] = MoneySaver.objects.aggregate(
+            cash=Sum(
+                Case(
+                    When(cashType=CashType.CASH, then=F("balance")),
+                    default=0,
+                    output_field=DecimalField(),
+                )
+            ),
+            bank=Sum(
+                Case(
+                    When(cashType=CashType.BANK, then=F("balance")),
+                    default=0,
+                    output_field=DecimalField(),
+                )
+            ),
         )
         return context
 
@@ -50,9 +65,9 @@ class TransactionAddView(CreateView):
         transaction.created_at = datetime.now()
         transaction.company = get_company(self.request.user)
         transaction.payment_order = payment_order_generation()
-        price = decimal.Decimal(self.request.POST.get('price'))
+        price = decimal.Decimal(self.request.POST.get("price"))
         transaction.balance = price
-        order = self.request.POST.get('order')
+        order = self.request.POST.get("order")
         if order:
             transaction.order = Order.objects.get(uuid=order)
         transaction.save()
@@ -74,7 +89,9 @@ class TranslateClientChoose(DetailView):
             pk = request.POST.get("selectedOption")
             client = self.model.objects.get(uuid=pk)
             order_list = Order.objects.filter(
-                Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
+                Q(created_by=client)
+                & ~Q(order_status=OrderStatus.CANCELLED)
+                & ~Q(order_status=OrderStatus.CREATION)
             )
             serializer = OrderSerializer(order_list, many=True)
             serialized_data = serializer.data

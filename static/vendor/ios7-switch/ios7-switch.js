@@ -16,7 +16,7 @@ function Switch(input) {
 
   // read initial state and set Switch state accordingly
   if (this.input.checked) this.turnOn()
-  
+
 }
 
 
@@ -82,10 +82,10 @@ Switch.prototype._prepareDOM = function() {
 
   var stateBackground = document.createElement('div');
   stateBackground.className = 'state-background background-fill';
-  
+
   var handle = document.createElement('div');
   handle.className = 'handle';
-    
+
   this.el.appendChild(onBackground);
   this.el.appendChild(stateBackground);
   this.el.appendChild(handle);

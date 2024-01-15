@@ -1,10 +1,8 @@
-from django.contrib import auth, messages
+from django.contrib import auth
 from django.contrib.auth.views import LoginView
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import TemplateView, DetailView, UpdateView
-
+from django.views.generic import DetailView, TemplateView, UpdateView
 from apps.accounts.forms import CustomUserUpdateForm
 from apps.accounts.models import CustomUser
 
@@ -13,7 +11,7 @@ class UserLogIn(LoginView):
     template_name = "accounts/login.html"
 
     def get_success_url(self):
-        return reverse_lazy('accounts:home')
+        return reverse_lazy("accounts:home")
 
 
 log_in = UserLogIn.as_view()
@@ -30,7 +28,7 @@ class Dashboard(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user'] = get_object_or_404(CustomUser, id=self.request.user.id)
+        context["user"] = get_object_or_404(CustomUser, id=self.request.user.id)
         return context
 
 
@@ -51,7 +49,7 @@ class UserUpdateView(UpdateView):
     template_name = "accounts/user/update.html"
 
     def get_success_url(self):
-        return reverse_lazy('accounts:user_detail', kwargs={'pk': self.request.user.id})
+        return reverse_lazy("accounts:user_detail", kwargs={"pk": self.request.user.id})
 
 
 user_update = UserUpdateView.as_view()

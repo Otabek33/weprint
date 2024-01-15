@@ -494,7 +494,7 @@ html .card#{if($admin-ext, '.card-admin', '')} .card-header-transparent {
 // -----------------------------------------------------------------------------
 .card {
 	&.card-big-info#{if($admin-ext, '.card-admin', '')} {
-		
+
 		.card-body {
 			padding: 0;
 			background: #FFF;

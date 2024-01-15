@@ -1,14 +1,16 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
-from typing import Any, Dict
 from datetime import datetime, timezone
+from typing import Any, Dict
 
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import (UpdateView, DeleteView, ListView, DetailView, CreateView)
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
+
+from apps.products.forms import ProductCreateForm, ProductUpdateForm
 from apps.products.models import Product
-from apps.products.forms import ProductUpdateForm, ProductCreateForm
 from utils.helpers import is_ajax
 
 
@@ -17,9 +19,11 @@ class ProductListView(ListView):
     paginate_by = 8
     template_name = "products/product_list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['product_list'] = Product.objects.filter(created_by=self.request.user.id)
+        context["product_list"] = Product.objects.filter(
+            created_by=self.request.user.id
+        )
         return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -57,7 +61,7 @@ class ProductDeleteView(DeleteView):
     model = Product
 
     def get_success_url(self):
-        return reverse_lazy('products:product_list')
+        return reverse_lazy("products:product_list")
 
 
 product_delete = ProductDeleteView.as_view()

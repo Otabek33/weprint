@@ -41,7 +41,7 @@
 			},
 			errorPlacement: function( error, element ) {
 				var placement = $(element).parent();
-				
+
 				placement.append(error);
 			}
 		});

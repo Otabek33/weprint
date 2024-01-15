@@ -1,8 +1,10 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from apps.transactions.views import transaction_list, transaction_add, transaction_client_choose, \
-    transaction_order_price, transaction_detail
+from apps.transactions.views import (transaction_add,
+                                     transaction_client_choose,
+                                     transaction_detail, transaction_list,
+                                     transaction_order_price)
 
 app_name = "transactions"
 
@@ -13,6 +15,4 @@ urlpatterns = [
     path("price/", transaction_order_price, name="transaction_order_price"),
     # path("delete/", transaction_delete, name="transaction_delete"),
     path("<int:pk>/detail/", transaction_detail, name="transaction_detail"),
-
-
 ]

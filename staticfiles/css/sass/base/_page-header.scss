@@ -119,7 +119,7 @@
 			position: absolute;
 		    top: 30%;
 		    right: -25px;
-		    color: #33353F; 
+		    color: #33353F;
 		    transform: translateY(-50%);
 		}
 	}
@@ -210,7 +210,7 @@ html.fixed {
 				& + .row {
 					margin-top: 50px;
 				}
-			}			
+			}
 		}
 	}
 }
@@ -294,10 +294,10 @@ html.sidebar-right-opened .page-header {
 // PAGE HEADER - IE FIXES
 // -----------------------------------------------------------------------------
 html.ie {
-	
+
 	/* Page header */
 	.page-header {
-		
+
 		/* Left Breadcumb */
 		&.page-header-left-breadcrumb {
 			h2 {

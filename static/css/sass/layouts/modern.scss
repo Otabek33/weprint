@@ -83,7 +83,7 @@ html {
 						}
 					}
 				}
-				
+
 				@media(min-width: 992px) {
 					.header-nav {
 						margin-left: 300px;
@@ -119,7 +119,7 @@ html {
 						}
 					}
 				}
-				
+
 				// Search Toggle
 				.search-toggle {
 					color: #333;
@@ -134,7 +134,7 @@ html {
 					.logo {
 						margin-top: 7px;
 					}
-				}	
+				}
 			}
 
 			// Search
@@ -473,10 +473,10 @@ html {
 				.nav-children {
 					li {
 						a {
-							color: #FFF;	
-						}	
+							color: #FFF;
+						}
 					}
-				} 
+				}
 			}
 
 			> li {
@@ -497,7 +497,7 @@ html {
 					.separator {
 						margin: 0 15px 0;
 					}
-					
+
 					@media(min-width: 768px) {
 						.search {
 							display: none !important;
@@ -509,7 +509,7 @@ html {
 						}
 						&.header-nav-menu {
 							.search-toggle {
-								display: inline-block !important; 
+								display: inline-block !important;
 							}
 						}
 					}
@@ -584,7 +584,7 @@ html {
 
 		// Sidebar Left Collapsed
 		&.sidebar-left-collapsed {
-			
+
 			// Header
 			.header {
 				&.header-nav-menu {
@@ -593,7 +593,7 @@ html {
 							display: none;
 						}
 					}
-					
+
 					@media(min-width: 992px) {
 						.header-nav {
 							margin-left: 75px;

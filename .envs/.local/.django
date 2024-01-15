@@ -5,7 +5,3 @@ DJANGO_ALLOWED_HOSTS=print-book.uz,www.print-book.uz
 # Redis
 # ------------------------------------------------------------------------------
 REDIS_URL=redis://redis:6379/0
-
-
-
-

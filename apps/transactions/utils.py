@@ -2,7 +2,7 @@ from datetime import datetime
 
 from apps.accounts.models import MoneySaver
 from apps.orders.models import Order
-from apps.transactions.models import Transaction, DoubleEntryAccounting
+from apps.transactions.models import DoubleEntryAccounting, Transaction
 
 
 def payment_order_generation():
@@ -19,10 +19,12 @@ def process_updating_entity(transaction, entity):
 
 
 def process_updating_obj_after_transaction(obj, object_name):
-    obj.total_debit = generation_total_amount_from_transaction(obj, DoubleEntryAccounting.DEBIT,
-                                                               object_name)
-    obj.total_credit = generation_total_amount_from_transaction(obj, DoubleEntryAccounting.CREDIT,
-                                                                object_name)
+    obj.total_debit = generation_total_amount_from_transaction(
+        obj, DoubleEntryAccounting.DEBIT, object_name
+    )
+    obj.total_credit = generation_total_amount_from_transaction(
+        obj, DoubleEntryAccounting.CREDIT, object_name
+    )
     obj.balance = obj.total_debit - obj.total_credit
     obj.save()
 
@@ -45,20 +47,21 @@ def update_total_amounts(obj, transaction):
 
 
 def generation_total_amount_from_transaction(obj, double_entry_accounting, object_name):
-    from django.db.models import Sum, F
+    from django.db.models import F, Sum
+
     # Construct the filter using double-underscore notation
     filter_args = {
         f"{object_name}": obj,  # Assuming 'object_name' is the related field name
-        'deleted_status': False,
-        'double_entry_accounting': double_entry_accounting
+        "deleted_status": False,
+        "double_entry_accounting": double_entry_accounting,
     }
 
     # Your existing query
     result = Transaction.objects.filter(**filter_args).aggregate(
-        balance_sum=Sum(F('balance'))
+        balance_sum=Sum(F("balance"))
     )
 
-    return result['balance_sum'] or 0
+    return result["balance_sum"] or 0
 
 
 def get_company(user):

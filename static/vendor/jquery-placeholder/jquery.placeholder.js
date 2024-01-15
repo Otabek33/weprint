@@ -18,11 +18,11 @@
 }(function($) {
 
     /****
-     * Allows plugin behavior simulation in modern browsers for easier debugging. 
-     * When setting to true, use attribute "placeholder-x" rather than the usual "placeholder" in your inputs/textareas 
+     * Allows plugin behavior simulation in modern browsers for easier debugging.
+     * When setting to true, use attribute "placeholder-x" rather than the usual "placeholder" in your inputs/textareas
      * i.e. <input type="text" placeholder-x="my placeholder text" />
      */
-    var debugMode = false; 
+    var debugMode = false;
 
     // Opera Mini v7 doesn't support placeholder although its DOM seems to indicate so
     var isOperaMini = Object.prototype.toString.call(window.operamini) === '[object OperaMini]';
@@ -103,9 +103,9 @@
                 }
 
                 if (value === '') {
-                    
+
                     element.value = value;
-                    
+
                     // Setting the placeholder causes problems if the element continues to have focus.
                     if (element != safeActiveElement()) {
                         // We can't use `triggerHandler` here because of dummy text/password inputs :(
@@ -113,7 +113,7 @@
                     }
 
                 } else {
-                    
+
                     if ($element.hasClass(settings.customClass)) {
                         clearPlaceholder.call(element);
                     }
@@ -138,7 +138,7 @@
         $(function() {
             // Look for forms
             $(document).delegate('form', 'submit.placeholder', function() {
-                
+
                 // Clear the placeholder values so they don't get submitted
                 var $inputs = $('.'+settings.customClass, this).each(function() {
                     clearPlaceholder.call(this, true, '');
@@ -185,19 +185,19 @@
     }
 
     function clearPlaceholder(event, value) {
-        
+
         var input = this;
         var $input = $(this);
-        
+
         if (input.value === $input.attr((debugMode ? 'placeholder-x' : 'placeholder')) && $input.hasClass(settings.customClass)) {
-            
+
             input.value = '';
             $input.removeClass(settings.customClass);
 
             if ($input.data('placeholder-password')) {
 
                 $input = $input.hide().nextAll('input[type="password"]:first').show().attr('id', $input.removeAttr('id').data('placeholder-id'));
-                
+
                 // If `clearPlaceholder` was called from `$.valHooks.input.set`
                 if (event === true) {
                     $input[0].value = value;
@@ -227,7 +227,7 @@
         if (input.value === '') {
             if (input.type === 'password') {
                 if (!$input.data('placeholder-textinput')) {
-                    
+
                     try {
                         $replacement = $input.clone().prop({ 'type': 'text' });
                     } catch(e) {
@@ -255,7 +255,7 @@
                 $input = $input.removeAttr('id').hide().prevAll('input[type="text"]:first').attr('id', $input.data('placeholder-id')).show();
 
             } else {
-                
+
                 var $passwordInput = $input.data('placeholder-password');
 
                 if ($passwordInput) {

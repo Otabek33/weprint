@@ -1,12 +1,12 @@
 from django.contrib import admin
 
 # Register your models here.
-from apps.orders.models import (Order, PrintBindingTypes, ClientAddress)
-
+from apps.orders.models import Order, PrintBindingTypes
 
 # Register your models here.
 
 
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     model = Order
     list_display = [
@@ -17,12 +17,8 @@ class OrderAdmin(admin.ModelAdmin):
         "file",
         "page_number",
         "price",
-        "order_status"
-
+        "order_status",
     ]
 
 
-admin.site.register(Order, OrderAdmin)
-
 admin.site.register([PrintBindingTypes])
-

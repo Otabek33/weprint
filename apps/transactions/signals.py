@@ -1,7 +1,9 @@
 from django.db.models.signals import Signal, post_save
 from django.dispatch import receiver
+
 from apps.transactions.models import Transaction
-from apps.transactions.utils import process_updating_entity, process_updating_obj_after_transaction
+from apps.transactions.utils import (process_updating_entity,
+                                     process_updating_obj_after_transaction)
 
 transaction_deleted_signal = Signal()
 

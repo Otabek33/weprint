@@ -10,11 +10,11 @@ Theme Version: 	4.0.0
 
 	/*
 	 * Form Image - Dropzone
-	 * "upload.php" is not included with the template. You should create your own server side file to upload the files. 
+	 * "upload.php" is not included with the template. You should create your own server side file to upload the files.
 	 * See https://www.dropzonejs.com/#server-side-implementation for more information
 	 *
 	 */
-	var initializeDropzone = function() {		
+	var initializeDropzone = function() {
 		$('#dropzone-form-image').dropzone({
 			url: '/upload.php',
 			addRemoveLinks: true,
@@ -101,11 +101,11 @@ Theme Version: 	4.0.0
 
 						$('.nav-link[href="#'+ tab_id +'"]').trigger('click');
 						return false;
-					});            
+					});
 		        }
 		    },
 			submitHandler: function(form) {
-				
+
 				// Fields Data
 				var formData = $form.serializeArray(),
 					formFieldsData = {};
@@ -143,7 +143,7 @@ Theme Version: 	4.0.0
 						for(var i = 0; i < dropzoneObj.files.length; i++) {
 							imagesArr.push({
 								dataURL: dropzoneObj.files[i].dataURL,
-								upload: dropzoneObj.files[i].upload	
+								upload: dropzoneObj.files[i].upload
 							});
 						}
 
@@ -158,7 +158,7 @@ Theme Version: 	4.0.0
 				$submitButton.html( '<i class="bx bx-save text-4 mr-2"></i>' + $submitButton.data('loading-text') );
 
 				// Important: "register.php" is not included with the template. We add this just for example purpose.
-				// You should create your own server side code to connect with a database and register the data. 
+				// You should create your own server side code to connect with a database and register the data.
 				$.ajax({
 					url: '/path/to/register.php',
 					type: 'post',
@@ -193,7 +193,7 @@ Theme Version: 	4.0.0
 						addclass: 'notification-error',
 						icon: 'fas fa-times'
 					});
-					
+
 				});
 			}
 		});
@@ -206,6 +206,6 @@ Theme Version: 	4.0.0
 	$(window).on('ecommerce.sidebar.overlay.show', function(){
 		ecommerceFormValidate();
 	});
-	
+
 
 }(jQuery));

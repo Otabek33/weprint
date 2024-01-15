@@ -8,4 +8,4 @@ from .chat import polToWebhook
 @csrf_exempt
 def webhook(request):
     polToWebhook(request)
-    return JsonResponse({'message': 'OK'}, status=200)
+    return JsonResponse({"message": "OK"}, status=200)

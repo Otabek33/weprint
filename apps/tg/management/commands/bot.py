@@ -1,11 +1,10 @@
-
 from django.core.management.base import BaseCommand
 
 from apps.tg.chat import bot
 
 
 class Command(BaseCommand):
-    help = 'Telegram-bot'
+    help = "Telegram-bot"
 
     def handle(self, *args, **options):
         bot.remove_webhook()

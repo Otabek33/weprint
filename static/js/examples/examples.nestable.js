@@ -7,7 +7,7 @@ Theme Version: 	4.0.0
 (function($) {
 
 	'use strict';
-		
+
 	/*
 	Update Output
 	*/

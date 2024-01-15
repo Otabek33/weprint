@@ -96,7 +96,7 @@ No Bootstrap CSS is required for the plugin to work.
     $(function () {
       // Basic instantiation:
       $('#demo-input').colorpicker();
-      
+
       // Example using an event, to change the color of the #demo div background:
       $('#demo-input').on('colorpickerChange', function(event) {
         $('#demo').css('background-color', event.color.toString());
@@ -144,7 +144,7 @@ you will usually need to set inline to `true` and a `container` selector option.
 
 This project exists thanks to all the [people who contribute](https://github.com/itsjavi/bootstrap-colorpicker/graphs/contributors).
 
-Please read [CONTRIBUTING](https://github.com/itsjavi/bootstrap-colorpicker/blob/master/.github/CONTRIBUTING.md) 
+Please read [CONTRIBUTING](https://github.com/itsjavi/bootstrap-colorpicker/blob/master/.github/CONTRIBUTING.md)
 before sending a pull request or issue.
 
 ## License

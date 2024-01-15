@@ -1,14 +1,9 @@
-from datetime import datetime, timezone
 
+from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import (ListView, DetailView, DeleteView, TemplateView)
-
-from apps.clients.models import Client
+from django.views.generic import DetailView, ListView, TemplateView
 from apps.orders.models import Order, OrderStatus
-from django.contrib import messages
-from django.db.models import Q
-
 from utils.helpers import is_ajax
 
 
@@ -18,8 +13,7 @@ class OrderListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        orders = Order.objects.order_by(
-            "-created_at").exclude(order_status=1)
+        orders = Order.objects.order_by("-created_at").exclude(order_status=1)
         context["order_list"] = orders
         return context
 
@@ -43,7 +37,7 @@ class OrderDetail(DetailView):
         order = get_object_or_404(Order, pk=self.kwargs["pk"])
         order.order_status = OrderStatus.ACTIVE
         order.save()
-        messages.success(request, 'Data successfully saved!')
+        messages.success(request, "Data successfully saved!")
         return redirect("orders:order_list")
 
 
@@ -58,7 +52,7 @@ class OrderCancelView(DetailView):
         order = get_object_or_404(Order, pk=self.kwargs["pk"])
         order.order_status = OrderStatus.CANCELLED
         order.save()
-        messages.success(self.request, 'Buyurtma bekor qilindi')
+        messages.success(self.request, "Buyurtma bekor qilindi")
         return redirect("orders:order_list")
 
 
@@ -82,14 +76,15 @@ order_cancel = OrderCancelView.as_view()
 
 
 class OrderStatusUpdate(TemplateView):
-
     def post(self, request, *args, **kwargs):
         if is_ajax(request):
             order = get_object_or_404(Order, pk=self.kwargs["pk"])
             order.order_status = int(request.POST["status"])
             order.save()
             message = "Buyurtma statusi o'zgardi"
-            return JsonResponse({"success": True, "data": None, "msg": message}, status=200)
+            return JsonResponse(
+                {"success": True, "data": None, "msg": message}, status=200
+            )
 
 
 order_status = OrderStatusUpdate.as_view()

@@ -50,7 +50,7 @@ $right: if-ltr(right, left);
 	}
 }
 
-@mixin if-ltr { 
+@mixin if-ltr {
 	@if $dir != rtl {
 		@content;
 	}
@@ -61,5 +61,3 @@ $right: if-ltr(right, left);
 		@content;
 	}
 }
-
-

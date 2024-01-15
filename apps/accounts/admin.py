@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import (CustomUser,
-                     UserRole, Company, MoneySaver, ClientAddress)
+from .models import ClientAddress, Company, CustomUser, MoneySaver, UserRole
 
 
 @admin.register(CustomUser)
@@ -15,9 +14,8 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "company",
         "role",
-
     ]
-    list_editable = ['role']
+    list_editable = ["role"]
     fieldsets = (
         (
             None,
@@ -47,7 +45,6 @@ class CompanyAdmin(admin.ModelAdmin):
         "email",
         "phone",
         "balance",
-
     ]
 
 

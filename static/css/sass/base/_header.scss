@@ -166,7 +166,7 @@ html.header-dark {
 // HEADER NAV MENU
 // -----------------------------------------------------------------------------
 /* Header Nav Menu */
-.header {	
+.header {
 	&.header-nav-menu {
 		@media only screen and (min-width: 768px) {
 			.logo {
@@ -208,7 +208,7 @@ html.header-dark {
 									}
 								}
 							}
-						
+
 						&.dropdown-mega.active {
 							ul.dropdown-mega-sub-nav {
 								li {
@@ -278,7 +278,7 @@ html.header-dark {
 				box-shadow: none;
 			}
 		}
-		
+
 		@media (min-width: 992px) {
 			// Header Nav Stripe
 			&.header-nav-stripe {
@@ -485,7 +485,7 @@ html.header-dark {
 			    margin: 0px 14px 0;
 			}
 		}
-		
+
 		// Search Form
 		@media only screen and (min-width: 768px) and (max-width: 1199px) {
 			.search {
@@ -515,7 +515,7 @@ html.header-dark {
 		@media only screen and (min-width: 992px) {
 			.header-right {
 				position: relative;
-			}	
+			}
 		}
 
 		// Header Right get position absolute only on Tablet resolution
@@ -524,7 +524,7 @@ html.header-dark {
 				position: absolute;
 				top: 0;
     			right: 60px;
-			}	
+			}
 		}
 	}
 }
@@ -533,7 +533,7 @@ html.header-dark {
 // -----------------------------------------------------------------------------
 html.sidebar-left-collapsed {
 
-	.header {	
+	.header {
 		&.header-nav-menu {
 			@media (min-width: 992px) {
 
@@ -615,7 +615,7 @@ html.header-dark {
 
 			/* Header Nav Stripe & Header Nav Top Line */
 			@media (min-width: 992px) {
-				&.header-nav-stripe, 
+				&.header-nav-stripe,
 				&.header-nav-top-line {
 					.header-nav-main {
 						nav {

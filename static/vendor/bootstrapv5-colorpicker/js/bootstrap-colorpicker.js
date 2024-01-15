@@ -4187,7 +4187,7 @@ var PopupHandler = function () {
 
       this.popoverTarget.popover(_jquery2.default.extend(true, {}, _options2.default.popover, cp.options.popover, { trigger: 'manual', content: cp.picker, html: true }));
 
-      if (bootstrap) // Bootstrap 5  
+      if (bootstrap) // Bootstrap 5
         this.popoverTip = (0, _jquery2.default)(bootstrap.Popover.getInstance(this.popoverTarget[0]).getTipElement());else // Boostrap 4
         this.popoverTip = (0, _jquery2.default)(this.popoverTarget.popover('getTipElement').data('bs.popover').tip);
 

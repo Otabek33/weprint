@@ -110,7 +110,7 @@ var bootstrapWizardCreate = function(element, options) {
 			return false;
 		}
 
-        
+
 		historyStack.push(obj.currentIndex());
 		$navigation.find(baseItemSelector + ':eq(0) a').tab('show');
 	};
@@ -160,11 +160,11 @@ var bootstrapWizardCreate = function(element, options) {
 	this.lastIndex = function() {
 		return obj.navigationLength();
 	};
-	
+
 	this.getIndex = function(e) {
 		return $navigation.find(baseItemSelector + ($settings.withVisible ? ':visible' : '')).index(e);
 	};
-	
+
 	this.nextIndex = function() {
 		var nextIndexCandidate=this.currentIndex();
 		var nextTabCandidate=null;
@@ -182,7 +182,7 @@ var bootstrapWizardCreate = function(element, options) {
 			prevTabCandidate = $navigation.find(baseItemSelector + ($settings.withVisible ? ':visible' : '') + ":eq(" + prevIndexCandidate + ")");
 		} while ((prevTabCandidate)&&(prevTabCandidate.hasClass("disabled")));
 		return prevIndexCandidate;
-	};	
+	};
 	this.navigationLength = function() {
 		return $navigation.find(baseItemSelector + ($settings.withVisible ? ':visible' : '')).length - 1;
 	};
@@ -244,7 +244,7 @@ var bootstrapWizardCreate = function(element, options) {
 		}
 	};
 
-	var innerTabShown = function (e) {  
+	var innerTabShown = function (e) {
 		var $element = $(e.target).parent();
 		var nextTab = $navigation.find(baseItemSelector).index($element);
 

@@ -1,13 +1,12 @@
 from django import forms
-from apps.tg.models import (PrintSize, PrintColor, PrintBindingTypes)
+
 from apps.orders.models import Order
+from apps.tg.models import PrintBindingTypes, PrintColor, PrintSize
 
 
 class OrderCreateForm(forms.ModelForm):
     printSize = forms.Field(
-        widget=forms.Select(
-            choices=PrintSize.choices, attrs={"class": "form-control"}
-        ),
+        widget=forms.Select(choices=PrintSize.choices, attrs={"class": "form-control"}),
     )
     printColor = forms.Field(
         widget=forms.Select(
@@ -34,5 +33,4 @@ class OrderCreateForm(forms.ModelForm):
 
     widgets = {
         "file": forms.FileInput(attrs={"class": "form-control"}),
-
     }

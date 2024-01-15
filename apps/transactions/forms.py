@@ -12,7 +12,7 @@ class TransactionCreateForm(forms.ModelForm):
     )
     cash_type = forms.ModelChoiceField(
         queryset=MoneySaver.objects.all(),
-        widget=forms.Select(attrs={"class": "form-control"})
+        widget=forms.Select(attrs={"class": "form-control"}),
     )
     double_entry_accounting = forms.Field(
         widget=forms.Select(
@@ -22,11 +22,13 @@ class TransactionCreateForm(forms.ModelForm):
 
     client = forms.ModelChoiceField(
         queryset=Client.objects.all(),
-        widget=forms.Select(attrs={
-            "class": "form-control",
-            "data-plugin-selectTwo": "",
-            "data-plugin-options": '{"minimumInputLength": 2}',
-        }),
+        widget=forms.Select(
+            attrs={
+                "class": "form-control",
+                "data-plugin-selectTwo": "",
+                "data-plugin-options": '{"minimumInputLength": 2}',
+            }
+        ),
         required=False,
     )
 
@@ -37,5 +39,4 @@ class TransactionCreateForm(forms.ModelForm):
             "cash_type",
             "double_entry_accounting",
             "client",
-
         ]

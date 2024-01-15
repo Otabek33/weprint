@@ -47,7 +47,7 @@ html.has-tab-navigation {
         background-color: #eee;
         border-radius: 0 7px 7px 7px;
         transition: ease padding 300ms;
-        
+
         /* Only for desktop */
         @media (min-width: 992px) {
 			&.tab-menu-opened {
@@ -350,15 +350,15 @@ html.has-tab-navigation {
 										padding: 2px 5px;
 									}
 									> a {
-										
-									}	
+
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-		}	
+		}
 	}
 }
 
@@ -513,7 +513,7 @@ html.has-tab-navigation {
 									}
 								}
 							}
-							
+
 						}
 					}
 				}
@@ -593,7 +593,7 @@ html.dark {
 					}
 				}
 			}
-		}	
+		}
 	}
 }
 
@@ -693,7 +693,7 @@ html.dark {
 						}
 					}
 				}
-			}	
+			}
 		}
 	}
 }

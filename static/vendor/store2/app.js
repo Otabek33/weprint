@@ -483,7 +483,7 @@ require.register("store/src/store.on.js", function(exports, require, module){
  * // listen to all storage events (also namespace sensitive)
  * store.on(function storageEvent(e){ console.log('web storage:', e); });
  * store.off(storageEvent);
- * 
+ *
  * Status: BETA - useful, if you aren't using IE8 or worse
  */
 ;(function(window, _) {
@@ -688,7 +688,7 @@ require.register("store/src/store.old.js", function(exports, require, module){
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * If fake (non-persistent) storage for users stuck in the dark ages 
+ * If fake (non-persistent) storage for users stuck in the dark ages
  * does not satisfy you, this will replace it with the a reasonable imitator for their
  * pathetic, incompetent browser.  Note that the session replacement here is potentially
  * insecure as it uses window.name without any fancy protections.
@@ -822,7 +822,7 @@ require.register("store/src/store.overflow.js", function(exports, require, modul
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * When quota is reached on a storage area, this shifts incoming values to 
+ * When quota is reached on a storage area, this shifts incoming values to
  * fake storage, so they last only as long as the page does. This is useful
  * because it is more burdensome for localStorage to recover from quota errors
  * than incomplete caches. In other words, it is wiser to rely on store.js
@@ -966,7 +966,7 @@ require.register("store/src/store.array.js", function(exports, require, module){
  *
  *   store.push('array', 'a', 1, true);// == store.set('array', (store.get('array')||[]).push('a', 1, true]));
  *   store.indexOf('array', true);// === store.get('array').indexOf(true)
- * 
+ *
  * This will add all functions of Array.prototype that are specific to the Array interface and have no
  * conflict with existing store functions.
  *
@@ -1040,10 +1040,10 @@ require.register("store/src/store.dot.js", function(exports, require, module){
  *   store.dot('foo','bar');// makes store aware of keys (could also do store.set('foo',''))
  *   store.foo = { is: true };// == store.set('foo', { is: true });
  *   console.log(store.foo.is);// logs 'true'
- * 
+ *
  * This will not create accessors that conflict with existing properties of the store object.
  *
- * Status: ALPHA - good, but ```store.foo.is=false``` won't persist while looking like it would 
+ * Status: ALPHA - good, but ```store.foo.is=false``` won't persist while looking like it would
  */
 ;(function(_, Object, Array) {
 
@@ -1173,7 +1173,7 @@ require.register("store/src/store.dom.js", function(exports, require, module){
     // prefer store attribute value, then name attribute, use nodeName+index as last resort
     DOM.key = function(node, i) {
         return node.getAttribute('store') ||
-            node.getAttribute('name') || 
+            node.getAttribute('name') ||
             ('dom.'+node.nodeName.toLowerCase() + (i||''));
     };
     // both get and set should prefer value property to innerHTML

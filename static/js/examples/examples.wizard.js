@@ -263,7 +263,7 @@ Theme Version: 	4.0.0
 			var $total = navigation.find('li').length - 1;
 			var $current = index;
 			var $percent = Math.floor(( $current / $total ) * 100);
-			
+
 			navigation.find('li').removeClass('active');
 			navigation.find('li').eq( $current ).addClass('active');
 

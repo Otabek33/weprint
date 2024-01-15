@@ -1,10 +1,9 @@
 from datetime import datetime, timezone
-
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DeleteView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from apps.accounts.forms import MoneySaverCreateForm
-from apps.accounts.models import CustomUser, CashType, MoneySaver
+from apps.accounts.models import CashType, CustomUser, MoneySaver
 from apps.transactions.models import Transaction
 
 
@@ -15,10 +14,13 @@ class CashListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
-        cash = MoneySaver.objects.get(deleted_status=False, cashType=CashType.CASH, company=user.company)
+        cash = MoneySaver.objects.get(
+            deleted_status=False, cashType=CashType.CASH, company=user.company
+        )
         context["cash"] = cash
-        context["transactions_list"] = Transaction.objects.filter(deleted_status=False, cash_type=cash,
-                                                                  company=user.company)
+        context["transactions_list"] = Transaction.objects.filter(
+            deleted_status=False, cash_type=cash, company=user.company
+        )
         return context
 
 
@@ -34,8 +36,9 @@ class BankListView(ListView):
         user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
         bank = MoneySaver.objects.get(cashType=CashType.BANK, company=user.company)
         context["bank"] = bank
-        context["transactions_list"] = Transaction.objects.filter(deleted_status=False, cash_type=bank,
-                                                                  company=user.company)
+        context["transactions_list"] = Transaction.objects.filter(
+            deleted_status=False, cash_type=bank, company=user.company
+        )
         return context
 
 
@@ -49,7 +52,9 @@ class MoneySaverListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
-        bank_list = MoneySaver.objects.filter(deleted_status=False, company=user.company)
+        bank_list = MoneySaver.objects.filter(
+            deleted_status=False, company=user.company
+        )
         context["bank_list"] = bank_list
         return context
 
@@ -96,7 +101,9 @@ class MoneySaverUpdateView(UpdateView):
     template_name = "accounts/banks/update.html"
 
     def get_success_url(self):
-        return reverse_lazy('accounts:money_saver_list', kwargs={'pk': self.request.user.id})
+        return reverse_lazy(
+            "accounts:money_saver_list", kwargs={"pk": self.request.user.id}
+        )
 
 
 money_saver_update = MoneySaverUpdateView.as_view()

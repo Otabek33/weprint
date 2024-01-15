@@ -26,7 +26,7 @@ if (typeof localStorage !== "undefined") {
 	if (localStorage.getItem('layout') !== null && !document.querySelector('html').hasAttribute('data-style-switcher-options')) {
 
 		if (localStorage.getItem('layout') == 'boxed') {
-			var classes = document.querySelector('html').className.replace(/fixed/g, ''); 
+			var classes = document.querySelector('html').className.replace(/fixed/g, '');
 			document.querySelector('html').className = classes + ' boxed';
 		}
 

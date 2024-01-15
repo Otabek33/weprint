@@ -1,14 +1,11 @@
 # from django.contrib.auth.mixins import LoginRequiredMixin
-from typing import Any, Dict
-from datetime import datetime, timezone
-
-from django.db.models import Q
+from datetime import datetime
+from typing import Any
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import (CreateView, UpdateView, DeleteView, ListView)
-
-from apps.accounts.models import CustomUser, MoneySaver, CashType
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from apps.accounts.models import CashType, MoneySaver
 from apps.clients.forms import ClientCreateForm, ClientUpdateForm
 from apps.clients.models import Client
 from apps.transactions.models import Transaction
@@ -19,9 +16,9 @@ class ClientListView(CreateView):
     form_class = ClientCreateForm
     template_name = "clients/client_list.html"
 
-    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context['client_list'] = Client.objects.filter(deleted_status=False)
+        context["client_list"] = Client.objects.filter(deleted_status=False)
         return context
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -91,7 +88,8 @@ class ClientDebitCredit(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["client_list"] = Client.objects.filter(deleted_status=False).order_by(
-            "created_at")
+            "created_at"
+        )
         context["cash"] = MoneySaver.objects.filter(cashType=CashType.CASH).first()
         context["bank"] = MoneySaver.objects.filter(cashType=CashType.BANK).first()
         return context
@@ -110,7 +108,7 @@ class TransactionDebitCreditView(ListView):
         context["transaction_list"] = Transaction.objects.filter(
             client=client, deleted_status=False
         )
-        context['client'] = client
+        context["client"] = client
         return context
 
 

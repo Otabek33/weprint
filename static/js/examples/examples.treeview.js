@@ -55,7 +55,7 @@ Theme Version: 	4.0.0
 		'core' : {
 			'themes' : {
 				'responsive': false
-			}, 
+			},
 			'check_callback' : true,
 			'data' : {
 				'url' : function (node) {
@@ -84,7 +84,7 @@ Theme Version: 	4.0.0
 		'core' : {
 			'themes' : {
 				'responsive': false
-			}, 
+			},
 			'check_callback' : true,
 			'data' : {
 				'url' : function (node) {

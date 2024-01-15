@@ -2367,7 +2367,7 @@
                 }
             }
             if (donutWidth) {
-                target.drawCircle(radius, radius, radius - donutWidth, options.get('donutColor'), 
+                target.drawCircle(radius, radius, radius - donutWidth, options.get('donutColor'),
                     options.get('donutColor'), 0).append();
             }
             target.render();

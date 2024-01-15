@@ -5,13 +5,13 @@ from .base import env
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB'),
-        'USER': env('POSTGRES_USER'),
-        'PASSWORD': env('POSTGRES_PASSWORD'),
-        'HOST': env('POSTGRES_HOST'),  # Set to the address of your PostgreSQL server
-        'PORT': env('POSTGRES_PORT'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
+        "HOST": env("POSTGRES_HOST"),  # Set to the address of your PostgreSQL server
+        "PORT": env("POSTGRES_PORT"),
     }
 }
 # GENERAL
@@ -25,8 +25,7 @@ SECRET_KEY = env(
     default="UivvcRCYBkUXJVx4hWo8jdlAe1rv0U6GLlwnbHyJxTjLLxJxnF3CgHdbUIX4U3mh",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['127.0.0.1',
-                 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -63,9 +62,8 @@ DEBUG_TOOLBAR_CONFIG = {
 INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 INTERNAL_IPS = [
-
-    '127.0.0.1',
-    'localhost',
+    "127.0.0.1",
+    "localhost",
 ]
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -80,7 +78,6 @@ TEMPLATES = [
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
-
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -91,7 +88,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-
             ],
         },
     }

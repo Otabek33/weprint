@@ -2,19 +2,19 @@ from django import forms
 from django.forms import NumberInput
 from django.utils.html import format_html, format_html_join
 
-from apps.accounts.models import Company, CashType, MoneySaver, UserRole
+from apps.accounts.models import CashType, Company, MoneySaver, UserRole
 
 
 class CurrencyInput(NumberInput):
     def render(self, name, value, attrs=None, renderer=None):
-        formatted_value = "{:,.2f}".format(value)  # Format the value as currency
+        formatted_value = f"{value:,.2f}"  # Format the value as currency
         attrs["readonly"] = "readonly"  # Set the readonly attribute
         attrs["class"] = "form-control"  # Set the readonly attribute
 
         return format_html(
             '<input{} value="{} so\'m">',
-            format_html_join(' ', ' {}="{}"', attrs.items()),
-            formatted_value
+            format_html_join(" ", ' {}="{}"', attrs.items()),
+            formatted_value,
         )
 
 
@@ -29,13 +29,19 @@ class CompanyUpdateForm(forms.ModelForm):
         widget=forms.TextInput(attrs={"class": "form-control"}), required=True
     )
     balance = forms.DecimalField(
-        widget=CurrencyInput(attrs={"class": "form-control", 'readonly': 'readonly'}), localize=True, required=False,
+        widget=CurrencyInput(attrs={"class": "form-control", "readonly": "readonly"}),
+        localize=True,
+        required=False,
     )
     total_debit = forms.DecimalField(
-        widget=CurrencyInput(attrs={"class": "form-control", 'readonly': 'readonly'}), localize=True, required=False,
+        widget=CurrencyInput(attrs={"class": "form-control", "readonly": "readonly"}),
+        localize=True,
+        required=False,
     )
     total_credit = forms.DecimalField(
-        widget=CurrencyInput(attrs={"class": "form-control", 'readonly': 'readonly'}), localize=True, required=False,
+        widget=CurrencyInput(attrs={"class": "form-control", "readonly": "readonly"}),
+        localize=True,
+        required=False,
     )
 
     class Meta:
@@ -47,7 +53,6 @@ class CompanyUpdateForm(forms.ModelForm):
             "balance",
             "total_debit",
             "total_credit",
-
         ]
 
 
@@ -68,7 +73,6 @@ class CompanyCreateForm(forms.ModelForm):
             "name",
             "email",
             "phone",
-
         ]
 
 
@@ -99,7 +103,6 @@ class CustomUserUpdateForm(forms.ModelForm):
             "last_name",
             "email",
             "role",
-
         ]
 
 
@@ -108,9 +111,7 @@ class MoneySaverCreateForm(forms.ModelForm):
         widget=forms.TextInput(attrs={"class": "form-control"}), required=True
     )
     cash_type = forms.Field(
-        widget=forms.Select(
-            choices=CashType.choices, attrs={"class": "form-control"}
-        ),
+        widget=forms.Select(choices=CashType.choices, attrs={"class": "form-control"}),
     )
 
     class Meta:
@@ -118,5 +119,4 @@ class MoneySaverCreateForm(forms.ModelForm):
         fields = [
             "reester_number",
             "cash_type",
-
         ]

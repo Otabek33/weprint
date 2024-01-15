@@ -32,7 +32,7 @@ Theme Version: 	4.0.0
 				}
 			},
 			drawCallback: function() {
-				
+
 				// Move dataTables info to footer of table
 				$ecommerceListTable
 					.closest('.dataTables_wrapper')
@@ -44,7 +44,7 @@ Theme Version: 	4.0.0
 					.closest('.dataTables_wrapper')
 					.find('.dataTables_paginate')
 					.appendTo( $ecommerceListTable.closest('.datatables-header-footer-wrapper').find('.pagination-wrapper') );
-				
+
 				$ecommerceListTable.closest('.datatables-header-footer-wrapper').find('.pagination').addClass('pagination-modern pagination-modern-spacing justify-content-center');
 
 			}

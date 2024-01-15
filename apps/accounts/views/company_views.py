@@ -1,9 +1,10 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, UpdateView, ListView, CreateView, DeleteView
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
-from apps.accounts.forms import CompanyUpdateForm, CompanyCreateForm
-from apps.accounts.models import Company, ClientAddress
+from apps.accounts.forms import CompanyCreateForm, CompanyUpdateForm
+from apps.accounts.models import ClientAddress, Company
 
 
 class CompanyDetailView(DetailView):
@@ -20,11 +21,12 @@ class CompanyUpdateView(UpdateView):
     template_name = "accounts/company/update.html"
 
     def form_valid(self, form):
-        user = self.request.user
         company = form.save(commit=False)
-        location = ClientAddress.objects.create(name=self.request.POST.get('address'),
-                                                latitude=self.request.POST.get('latitude'),
-                                                longitude=self.request.POST.get('longitude'))
+        location = ClientAddress.objects.create(
+            name=self.request.POST.get("address"),
+            latitude=self.request.POST.get("latitude"),
+            longitude=self.request.POST.get("longitude"),
+        )
         company.location = location
         company.location = location
         company.save()
@@ -49,9 +51,11 @@ class CompanyCreateView(CreateView):
 
     def form_valid(self, form):
         company = form.save(commit=False)
-        location = ClientAddress.objects.create(name=self.request.POST.get('address'),
-                                                latitude=self.request.POST.get('latitude'),
-                                                longitude=self.request.POST.get('longitude'))
+        location = ClientAddress.objects.create(
+            name=self.request.POST.get("address"),
+            latitude=self.request.POST.get("latitude"),
+            longitude=self.request.POST.get("longitude"),
+        )
         company.location = location
         company.location = location
         company.save()
@@ -66,7 +70,9 @@ class CompanyDeleteView(DeleteView):
     template_name = "accounts/company/delete.html"
 
     def get_success_url(self):
-        return reverse_lazy('accounts:company_list', kwargs={'pk': self.request.user.id})
+        return reverse_lazy(
+            "accounts:company_list", kwargs={"pk": self.request.user.id}
+        )
 
 
 company_delete = CompanyDeleteView.as_view()

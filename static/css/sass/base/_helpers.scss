@@ -178,7 +178,7 @@ h6 .inverted {
 @each $breakpoint in map-keys($grid-breakpoints) {
 	@include media-breakpoint-up($breakpoint) {
 		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-		
+
 		.text#{$infix}-1 {
 			font-size: .8em !important;
 		}

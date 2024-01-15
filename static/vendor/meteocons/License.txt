@@ -3,7 +3,7 @@ Thank you for usign Meteocons!
 If you would like to be among the first ones to hear about all the news, follow @bluxart and @pyconic on Twitter.
 
 LICENSE:
-------------------- 
+-------------------
 
 Meteocons are free for use in both personal and commercial projects.
 
@@ -26,4 +26,3 @@ Web: http://www.alessioatzeni.com
 Email: info@alessioatzeni.com
 Twitter: http://twitter.com/bluxart
 Twitter: http://twitter.com/pyconic
-

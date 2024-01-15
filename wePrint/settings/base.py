@@ -6,20 +6,20 @@ from pathlib import Path
 
 import django.conf.locale
 import environ
+from decouple import Csv, config
 from django.conf import global_settings
 from django.utils.translation import gettext_lazy as _
-from decouple import Csv, config
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 APPS_DIR = BASE_DIR / "wePrint"
 env = environ.Env()
 # Path to the .django file
-env_files = ['.django', '.postgres']
+env_files = [".django", ".postgres"]
 
 
 def read_env_file(file_name):
     """Read environment variables from the specified file."""
-    env_file_path = os.path.join(BASE_DIR, '.envs', '.production', file_name)
+    env_file_path = os.path.join(BASE_DIR, ".envs", ".production", file_name)
     env.read_env(env_file_path)
 
 
@@ -41,31 +41,30 @@ TIME_ZONE = "Asia/Tashkent"
 
 # Internationalization
 LANGUAGES = [
-    ('ru', _('Russian')),
-    ('uz', _('Uzbek')),
+    ("ru", _("Russian")),
+    ("uz", _("Uzbek")),
 ]
 
 EXTRA_LANG_INFO = {
-    'uz': {
-        'bidi': False,  # right-to-left
-        'code': 'uz',
-        'name': 'Uzbek',
-        'name_local': "O'zbek",
+    "uz": {
+        "bidi": False,  # right-to-left
+        "code": "uz",
+        "name": "Uzbek",
+        "name_local": "O'zbek",
     },
 }
 
-LANGUAGE_CODE = 'uz'
+LANGUAGE_CODE = "uz"
 
 LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
 django.conf.locale.LANG_INFO = LANG_INFO
-global_settings.LANGUAGES = global_settings.LANGUAGES + [("uz", 'Uzbek')]
+global_settings.LANGUAGES = global_settings.LANGUAGES + [("uz", "Uzbek")]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
-USE_L10N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#locale-paths
@@ -149,7 +148,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
 ]
 
 # STATIC
@@ -172,7 +170,6 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = str(BASE_DIR / "media")
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = "/media/"
-
 
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
@@ -217,7 +214,7 @@ LOGGING = {
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s "
-                      "%(process)d %(thread)d %(message)s"
+            "%(process)d %(thread)d %(message)s"
         }
     },
     "handlers": {
@@ -253,7 +250,7 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 # django-celery-results
 # https://docs.celeryproject.org/en/latest/django/first-steps-with-django.html#django-celery-results-using-the-django-orm-cache-as-a-result-backend
-CELERY_CACHE_BACKEND = 'default'
+CELERY_CACHE_BACKEND = "default"
 
 # tempus dominus localization
 TEMPUS_DOMINUS_LOCALIZE = True

@@ -316,7 +316,7 @@ class Gauge extends BaseGauge
 
 		@gp = [new GaugePointer(@)]
 		@setOptions()
-		
+
 
 	setOptions: (options = null) ->
 		super(options)
@@ -329,7 +329,7 @@ class Gauge extends BaseGauge
 		@lineWidth = @availableHeight * @options.lineWidth # .2 - .7
 		@radius = (@availableHeight - @lineWidth / 2) / (1.0 + @extraPadding)
 		@ctx.clearRect(0, 0, @canvas.width, @canvas.height)
-		
+
 		for gauge in @gp
 			gauge.setOptions(@options.pointer)
 			gauge.render()
@@ -443,7 +443,7 @@ class Gauge extends BaseGauge
 					rest = font.slice(match.length)
 					fontsize = parseFloat(match) * this.displayScale
 					@ctx.font = fontsize + rest
-									
+
 					rotationAngle = @getAngle(value.label) - 3 * Math.PI / 2
 					@ctx.rotate(rotationAngle)
 					@ctx.fillText(formatNumber(value.label, staticLabels.fractionDigits), 0, -radius - @lineWidth / 2)
@@ -456,7 +456,7 @@ class Gauge extends BaseGauge
 					@ctx.rotate(rotationAngle)
 					@ctx.fillText(formatNumber(value, staticLabels.fractionDigits), 0, -radius - @lineWidth / 2)
 					@ctx.rotate(-rotationAngle)
-			
+
 		@ctx.restore()
 
 	renderTicks: (ticksOptions, w, h, radius) ->
@@ -480,7 +480,7 @@ class Gauge extends BaseGauge
 				@ctx.lineWidth = @lineWidth * divLength
 				scaleMutate = (@lineWidth / 2) * ( 1 - divLength)
 				tmpRadius = (@radius * @options.radiusScale) + scaleMutate
-				
+
 				@ctx.strokeStyle = divColor
 				@ctx.beginPath()
 				@ctx.arc(0, 0, tmpRadius, @getAngle(currentDivision - divWidth), @getAngle(currentDivision + divWidth), false)
@@ -493,7 +493,7 @@ class Gauge extends BaseGauge
 						@ctx.lineWidth = @lineWidth * subLength
 						scaleMutate = (@lineWidth / 2) * ( 1 - subLength)
 						tmpRadius = (@radius * @options.radiusScale) + scaleMutate
-						
+
 						@ctx.strokeStyle = subColor
 						@ctx.beginPath()
 						@ctx.arc(0, 0, tmpRadius, @getAngle(currentSubDivision - subWidth), @getAngle(currentSubDivision + subWidth), false)
@@ -514,7 +514,7 @@ class Gauge extends BaseGauge
 		radius = @radius * @options.radiusScale
 		if (@options.staticLabels)
 			@renderStaticLabels(@options.staticLabels, w, h, radius)
-		
+
 		if (@options.staticZones)
 			@ctx.save()
 			@ctx.translate(w, h)
@@ -532,7 +532,7 @@ class Gauge extends BaseGauge
 					@ctx.lineWidth = @lineWidth * zone.height
 					scaleMutate = (@lineWidth / 2) * (zone.offset || 1 - zone.height)
 					tmpRadius = (@radius * @options.radiusScale) + scaleMutate
-				
+
 				@ctx.strokeStyle = zone.strokeStyle
 				@ctx.beginPath()
 				@ctx.arc(0, 0, tmpRadius, @getAngle(min), @getAngle(max), false)
@@ -565,11 +565,11 @@ class Gauge extends BaseGauge
 			@ctx.stroke()
 			@ctx.save()
 			@ctx.translate(w, h)
-		
+
 		if (@options.renderTicks)
 			@renderTicks(@options.renderTicks, w, h, radius)
 
-		
+
 		@ctx.restore()
 		# Draw pointers from (w, h)
 

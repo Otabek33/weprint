@@ -47,7 +47,7 @@ Theme Version:  4.0.0
 			editable: true,
 			droppable: true, // this allows things to be dropped onto the calendar !!!
 			drop: function(eventDropInfo) { // this function is called when something is dropped
-				
+
 				// is the "remove after drop" checkbox checked?
 		        if ($('#RemoveAfterDrop').is(':checked')) {
 		          // if so, remove the element from the "Draggable Events" list

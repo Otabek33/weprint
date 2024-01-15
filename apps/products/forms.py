@@ -1,12 +1,12 @@
 from django import forms
-from apps.products.models import (PrintBindingTypes, Product, PrintSize, PrintColor)
+
+from apps.products.models import (PrintBindingTypes, PrintColor, PrintSize,
+                                  Product)
 
 
 class ProductUpdateForm(forms.ModelForm):
     printSize = forms.Field(
-        widget=forms.Select(
-            choices=PrintSize.choices, attrs={"class": "form-control"}
-        ),
+        widget=forms.Select(choices=PrintSize.choices, attrs={"class": "form-control"}),
     )
     printColor = forms.Field(
         widget=forms.Select(
@@ -29,15 +29,12 @@ class ProductUpdateForm(forms.ModelForm):
             "printColor",
             "printBindingType",
             "price",
-
         ]
 
 
 class ProductCreateForm(forms.ModelForm):
     printSize = forms.Field(
-        widget=forms.Select(
-            choices=PrintSize.choices, attrs={"class": "form-control"}
-        ),
+        widget=forms.Select(choices=PrintSize.choices, attrs={"class": "form-control"}),
     )
     printColor = forms.Field(
         widget=forms.Select(
@@ -74,7 +71,4 @@ class PrintBindingTypesCreateForm(forms.ModelForm):
         fields = [
             "name",
             "photo",
-
         ]
-
-

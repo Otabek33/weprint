@@ -39,7 +39,7 @@ Theme Version: 	4.0.0
 
 		closeBtnInside: true,
 		preloader: false,
-		
+
 		midClick: true,
 		removalDelay: 300,
 		mainClass: 'my-mfp-zoom-in',
@@ -56,7 +56,7 @@ Theme Version: 	4.0.0
 
 		closeBtnInside: true,
 		preloader: false,
-		
+
 		midClick: true,
 		removalDelay: 300,
 		mainClass: 'my-mfp-slide-bottom',

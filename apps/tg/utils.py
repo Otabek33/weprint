@@ -1,10 +1,11 @@
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 
 from apps.clients.models import Client
-from apps.orders.models import Order, OrderStatus, ClientAddress, PrintBindingTypes
+from apps.orders.models import (ClientAddress, Order, OrderStatus,
+                                PrintBindingTypes)
 from apps.products.models import Product
-from datetime import datetime
-
 from apps.tg.models import PrintColor, PrintSize
 
 User = get_user_model()
@@ -13,17 +14,21 @@ User = get_user_model()
 def get_or_create_client(message):
     client, created = Client.objects.get_or_create(userId=message.chat.id)
     if created:
-        client.first_name = message.from_user.first_name or ''
-        client.username = message.from_user.username or ''
-        client.last_name = message.from_user.last_name or ''
+        client.first_name = message.from_user.first_name or ""
+        client.username = message.from_user.username or ""
+        client.last_name = message.from_user.last_name or ""
         client.phone = message.contact.phone_number
         client.save()
 
 
 def get_or_create_order(message):
     client = Client.objects.get(userId=message.chat.id)
-    order, created = Order.objects.get_or_create(tg_pk=message.chat.id, created_by=client,
-                                                 order_status=OrderStatus.CREATION, page_number=0)
+    order, created = Order.objects.get_or_create(
+        tg_pk=message.chat.id,
+        created_by=client,
+        order_status=OrderStatus.CREATION,
+        page_number=0,
+    )
     if created:
         order.created_by = client
         order.order_number = generate_order_number()
@@ -54,7 +59,9 @@ def update_order_file_status(order):
 
 
 def order_generation():
-    last_transaction = len(Order.objects.exclude(order_status=OrderStatus.CREATION).all())
+    last_transaction = len(
+        Order.objects.exclude(order_status=OrderStatus.CREATION).all()
+    )
     if last_transaction is not None:
         # Transaction exists
         return last_transaction + 1
@@ -78,12 +85,17 @@ def generate_order_number():
 def get_user_orders(user_id):
     client = Client.objects.get(userId=user_id)
     excluded_statuses = [OrderStatus.CREATION]
-    return Order.objects.filter(created_by=client).exclude(order_status__in=excluded_statuses)
+    return Order.objects.filter(created_by=client).exclude(
+        order_status__in=excluded_statuses
+    )
 
 
 def update_order_price(order):
-    product = Product.objects.get(printColor=order.printColor, printSize=order.printSize,
-                                  printBindingType=order.printBindingType)
+    product = Product.objects.get(
+        printColor=order.printColor,
+        printSize=order.printSize,
+        printBindingType=order.printBindingType,
+    )
     order.price = order.page_number * product.price
     order.created_at = datetime.now()
     order.save()
@@ -125,10 +137,13 @@ def update_order_file_path(message, file_oath, order_number):
     return order
 
 
-def update_order_location_telegram_share(message,order_number):
+def update_order_location_telegram_share(message, order_number):
     order = get_order(order_number)
-    location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
-                                                            longitude=message.location.longitude)
+    location, created = ClientAddress.objects.get_or_create(
+        name=message.chat.id,
+        latitude=message.location.latitude,
+        longitude=message.location.longitude,
+    )
     order.location = location
     order.file_status = True
     order.save()

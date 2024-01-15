@@ -32,7 +32,7 @@ Theme Version: 	4.0.0
 		$.ajax({
 			url: $this.data('ajax-url'),
 		}).always(function(data, textStatus, jqXHR) {
-			
+
 			// Remove Loading Overlay Showing Class
 			$sidebarOverlay
 				.find('.loading-overlay')
@@ -61,7 +61,7 @@ Theme Version: 	4.0.0
 			$(window).trigger('resize');
 			$(window).trigger('ecommerce.sidebar.overlay.show');
 		});
-			
+
 	});
 
 	/*

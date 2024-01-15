@@ -284,7 +284,7 @@
 				#{$left}: 0;
 				content: counter(custom-counter);
 				counter-increment: custom-counter;
-				font-weight: bold; 
+				font-weight: bold;
 			}
 		}
 
@@ -326,7 +326,7 @@
 			    justify-content: center;
 			    width: 45px;
 			    height: 30px;
-			    font-weight: 600;	
+			    font-weight: 600;
 				border: 1px solid #CCC;
 				&:hover,
 				&:focus,

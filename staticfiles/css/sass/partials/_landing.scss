@@ -20,7 +20,7 @@ html.boxed {
 @media (min-width: 768px) and (max-width: 991px) {
 	.container-with-sidebar {
 		width: 100%;
-	}	
+	}
 }
 @media (min-width: 992px) {
 	.container-with-sidebar {
@@ -35,7 +35,7 @@ html.boxed {
 @media (min-width: 1600px) {
 	.container-with-sidebar {
 		width: calc(1570px - 144px) !important;
-	}	
+	}
 }
 
 /* Container With Sidebar */
@@ -46,7 +46,7 @@ html:not(.sidebar-left-collapsed):not(.boxed) {
 			[class*="col-"]:not(.isotope-item) {
 				width: 100%;
 			}
-		}	
+		}
 	}
 	@media (min-width: 992px) {
 		.container-with-sidebar {
@@ -61,7 +61,7 @@ html:not(.sidebar-left-collapsed):not(.boxed) {
 	@media (min-width: 1600px) {
 		.container-with-sidebar {
 			width: calc(1570px - 300px) !important;
-		}	
+		}
 	}
 }
 
@@ -79,7 +79,7 @@ html:not(.sidebar-left-collapsed) {
 		.custom-padding {
 			padding-bottom: 0;
 			padding-top: 30px;
-		}	
+		}
 	}
 }
 
@@ -88,7 +88,7 @@ html:not(.sidebar-left-collapsed) {
 	.custom-padding {
 		padding-bottom: 0;
     	padding-top: 30px;
-	}	
+	}
 }
 
 /* Custom Padding Bottom - Without Sidebar */
@@ -96,7 +96,7 @@ html:not(.sidebar-left-collapsed) {
 	.custom-padding {
 		padding-bottom: 0;
     	padding-top: 0px;
-	}	
+	}
 }
 
 /* Custom Padding Bottom - Without Sidebar */
@@ -104,7 +104,7 @@ html:not(.sidebar-left-collapsed) {
 	.custom-padding {
 		padding-bottom: 0;
     	padding-top: 50px;
-	}	
+	}
 }
 
 /* Custom Position For Porto Front-End Landing Dashboard */
@@ -136,7 +136,7 @@ html:not(.sidebar-left-collapsed) {
 
 /* Custom Position For Porto Front-End Landing Dashboard - With Sidebar */
 html:not(.sidebar-left-collapsed) {
-	.custom-pos {		    
+	.custom-pos {
 	    @media (max-width: 1599px) {
 	    	top: 100px;
 			.abs-bottom-left {

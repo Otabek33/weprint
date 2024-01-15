@@ -135,7 +135,7 @@
 	    var styleHeight = Math.round(parseFloat(ta.style.height));
 	    var computed = window.getComputedStyle(ta, null); // Using offsetHeight as a replacement for computed.height in IE, because IE does not account use of border-box
 
-	    var actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(computed.height)) : ta.offsetHeight; // The actual height not matching the style height (set via the resize method) indicates that 
+	    var actualHeight = computed.boxSizing === 'content-box' ? Math.round(parseFloat(computed.height)) : ta.offsetHeight; // The actual height not matching the style height (set via the resize method) indicates that
 	    // the max-height has been exceeded, in which case the overflow should be allowed.
 
 	    if (actualHeight < styleHeight) {
