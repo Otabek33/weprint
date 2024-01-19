@@ -1,19 +1,16 @@
 import asyncio
 import json
 import logging
-from datetime import datetime
-
 import telebot
 from django.contrib.auth import get_user_model
 from telebot import types
-
-from apps.orders.models import ClientAddress, PrintBindingTypes
+from apps.orders.models import PrintBindingTypes
 from apps.tg.buttons import (location_request, location_share, main_menu,
                              order_binding, order_color, order_info,
-                             order_size, payment_type)
+                             order_size)
 from apps.tg.consta import BOT_TOKEN, GROUP_CHAT_ID, MAX_FILE_SIZE_MB
-from apps.tg.message import MESSAGES
-from apps.tg.models import DeliveryType, PaymentType, PrintColor, PrintSize
+
+from apps.tg.models import DeliveryType
 from apps.tg.utils import (get_or_create_client, get_or_create_order,
                            get_order, get_user_orders, update_delivery,
                            update_order_binding, update_order_color,

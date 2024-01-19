@@ -36,7 +36,8 @@
                     <h2 class="card-title">Buyurtmalar</h2>
                 </header>
                 <div class="card-body">
-
+                    <a type="button" href="{% url 'orders:add' user.id %}"
+                       class="btn btn-primary">+ {% trans "Qo'shmoq" %}</a>
                     <table class="table table-bordered table-striped mb-0" id="datatable-tabletools">
 
                         <thead>
@@ -128,7 +129,7 @@
     <script src="{% static 'js/examples/examples.datatables.row.with.details.js' %}"></script>
     <script src="{% static 'js/examples/examples.datatables.tabletools.js' %}"></script>
 
-      <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             let form = document.getElementById("order_status_form");
 

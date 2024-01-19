@@ -1,10 +1,14 @@
-
 from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView, CreateView
+
+from apps.accounts.models import ClientAddress
+from apps.orders.forms import OrderCreateForm
 from apps.orders.models import Order, OrderStatus
+from apps.tg.utils import generate_order_number
 from utils.helpers import is_ajax
+from django.http import HttpResponse
 
 
 class OrderListView(ListView):
@@ -30,6 +34,9 @@ class OrderDetail(DetailView):
         order = get_object_or_404(Order, pk=self.kwargs["pk"])
         client = order.created_by
         context["order"] = order
+        # TODO add company lat and long
+        context["comp_lat"] = order.company.location.latitude
+        context["comp_long"] = order.company.location.longitude
         context["client"] = client
         return context
 
@@ -59,22 +66,6 @@ class OrderCancelView(DetailView):
 order_cancel = OrderCancelView.as_view()
 
 
-# class DebitCreditView(ListView):
-#     model = Order
-#     template_name = "clients/transaction_debit_credit.html"
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         client = get_object_or_404(Client, pk=self.kwargs["pk"])
-#         context["order_list"] = Order.objects.filter(
-#             Q(created_by=client) & ~Q(order_status=OrderStatus.CANCELLED) & ~Q(order_status=OrderStatus.CREATION)
-#         )
-#         return context
-#
-#
-# debit_credit = DebitCreditView.as_view()
-
-
 class OrderStatusUpdate(TemplateView):
     def post(self, request, *args, **kwargs):
         if is_ajax(request):
@@ -88,3 +79,29 @@ class OrderStatusUpdate(TemplateView):
 
 
 order_status = OrderStatusUpdate.as_view()
+
+
+class OrderCreateView(CreateView):
+    model = Order
+    form_class = OrderCreateForm
+    template_name = "orders/order_add.html"
+
+    def form_valid(self, form):
+        order = form.save(commit=False)
+        location = ClientAddress.objects.create(
+            name=self.request.POST.get("address"),
+            latitude=self.request.POST.get("latitude"),
+            longitude=self.request.POST.get("longitude"),
+        )
+        order.location = location
+        order.order_number = generate_order_number()
+        order.order_status = OrderStatus.ORDERED
+        order.save()
+        return redirect("accounts:company_list", pk=self.request.user.id)
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return HttpResponse(form.errors)
+
+
+order_add = OrderCreateView.as_view()

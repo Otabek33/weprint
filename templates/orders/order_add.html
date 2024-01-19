@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+
+{% load static i18n %}
+
+{% block title %}{% trans "Buyurtma" %}{% endblock %}
+{% block additional_css %}
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css"/>
+    <style>
+
+        #map {
+            height: 500px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <header class="page-header page-header-left-inline-breadcrumb">
+        <h2 class="font-weight-bold text-6">{% trans "Dashboard" %}</h2>
+        <div class="right-wrapper">
+            <ol class="breadcrumbs">
+                <li><span>{% trans "Korxona" %}</span></li>
+                <li><span>{% trans "Qo'shmoq" %}</span></li>
+            </ol>
+
+        </div>
+    </header>
+    <!-- start: page -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row mt-2" style="background-color: green">
+            <div class="col">
+                <section class="card card-modern card-big-info">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-2-5 col-xl-1-5">
+                                <i class="card-big-info-icon bx bx-building"></i>
+                                <h2 class="card-big-info-title">{% trans "Buyurtma" %}</h2>
+                                <p class="card-big-info-desc">{% trans "Buyurtma hajmi, rangi ,bog'lama turi" %}</p>
+                            </div>
+
+                            <div class="col-lg-3-5 col-xl-4-5">
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Hajmi" %}</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.printSize }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Rang" %}</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.printColor }}
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Bog'lama turi" %}</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.printBindingType }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Sahifa soni" %}</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.page_number }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row align-items-center pb-3">
+                                    <label class="col-lg-5 col-xl-3 control-label text-lg-end mb-0">{% trans "Narx" %}</label>
+                                    <div class="col-lg-7 col-xl-6">
+                                        {{ form.price }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                        </div>
+
+                        <h2 class="card-title">{% trans "Manzil" %}</h2>
+                    </header>
+                    <div class="card-body">
+
+                        <div id="map"></div>
+
+                    </div>
+                </section>
+            </div>
+            <div class="col-lg-4">
+                <section class="card">
+                    <header class="card-header">
+                        <div class="card-actions">
+                            <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                            <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                        </div>
+
+                        <h2 class="card-title">{% trans "Manzil" %}</h2>
+                    </header>
+                    <div class="card-body" style="height: 530px;">
+
+                        <div class="form-row">
+                            <div class="form-group col mb-3">
+                                <label>{% trans "Manzil" %}</label>
+                                <div class="text">
+
+                                        <textarea type="text" name="address" class="form-control form-control-modern "
+
+                                        >{{ company.location.name }}</textarea>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col mb-3">
+                                <label>{% trans "Latitude" %}</label>
+                                <div class="text">
+
+                                    <input type="text" name="latitude" class="form-control" id="latitude"
+                                           placeholder="{{ company.location.latitude }}"
+                                           readonly>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col mb-3">
+                                <label>{% trans "Longitude" %}</label>
+                                <div class="text">
+
+                                    <input type="text" name="longitude" class="form-control" id="longitude"
+                                           placeholder="{{ company.location.longitude }}"
+                                           readonly>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+        <div class="row action-buttons">
+            <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+                <a href="{% url 'orders:order_list' %}"
+                   class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">
+                    {% trans "Orqaga" %}</a>
+            </div>
+            <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+                <button type="submit"
+                        class=" btn btn-success btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1  ">
+                    <i class="bx bx-save text-4 me-2"></i> {% trans "Saqlash" %}
+                </button>
+
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}
+
+{% block additional_js %}
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        let mapOptions = {
+            center: [41.44434969087804, 69.55308079719545],
+            zoom: 15
+        }
+
+        let map = new L.map('map', mapOptions);
+
+        let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        map.addLayer(layer);
+
+
+        let marker = null;
+        map.on('click', (event) => {
+
+            if (marker !== null) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker([event.latlng.lat, event.latlng.lng]).addTo(map);
+
+            document.getElementById('latitude').value = event.latlng.lat;
+            document.getElementById('longitude').value = event.latlng.lng;
+
+        })
+    </script>
+{% endblock %}

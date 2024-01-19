@@ -28,7 +28,6 @@ class CompanyUpdateView(UpdateView):
             longitude=self.request.POST.get("longitude"),
         )
         company.location = location
-        company.location = location
         company.save()
         return redirect("accounts:company_list", pk=self.request.user.id)
 

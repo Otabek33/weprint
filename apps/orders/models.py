@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from apps.accounts.models import ClientAddress
+from apps.accounts.models import ClientAddress, Company
 from apps.products.models import PrintBindingTypes
 from apps.tg.models import DeliveryType, PaymentType, PrintColor, PrintSize
 
@@ -36,7 +36,7 @@ class Order(models.Model):
         null=True,
         related_name="printBindingTypes",
     )
-    file = models.FileField(_("Fayl"), upload_to="uploads/%Y/%m/%d/")
+    file = models.FileField(_("Fayl"), upload_to="uploads/%Y/%m/%d/", blank=True, null=True)
     price = models.DecimalField(_("Narx"), max_digits=20, decimal_places=2, default=0.0)
     total_debit = models.DecimalField(
         _("Umumiy debit"), max_digits=20, decimal_places=2, default=0
@@ -69,6 +69,10 @@ class Order(models.Model):
         null=True,
         related_name="order_updated_by",
     )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE,
+                                blank=True,
+                                null=True,
+                                related_name="company_order", )
     created_at = models.DateTimeField(_("Yaratilgan vaqt"), default=timezone.now)
     tg_pk = models.CharField(_("Telegram id"), max_length=150, default=0)
     file_status = models.BooleanField(_("Fayl statusi"), default=False)

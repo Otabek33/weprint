@@ -1,7 +1,8 @@
 from django import forms
 
 from apps.orders.models import Order
-from apps.tg.models import PrintBindingTypes, PrintColor, PrintSize
+from apps.tg.models import PrintColor, PrintSize
+from apps.orders.models import PrintBindingTypes
 
 
 class OrderCreateForm(forms.ModelForm):
@@ -13,14 +14,18 @@ class OrderCreateForm(forms.ModelForm):
             choices=PrintColor.choices, attrs={"class": "form-control"}
         ),
     )
-    printBindingType = forms.Field(
-        widget=forms.Select(
-            choices=PrintBindingTypes.choices, attrs={"class": "form-control"}
-        ),
+    printBindingType = forms.ModelChoiceField(
+        queryset=PrintBindingTypes.objects.all(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        required=False,
     )
-    file = forms.FileField(
-        widget=forms.FileInput(attrs={"class": "form-control"}), required=True
+    price = forms.DecimalField(
+        widget=forms.NumberInput(attrs={"class": "form-control"}), required=True
     )
+    page_number = forms.DecimalField(
+        widget=forms.NumberInput(attrs={"class": "form-control"}), required=True
+    )
+
 
     class Meta:
         model = Order
@@ -28,9 +33,6 @@ class OrderCreateForm(forms.ModelForm):
             "printSize",
             "printColor",
             "printBindingType",
-            "file",
+            "price",
+            "page_number",
         ]
-
-    widgets = {
-        "file": forms.FileInput(attrs={"class": "form-control"}),
-    }

@@ -367,10 +367,15 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
     <script>
-        var latitude =
-        {{ order.location.latitude }}
-        var longitude =
-        {{ order.location.longitude }}
+    console.log("{{ comp_lat }}")
+    console.log("{{ comp_long }}")
+        var latitudeWithComma = "{{ order.location.latitude }}";
+        var longitudeWithComma = "{{ order.location.longitude }}";
+
+        // Replace commas with dots
+        var latitude = latitudeWithComma.replace(',', '.');
+        var longitude = longitudeWithComma.replace(',', '.');
+
         var map = L.map('map');
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -380,7 +385,7 @@
         L.Routing.control({
             waypoints: [
                 L.latLng(latitude, longitude),
-                L.latLng(41.322610, 69.253904)
+                L.latLng("{{ comp_lat }}", "{{ comp_long }}")
             ],
             addWaypoints: false,
             routeWhileDragging: true
