@@ -139,11 +139,17 @@ def update_order_file_path(message, file_oath, order_number):
 
 def update_order_location_telegram_share(message, order_number):
     order = get_order(order_number)
-    location, created = ClientAddress.objects.get_or_create(
-        name=message.chat.id,
-        latitude=message.location.latitude,
-        longitude=message.location.longitude,
-    )
+    try:
+        location = ClientAddress.objects.get(
+            name=message.chat.id,
+            latitude=message.location.latitude,
+            longitude=message.location.longitude,
+        )
+    except Exception:
+        location = ClientAddress.objects.create(name=message.chat.id,
+                                                latitude=message.location.latitude,
+                                                longitude=message.location.longitude, )
+
     order.location = location
     order.file_status = True
     order.save()

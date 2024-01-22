@@ -85,7 +85,7 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(
             call.message.chat.id,
-            photo=open("media/download.png", "rb"),
+            photo=open("static/download.png", "rb"),
             caption="Hujjatni yuboring",
         )
     elif call.data == "location_request":
@@ -103,7 +103,7 @@ def callback_query(call):
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_photo(
             call.message.chat.id,
-            photo=open("media/download.png", "rb"),
+            photo=open("static/download.png", "rb"),
             caption="Hujjatni yuboring",
         )
 
@@ -278,7 +278,7 @@ def get_sms(message):
                 bot.delete_message(message.chat.id, message.id)
                 bot.send_photo(
                     message.chat.id,
-                    photo=open("media/download.png", "rb"),
+                    photo=open("static/download.png", "rb"),
                     caption="Hujjatni yuboring",
                 )
             else:
@@ -378,7 +378,7 @@ def get_document(message):
             )
             bot.send_message(message.chat.id, mess, reply_markup=main_menu())
             bot.send_document(
-                chat_id=GROUP_CHAT_ID,
+                chat_id=-4089429437,
                 document=open(file_path, "rb"),
                 caption=admin_message,
             )
@@ -399,7 +399,7 @@ def get_location(message):
     bot.delete_message(message.chat.id, message.id)
     bot.send_photo(
         message.chat.id,
-        photo=open("media/download.png", "rb"),
+        photo=open("static/download.png", "rb"),
         caption="Hujjatni yuboring",
     )
 
