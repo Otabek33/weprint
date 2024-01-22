@@ -34,7 +34,6 @@ class OrderDetail(DetailView):
         order = get_object_or_404(Order, pk=self.kwargs["pk"])
         client = order.created_by
         context["order"] = order
-        # TODO add company lat and long
         context["comp_lat"] = order.company.location.latitude
         context["comp_long"] = order.company.location.longitude
         context["client"] = client
