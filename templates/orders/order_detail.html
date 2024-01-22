@@ -367,25 +367,23 @@
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
     <script>
-    console.log("{{ comp_lat }}")
-    console.log("{{ comp_long }}")
+        var comp_lat = "{{ comp_lat }}";
+        var comp_long = "{{ comp_long }}";
         var latitudeWithComma = "{{ order.location.latitude }}";
         var longitudeWithComma = "{{ order.location.longitude }}";
 
         // Replace commas with dots
         var latitude = latitudeWithComma.replace(',', '.');
         var longitude = longitudeWithComma.replace(',', '.');
+        var company_lat = comp_lat.replace(',', '.');
+        var company_long = comp_long.replace(',', '.');
 
         var map = L.map('map');
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         L.Routing.control({
             waypoints: [
                 L.latLng(latitude, longitude),
-                L.latLng("{{ comp_lat }}", "{{ comp_long }}")
+                L.latLng(company_lat, company_long)
             ],
             addWaypoints: false,
             routeWhileDragging: true
