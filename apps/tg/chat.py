@@ -378,7 +378,7 @@ def get_document(message):
             )
             bot.send_message(message.chat.id, mess, reply_markup=main_menu())
             bot.send_document(
-                chat_id=-4089429437,
+                chat_id=GROUP_CHAT_ID,
                 document=open(file_path, "rb"),
                 caption=admin_message,
             )
