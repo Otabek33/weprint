@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views.account_views import home, log_in, logout, user_detail, user_update
 from .views.bank_views import (bank, cash, money_saver_add, money_saver_delete,
-                               money_saver_list, money_saver_update)
+                               money_saver_list)
 from .views.company_views import (company_add, company_delete, company_detail,
                                   company_list, company_update)
 
@@ -26,7 +26,5 @@ urlpatterns = [
     path(
         "<uuid:pk>/money-saver-delete/", money_saver_delete, name="money_saver_delete"
     ),
-    path(
-        "<uuid:pk>/money-saver-update/", money_saver_update, name="money_saver_update"
-    ),
+
 ]

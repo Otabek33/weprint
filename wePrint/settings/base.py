@@ -193,10 +193,7 @@ SECURE_BROWSER_XSS_FILTER = False
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = "ALLOW"
 
-# ADMIN
-# ------------------------------------------------------------------------------
-# Django Admin URL.
-ADMIN_URL = "admin/"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [("""Otabek Davronov""", "o.davronov@gmail.com")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
