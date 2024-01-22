@@ -247,7 +247,7 @@ msgstr "Номер страницы"
 msgid "Buyurtma statusi"
 msgstr "Заказы"
 
-#: .\apps\orders\models.py:49
+#: .\apps\orders\moBuyurtmalardels.py:49
 msgid "Created by"
 msgstr "Создано"
 

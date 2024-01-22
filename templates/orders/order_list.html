@@ -2,15 +2,15 @@
 
 {% load static i18n %}
 
-{% block title %}Buyurtmalar{% endblock %}
+{% block title %}{% trans 'Buyurtmalar' %}{% endblock %}
 
 
 {% block content %}
     <header class="page-header page-header-left-inline-breadcrumb">
-        <h2 class="font-weight-bold text-6">Dashboard ></h2>
+        <h2 class="font-weight-bold text-6">{% trans 'Dashboard' %} ></h2>
         <div class="right-wrapper">
             <ol class="breadcrumbs">
-                <li><span>Buyurtmalar</span></li>
+                <li><span>{% trans 'Buyurtmalar' %}</span></li>
             </ol>
         </div>
     </header>
@@ -33,7 +33,7 @@
                         <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
                     </div>
 
-                    <h2 class="card-title">Buyurtmalar</h2>
+                    <h2 class="card-title">{% trans 'Buyurtmalar' %}</h2>
                 </header>
                 <div class="card-body">
                     <a type="button" href="{% url 'orders:add' user.id %}"
