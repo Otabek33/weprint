@@ -83,10 +83,8 @@ def callback_query(call):
         sending_document = True
         update_order_file_status(order)
         bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_photo(
-            call.message.chat.id,
-            photo=open("static/download.png", "rb"),
-            caption="Hujjatni yuboring",
+        bot.send_message(
+            call.message.chat.id,"Hujjatni yuboring",
         )
     elif call.data == "location_request":
         bot.delete_message(call.message.chat.id, call.message.id)
@@ -101,10 +99,8 @@ def callback_query(call):
         update_order_file_status(order)
         update_delivery(order, DeliveryType.Self_Delivery)
         bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_photo(
-            call.message.chat.id,
-            photo=open("static/download.png", "rb"),
-            caption="Hujjatni yuboring",
+        bot.send_message(
+            call.message.chat.id, "Hujjatni yuboring",
         )
 
     elif call.data == "Courier_Delivery":
@@ -276,10 +272,8 @@ def get_sms(message):
                 sending_document = True
                 update_order_location_sentence(order_number, text)
                 bot.delete_message(message.chat.id, message.id)
-                bot.send_photo(
-                    message.chat.id,
-                    photo=open("static/download.png", "rb"),
-                    caption="Hujjatni yuboring",
+                bot.send_message(
+                    message.chat.id, "Hujjatni yuboring",
                 )
             else:
                 markup = main_menu()
