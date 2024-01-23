@@ -352,8 +352,12 @@ def get_document(message):
             )
             if order.location:
                 location_name = order.location.name
+                latitude = order.location.latitude
+                longitude = order.location.longitude
             else:
                 location_name = "Manzil"
+                latitude = 1
+                longitude = 1
             admin_message = (
                 f"<b>Yangi buyurtma </b>"
                 f"\n\n\n\n<b>Buyurtma  🔍 :</b> {order.order_number}"
@@ -364,8 +368,8 @@ def get_document(message):
                 f"\n\n<b>Adres 🏠 :</b> "
                 
                 f"\n<b>manzil nomi =></b>{location_name}"
-                f"\n<b>latitude =></b>{order.location.latitude}"
-                f"\n<b>longitude =></b>{order.location.longitude} "
+                f"\n<b>latitude =></b>{latitude}"
+                f"\n<b>longitude =></b>{longitude} "
                 f"\n\n<b>==============</b>"
                 f"\n\n<b>Varaqlar soni  📄 : </b> {order.page_number}"
                 f"\n\n<b>Chop etish formati 🖨 :</b> {order.printBindingType.name}"
