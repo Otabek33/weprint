@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
+
+from apps.accounts.models import Company
 from apps.clients.models import Client
 from apps.orders.models import (ClientAddress, Order, OrderStatus,
                                 PrintBindingTypes)
@@ -31,6 +33,7 @@ def get_or_create_order(message):
     if created:
         order.created_by = client
         order.order_number = generate_order_number()
+        order.company = Company.objects.first()
         order.save()
     return order.order_number
 
