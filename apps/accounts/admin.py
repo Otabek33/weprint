@@ -58,4 +58,10 @@ class MoneySaverAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register([ClientAddress])
+@admin.register(ClientAddress)
+class ClientAddressAdmin(admin.ModelAdmin):
+    list_display = [
+        "name",
+        "latitude",
+        "longitude",
+    ]

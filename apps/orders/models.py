@@ -86,7 +86,7 @@ class Order(models.Model):
         choices=DeliveryType.choices,
         default=DeliveryType.Self_Delivery,
     )
-    location = models.OneToOneField(ClientAddress, on_delete=models.CASCADE, null=True)
+    location = models.ForeignKey(ClientAddress, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.order_number)

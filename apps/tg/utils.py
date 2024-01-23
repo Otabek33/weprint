@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
-
 from apps.clients.models import Client
 from apps.orders.models import (ClientAddress, Order, OrderStatus,
                                 PrintBindingTypes)
@@ -138,17 +137,20 @@ def update_order_file_path(message, file_oath, order_number):
 
 
 def update_order_location_telegram_share(message, order_number):
+    from django.db import IntegrityError
     # TODO throws error in local and production
     order = get_order(order_number)
     location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
                                                             longitude=message.location.longitude)
+
     if created:
         order.location = location
     else:
+
         order.location = ClientAddress.objects.get(name=message.chat.id, latitude=message.location.latitude,
                                                    longitude=message.location.longitude)
     order.file_status = True
-    order.save()
+    order.save(update_fields=["location", "file_status"])
 
 
 def get_order(order_number):
