@@ -138,19 +138,15 @@ def update_order_file_path(message, file_oath, order_number):
 
 
 def update_order_location_telegram_share(message, order_number):
+    # TODO throws error in local and production
     order = get_order(order_number)
-    try:
-        location = ClientAddress.objects.get(
-            name=message.chat.id,
-            latitude=message.location.latitude,
-            longitude=message.location.longitude,
-        )
-    except Exception:
-        location = ClientAddress.objects.create(name=message.chat.id,
-                                                latitude=message.location.latitude,
-                                                longitude=message.location.longitude, )
-
-    order.location = location
+    location, created = ClientAddress.objects.get_or_create(name=message.chat.id, latitude=message.location.latitude,
+                                                            longitude=message.location.longitude)
+    if created:
+        order.location = location
+    else:
+        order.location = ClientAddress.objects.get(name=message.chat.id, latitude=message.location.latitude,
+                                                   longitude=message.location.longitude)
     order.file_status = True
     order.save()
 

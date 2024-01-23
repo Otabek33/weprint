@@ -84,7 +84,7 @@ def callback_query(call):
         update_order_file_status(order)
         bot.delete_message(call.message.chat.id, call.message.id)
         bot.send_message(
-            call.message.chat.id,"Hujjatni yuboring",
+            call.message.chat.id, "Hujjatni yuboring",
         )
     elif call.data == "location_request":
         bot.delete_message(call.message.chat.id, call.message.id)
@@ -350,6 +350,10 @@ def get_document(message):
                 f"<b>Status : </b> {order.get_order_status_display()} \n\n \n\n"
                 f"Yaratildi 🕕 : {order.created_at:%d-%m-%Y %H:%M:%S}\n"
             )
+            if order.location:
+                location_name = order.location.name
+            else:
+                location_name = "Manzil"
             admin_message = (
                 f"<b>Yangi buyurtma </b>"
                 f"\n\n\n\n<b>Buyurtma  🔍 :</b> {order.order_number}"
@@ -358,7 +362,8 @@ def get_document(message):
                 f"\n\n<b>To'lov turi 💳 :</b> {order.get_cash_type_display()}"
                 f"\n\n<b>Yetqazib berish turi 🚚 :</b> {order.get_delivery_type_display()}"
                 f"\n\n<b>Adres 🏠 :</b> "
-                f"\n<b>manzil nomi =></b>{order.location.name}"
+                
+                f"\n<b>manzil nomi =></b>{location_name}"
                 f"\n<b>latitude =></b>{order.location.latitude}"
                 f"\n<b>longitude =></b>{order.location.longitude} "
                 f"\n\n<b>==============</b>"
@@ -391,10 +396,8 @@ def get_location(message):
     sending_document = True
     update_order_location_telegram_share(message, order_number)
     bot.delete_message(message.chat.id, message.id)
-    bot.send_photo(
-        message.chat.id,
-        photo=open("static/download.png", "rb"),
-        caption="Hujjatni yuboring",
+    bot.send_message(
+        message.chat.id, "Hujjatni yuboring",
     )
 
 

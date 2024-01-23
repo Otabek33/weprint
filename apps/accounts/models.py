@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+
 # Create your models here.
 
 
@@ -41,6 +42,9 @@ class ClientAddress(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        unique_together = ('name', 'latitude', 'longitude')
+
 
 class Company(models.Model):
     """Class representing a person"""
@@ -60,7 +64,7 @@ class Company(models.Model):
     )
     location = models.OneToOneField(
         ClientAddress,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name="company_address",
