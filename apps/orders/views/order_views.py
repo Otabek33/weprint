@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView, TemplateView, CreateView
 
@@ -7,7 +6,6 @@ from apps.accounts.models import ClientAddress
 from apps.orders.forms import OrderCreateForm
 from apps.orders.models import Order, OrderStatus
 from apps.tg.utils import generate_order_number
-from utils.helpers import is_ajax
 from django.http import HttpResponse
 
 
@@ -67,14 +65,10 @@ order_cancel = OrderCancelView.as_view()
 
 class OrderStatusUpdate(TemplateView):
     def post(self, request, *args, **kwargs):
-        if is_ajax(request):
-            order = get_object_or_404(Order, pk=self.kwargs["pk"])
-            order.order_status = int(request.POST["status"])
-            order.save()
-            message = "Buyurtma statusi o'zgardi"
-            return JsonResponse(
-                {"success": True, "data": None, "msg": message}, status=200
-            )
+        order = get_object_or_404(Order, pk=self.kwargs["pk"])
+        order.order_status = int(request.POST["status"])
+        order.save()
+        return redirect("orders:order_list")
 
 
 order_status = OrderStatusUpdate.as_view()
