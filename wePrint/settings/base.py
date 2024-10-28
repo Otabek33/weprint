@@ -6,7 +6,6 @@ from pathlib import Path
 
 import django.conf.locale
 import environ
-from decouple import Csv, config
 from django.conf import global_settings
 from django.utils.translation import gettext_lazy as _
 
