@@ -22,3 +22,4 @@ drf-spectacular==0.26.4  # https://github.com/tfranzel/drf-spectacular
 # Additional
 # -----------------------------------------------------------------------------
 django-leaflet==0.31.0 # https://pypi.org/project/django-leaflet/
+pyTelegramBotAPI==4.23.0 # https://pypi.org/project/pyTelegramBotAPI/
