@@ -92,7 +92,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 )
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # STATIC
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
 # MEDIA
 # ------------------------------------------------------------------------------
 
