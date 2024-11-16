@@ -4,7 +4,7 @@
 DJANGO_SETTINGS_MODULE=wePrint.settings.production
 DJANGO_SECRET_KEY=8dIfgl361gIPUGeUAxDcyCAB1BBEZB3xcsMqaxxMy0ncrbVeBCIILXiP0V21bX7I
 DJANGO_ADMIN_URL=WW94knxVgqvs9jH4hfPt5JQ20A1thgcS/
-DJANGO_ALLOWED_HOSTS=.print-book.uz,sub.print-book.uz,176.221.28.147
+DJANGO_ALLOWED_HOSTS=www.fintechdev.uz, fintechdev.uz, 45.80.149.61
 DJANGO_DEBUG=False
 # Security
 # ------------------------------------------------------------------------------
