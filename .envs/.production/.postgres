@@ -1,7 +1,0 @@
-# PostgreSQL
-# ------------------------------------------------------------------------------
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_DB=print
-POSTGRES_USER=user_print
-POSTGRES_PASSWORD=user_print123!
